@@ -1,6 +1,6 @@
 "use client";
 
-import react, { useEffect } from 'react';
+import { useEffect } from 'react';
 import envelope from 'public/img/envelope.png';
 import gsap from 'gsap';
 import Image from 'next/image';
