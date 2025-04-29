@@ -25,10 +25,8 @@ export default function App() {
     return router.push('/')
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit() {
     setButtonVrf(true)
-    e.preventDefault();
-
     try {
       const res = await fetch("/api/password_recovery/send_recovery_email", {
         method: "POST",
