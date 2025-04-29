@@ -28,7 +28,7 @@ export default function App() {
   async function handleSubmit() {
     setButtonVrf(true)
     try {
-      const res = await fetch("/api/password_recovery/send_recovery_email", {
+      const res = await fetch("/api/password_recovery/reset_password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,10 +44,10 @@ export default function App() {
           showProgress: true,
           duration: 5,
         })
+        setTimeout(() => {
+          router.push('/login')
+        }, 3000);
       }
-      setTimeout(() => {
-        router.push('/login')
-      }, 3000);
     } catch (e) {
       api.error({
       message: 'Erro ao redefinir senha',
