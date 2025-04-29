@@ -46,6 +46,7 @@ type User = {
       id: string;
       name: string;
       email: string;
+      email_verified: string;
       messages: Message[];
     }
   }
@@ -67,6 +68,10 @@ function Index() {
   const [api, contextHolder] = notification.useNotification();
 
   const user = useSelector((state: User) => state.user.user);
+
+  if(!user.email_verified) {
+    return router.push('/email_verification')
+  }
 
   const onChange: CheckboxProps['onChange'] = (e) => {
     setInteractivityMessage(e.target.checked)
