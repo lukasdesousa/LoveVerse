@@ -154,7 +154,7 @@ return (
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-          <Link style={styles.forgotPassword} href="">
+          <Link style={styles.forgotPassword} href={'/forget_password'}>
             Esqueceu a senha?
           </Link>
         </Form.Item>

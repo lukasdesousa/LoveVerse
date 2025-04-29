@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { Resend } from 'resend';
 import { v4 as uuidv4 } from 'uuid';
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 const prisma = new PrismaClient();
 
 export async function forgotPasswordAction(email: string) {
@@ -19,12 +20,11 @@ export async function forgotPasswordAction(email: string) {
       },
     });
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
         from: 'LoveVerse - Confirme seu E-mail <loveverse@loveverse.space>', // Defina seu e-mail
         to: email,
         subject: 'Código de Verificação do Loveverse',
-        text: `<p>Clique <a href="https://localhost:3000/forget_password?token=${token}">aqui</a> para redefinir sua senha.</p>`,
+        text: `<p>Clique <a href="https://loveverse-umber.vercel.app/reset_password?token=${token}">aqui</a> para redefinir sua senha.</p>`,
       });
   }
 }

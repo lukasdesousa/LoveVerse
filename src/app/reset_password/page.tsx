@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Button, Form, Grid, Input, theme, Typography } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 import { useSearchParams } from 'next/navigation';
-import { resetPasswordAction } from '../actions/resetPasswordAction';
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -21,23 +20,36 @@ export default function App() {
   const searchParams = useSearchParams();
   const getToken = searchParams.get('token');
   const [password, setPassword] = useState('');
+  
+  if(!getToken) {
+    return router.push('/')
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     setButtonVrf(true)
     e.preventDefault();
 
-    if(!getToken) return alert('Token inválido, solicite outro email para alteração de senha!');
-
     try {
-      await resetPasswordAction(getToken, password);
-      api.success({
-        message: 'Senha redefinida',
-        description:
-          'Aguarde enquanto redirecionamos você',
-        showProgress: true,
-        duration: 5,
-      })
-      router.push('/login')
+      const res = await fetch("/api/password_recovery/send_recovery_email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({newPassword: password, token: getToken}),
+      });
+
+      if(res.ok) {
+        api.success({
+          message: 'Senha redefinida',
+          description:
+            'Aguarde enquanto redirecionamos você',
+          showProgress: true,
+          duration: 5,
+        })
+      }
+      setTimeout(() => {
+        router.push('/login')
+      }, 3000);
     } catch (e) {
       api.error({
       message: 'Erro ao redefinir senha',
@@ -46,7 +58,6 @@ export default function App() {
       duration: 5,
     })
     }
-    
   }
 
 const styles = {

@@ -8,7 +8,6 @@ import { Apresentation } from '@/components/loveComponents/Apresentation/Apresen
 import Button from '@mui/joy/Button';
 import Link from 'next/link';
 
-
 export const metadata = {
   title: 'LoveVerse - Crie mensagens encantadoras',
   description:

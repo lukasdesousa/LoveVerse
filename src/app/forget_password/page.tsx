@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import { Button, Form, Grid, Input, theme, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
-import { forgotPasswordAction } from "../actions/recoveryPassword";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -17,19 +16,28 @@ export default function App() {
   const [buttonVrf, setButtonVrf] = useState(false);
   const [email, setEmail] = useState('');
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit() {
     setButtonVrf(true)
-    e.preventDefault();
     try {
-      await forgotPasswordAction(email);
-      api.success({
-        message: 'Email enviado com sucesso',
-        description:
-          'Verifique sua caixa de entrada e spam',
-        showProgress: true,
-        duration: 5,
-      })
+      const res = await fetch("/api/password_recovery/send_recovery_email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email: email}),
+      });
+
+      if(res.ok) {
+        api.success({
+          message: 'Email enviado com sucesso',
+          description:
+            'Verifique sua caixa de entrada e spam',
+          showProgress: true,
+          duration: 5,
+        })
+      }
     } catch (e) {
+      setButtonVrf(false)
       api.error({
       message: 'Erro ao enviar email',
       description: e instanceof Error ? e.message : 'Erro desconhecido',
