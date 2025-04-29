@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button, Form, Grid, Input, theme, Typography } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 import { useSearchParams } from 'next/navigation';
+import { verifyToken } from "../actions/verifyToken";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -21,9 +22,22 @@ export default function App() {
   const getToken = searchParams.get('token');
   const [password, setPassword] = useState('');
   
-  if(!getToken) {
-    return router.push('/')
-  }
+  React.useEffect(() => {
+    async function checkToken() {
+      if (!getToken) {
+        router.push('/');
+        return;
+      }
+
+      const verification = await verifyToken(getToken);
+      if(!verification) {
+        alert('Token inválido')
+        router.push('/')
+      }
+    }
+
+    checkToken();
+  }, [getToken, router]);
 
   async function handleSubmit() {
     setButtonVrf(true)
