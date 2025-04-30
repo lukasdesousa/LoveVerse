@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useSensorSupport from "@/hooks/useSensorSupport";
 import styled from "styled-components";
 
-export default function SensorPermissionGate({
+export default function SensorPermissionEx({
     children,
 }: {
     children: React.ReactNode;
@@ -17,22 +17,13 @@ export default function SensorPermissionGate({
         const ua = window.navigator.userAgent;
         setIsIOS(/iPhone|iPad|iPod/i.test(ua));
 
-        const storedPermission = localStorage.getItem("sensor-permission");
-
-        if (storedPermission === "granted") {
-            setPermissionGranted(true);
-            return;
-        }
-
         if (!/iPhone|iPad|iPod/i.test(ua)) {
             setPermissionGranted(true);
-            localStorage.setItem("sensor-permission", "granted");
             return;
         }
 
         if (sensorSupport) {
             setPermissionGranted(true);
-            localStorage.setItem("sensor-permission", "granted");
         }
     }, [sensorSupport]);
 

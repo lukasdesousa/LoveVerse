@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-
-export default function useTiltUpMessage(threshold = -40) {
+export default function useTiltUpMessage(threshold = -20) {
   const [showMessage, setShowMessage] = useState(false);
   const hasTriggeredRef = useRef(false);
 
@@ -9,7 +8,7 @@ export default function useTiltUpMessage(threshold = -40) {
       const beta = event.beta;
 
       if (beta === null) return;
-
+      // Ex: -15 graus de inclinação já ativa
       if (beta < threshold && !hasTriggeredRef.current) {
         hasTriggeredRef.current = true;
         setShowMessage(true);
@@ -18,7 +17,6 @@ export default function useTiltUpMessage(threshold = -40) {
 
     const enableListener = async () => {
       if (
-        
         typeof DeviceOrientationEvent !== 'undefined' &&
         // @ts-expect-error ignore
         typeof DeviceOrientationEvent.requestPermission === 'function'

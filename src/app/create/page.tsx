@@ -66,6 +66,7 @@ function Index() {
   const [showSpotifyCard, setShowSpotifyCard] = useState(false);
   const [interactivityMessage, setInteractivityMessage] = useState(true);
   const [api, contextHolder] = notification.useNotification();
+  const [count, setCount] = useState('');
 
   const user = useSelector((state: User) => state.user.user);
 
@@ -201,8 +202,8 @@ function Index() {
                       <p style={{ fontWeight: '300' }}>Nenhuma música selecionada</p>
                     </div>
                   )}
-                  <Form.Item name="content" extra="Somente 1200 caracteres." rules={[{ required: true, message: "Insira uma mensagem!", max: 1200 }]}>
-                    <TextArea placeholder='Dê o seu melhor!' size='large' maxLength={1200} />
+                  <Form.Item name="content" extra={`Restam ${700 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 700 }]}>
+                    <TextArea onChange={(e) => setCount(e.currentTarget.value)} placeholder='Dê o seu melhor!' size='large' maxLength={700} />
                   </Form.Item>
                   <Container>
                     <section className="checkbox">

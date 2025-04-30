@@ -39,7 +39,7 @@ function Index() {
               <Introduction>
             <ScrollReveal>
                 <section className="content">
-                  <h2>ENCANTE QUEM VOCÊ AMA</h2>
+                  <h2>ENCANTE QUEM VOCÊ <span style={{color: 'pink'}}>AMA</span></h2>
                     <Text>
                       Com a LOVEVERSE a sua criatividade o seu amor é o limite! Explore sua criatividade criando bilhetes com mensagens encantadoras.
                     </Text>

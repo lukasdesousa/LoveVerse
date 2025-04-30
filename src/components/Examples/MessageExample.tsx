@@ -2,17 +2,23 @@
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import styled, { CSSProperties } from "styled-components";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
+import styled from "styled-components";
 import Image from "next/image";
-import hearts from "public/img/hearts.png";
-import HeartAnim from "@/components/HeartsAnim/HeartsAnim";
-import huggingFriends from 'public/img/happy-people.png';
-import { SpotifyCard } from "@/components/Spotify/SpotifyCard";
-import { useEffect } from "react";
+import HeartAnim from "../HeartsAnim/HeartsAnim";
+import useShake from "@/hooks/useShake";
+import { SpotifyCard } from "../Spotify/SpotifyCard";
+import happy from 'public/img/happy-people.png';
+import useTiltUpMessage from "@/hooks/useTiltUpMessage";
+import useSensorSupport from "@/hooks/useSensorSupport";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function MessageExample() {
+export default function MessagesExample() {
+  const [visibility, setVisibility] = useState(0);
+  const showMessage = useTiltUpMessage();
+  const sensorSupport = useSensorSupport();
 
   useEffect(() => {
     (gsap.utils.toArray(".message") as HTMLElement[]).forEach((el) => {
@@ -33,6 +39,7 @@ export default function MessageExample() {
         }
       );
     });
+  
   
     // Animação para a imagem com a classe .heart dentro da .image-container
     (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
@@ -73,113 +80,113 @@ export default function MessageExample() {
         }
       );
     });
-  
-    gsap.timeline({ repeat: -1, yoyo: true }) // A configuração 'repeat: -1' faz com que a animação continue indefinidamente e o 'yoyo' volta ao início
-      .to('.container', {
-        background: 'linear-gradient(135deg, #f92dd0, #e595ff)',
-        duration: 10,
-        ease: 'back.inOut'
-      })
-      .to('.container', {
-        background: 'linear-gradient(135deg, #ff9a9e, #fbc2eb)',
-        duration: 10,
-        ease: 'back.inOut'
-      })
-      .to('.container', {
-        background: 'linear-gradient(135deg, #fa99df, #a18cd1)',
-        duration: 10,
-        ease: 'back.inOut'
-      })
-      .to('.container', {
-        background: 'linear-gradient(135deg, #ef16ff, #f270f7)',
-        duration: 10,
-        ease: 'back.inOut'
-      })
-      .to('.container', {
-        background: 'linear-gradient(135deg, #ec84e7, #ff9a9e)',
-        duration: 10,
-        ease: 'back.inOut'
-      });
   }, [])
 
 
-  return (
-    <main className="container" style={{ height: "100vh", minHeight: "100vh" }}>
-      <Background>
-        <HeartAnim />
-        <MainContainer>
-          <Message className="message">
-            <p>ROLE A TELA</p>
-          </Message>
-          <Message className="message">
-            <p>MAS ANTES, ESCUTE DE PLAY NA MÚSICA SELECIONADA PRA VOCÊ</p>
-            <SpotifyCard link="https://open.spotify.com/intl-pt/track/2stkLJ0JNcXkIRDNF3ld6c?si=bae8541c79064e70" />
-          </Message>
-          <Message className="message">
-            <p>COM CARINHO, DE PEDRO</p>
-          </Message>
-          <Message className="message">
-            <p>PARA: JOANA</p>
-          </Message>
-          <Message className="message">
-            <section className='message-container'>
-              <section className="heart1">
-                <Image
-                  src={hearts}
-                  alt='imagens de corações vermelhos'
-                  width={100}
-                  height={100}
-                  className="hearts"
-                />
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
-              </section>
-              <p className="main-content">Olá Joana, saiba que você é a minha melhor amiga, e eu amo você muito. Que você esteja feliz e que tudo esteja ótimo. Que você saiba que eu estou aqui para você sempre. Obrigado pelas risadas e pelas aventuras, conte comigo pra tudo!</p>
-              <section className="heart2">
-                <Image
-                  src={hearts}
-                  alt='imagens de corações vermelhos'
-                  width={100}
-                  height={100}
-                  className="hearts"
-                />
-              </section>
+  useShake(() => {
+    setVisibility(1);
+    const imgEl = imageContainerRef.current?.querySelector<HTMLImageElement>('img.heart');
+    if (imgEl) {
+      // flash: começa super-branco e volta ao normal em 0.3s
+      gsap.fromTo(
+        imgEl,
+        { filter: 'brightness(10)' },    // branco intenso
+        {
+          filter: 'brightness(1)',      // volta ao normal
+          duration: 1,
+          ease: 'power1.out'
+        }
+      );
+    }
+  }, imageContainerRef);
+
+  return (
+    <main className="container" style={{ height: "100%", minHeight: '100%' }}>
+      <HeartAnim />
+      <MainContainer>
+        <Message className="message">
+          <p className="title">ROLE A TELA</p>
+        </Message>
+        <Message className="message">
+          <p className="title">COM CARINHO, DE RICHARD</p>
+        </Message>
+        <Message className="message">
+          <p className="title">PARA LUNA</p>
+        </Message>
+          <Message className="message">
+            <p className="title">ANTES, DE PLAY NO TRECHO QUE RICHARD SELECIONOU PRA VOCÊ</p>
+            <SpotifyCard link='https://open.spotify.com/intl-pt/track/5XeFesFbtLpXzIVDNQP22n?si=6f888dd11f1a4e89' />
+          </Message>
+        <Message className="message">
+          <section className='message-container'>
+            <p className="main-content">Oi Luna! Estou te enviando esta mensagem como forma de expressar o quão grande é o meu amor por você, eu te amo muito! Abraços, Richard.</p>
+          </section>
+        </Message>
+           {sensorSupport ? (<Message className="message">
+            <section className="day-container">
+              <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
+              {showMessage && (
+                <p>EU TE AMO HÁ 1000 DIAS, 583 HORAS E 58 MINUTOS</p>
+              )}
             </section>
           </Message>
-          <Message className="image-container message">
-            <section>
-              <p>
-                <strong>Uma foto bem bacana aqui!</strong>
-              </p>
+          ) : (
+            <Message className="message">
+              <section className="day-container">
+              <p>EU TE AMO HÁ 1000 DIAS, 583 HORAS E 58 MINUTOS</p>
+              </section>
+            </Message>)
+        }
+          {sensorSupport ? (
+            <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
+              <section>
+                <p className="title">
+                  CHACOALHE O SEU SMARTPHONE
+                </p>
                 <Image
-                  src={huggingFriends}
+                  src={happy}
                   alt="imagem do usuário"
                   width={450}
                   height={450}
-                  className="heart"
+                  className="heart main-image shake"
                 />
-            </section>
-          </Message>
-        </MainContainer>
-      </Background>
+              </section>
+            </Message>
+          ) : (
+            <Message className="image-container message">
+              <section>
+                <p>AGORA, UMA FOTO BEM BACANA!</p>
+                <div>
+                  <Image
+                    src={happy}
+                    alt="imagem do usuário"
+                    layout="responsive"
+                    width={200}
+                    height={200}
+                    className="heart main-image"
+                    style={{maxWidth: '400px', maxHeight: '400px', borderRadius: '10px'}}
+                  />
+                </div>
+              </section>
+            </Message>
+          )
+        }
+      </MainContainer>
     </main>
   );
 }
-
-const Background = styled.div<CSSProperties>`
-  /* Background animado com puro CSS */
-  background-size: 200% 200%;
-  min-height: 100vh;
-  overflow: hidden;
-`;
 
 const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 80vh;
+  gap: 70vh;
   padding: 50vh 0;
   min-height: 100vh;
   height: auto;
+  overflow: hidden;
   
   section.message-container {
     
@@ -187,14 +194,12 @@ const MainContainer = styled.main`
       display: flex;
       justify-content: end;
       align-items: center;
-      margin: 10px 0px;
     }
 
     .heart2 {
       display: flex;
       justify-content: start;
       align-items: center;
-      margin: 10px 0px;
     }
   }
 
@@ -204,30 +209,45 @@ const MainContainer = styled.main`
     align-items: center;
     justify-content: center;
 
-    img {
-      border-radius: 10px;
 
+    img {
+      display: block;
+      margin: auto;
     }
   }
 `;
 
-const Message = styled.section`
+const Message = styled.section<{ isVisible?: number }>`
   width: 90%;
   margin: 0 auto;
-
 
   p {
     font-size: 1.5rem;
     text-align: center;
     padding: 20px;
     color: white;
-    font-weight: 500;
+    font-weight: 100;
   }
 
   p.main-content {
     border: 1px solid white;
     border-radius: 10px;
+    text-align: left;
+    background-color: #8810a6f6;
+    font-weight: 250;
   }
+
+  p.title {
+    width: 90%;
+    margin: auto;
+  }
+
+  img.shake {
+    
+    transition: 1.2s;
+    ${(props) => `opacity: ${props.isVisible}`}
+  }
+
 `;
 
 const gradientAnimation = `
@@ -247,3 +267,4 @@ const gradientAnimation = `
 export const GlobalStyle = styled.div`
   ${gradientAnimation}
 `;
+

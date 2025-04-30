@@ -17,8 +17,10 @@ export const Content = styled.section`
   text-align: center;
 
   p {
-    margin-top: 20px;
+    width: 100%;
+    margin: 20px auto;
   }
+
 `;
 
 export const Text = styled.p`
@@ -36,19 +38,23 @@ export const Introduction = styled.section`
   background-repeat: no-repeat;
   height: 300px;
 
-  .content {
+  .content {  
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: left;
-    margin: 60px 30px;
+    margin: 50px 30px;
     gap: 5vh;
     font-weight: 200;
-    font-size: 20px;
+    font-size: 100%;
     color: white;
 
+    @media (min-width: 568px) {
+      font-size: 1.2rem;
+    }
+
     h2 {
-      font-weight: 300;
+      font-weight: 230;
     }
   }
 `;
@@ -56,6 +62,8 @@ export const Introduction = styled.section`
 
 export const Title = styled.h2`
     text-align: center;
-    font-size: 23px;
+    font-size: 1.4rem;
     font-weight: 400;
+    margin: auto;
+    width: 90%;
 `;

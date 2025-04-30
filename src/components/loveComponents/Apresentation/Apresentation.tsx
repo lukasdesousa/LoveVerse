@@ -90,6 +90,8 @@ const Container = styled.section`
     text-align: center;
     border-top: 1px solid #6110ed75;
     border-bottom: 1px solid #6110ed75;
+
+   
 `;
 
 const SubContainer = styled.div`
