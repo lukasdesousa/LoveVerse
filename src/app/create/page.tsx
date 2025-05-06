@@ -50,19 +50,19 @@ function Index() {
     spotifyLink?: string;
     dateInit?: Date;
   };
-  
+
   const [savedMessage, setSavedMessage] = useState<SavedMessage>();
 
   const raw = localStorage.getItem('pendingMessage');
 
   useEffect(() => {
-    if(raw) {
+    if (raw) {
       const msg = JSON.parse(raw);
       setSavedMessage(msg)
       console.log(savedMessage)
       return;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -137,7 +137,10 @@ function Index() {
 
     // 1) Gera ID único para o pagamento
     const paymentId = crypto.randomUUID();
-    const imageBase64 = await convertToBase64(imageFile!);
+
+    const imageBase64 = imageFile
+      ? await convertToBase64(imageFile)
+      : savedMessage?.imageBase64 || '';
 
     // 2) Salva tudo no storage
     localStorage.setItem('pendingMessage', JSON.stringify({

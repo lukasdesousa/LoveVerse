@@ -22,19 +22,25 @@ export default function SuccessPage() {
       console.log(msg.imageBase64)
       if (msg.imageBase64) {
         try {
-          const res = await fetch('/api/uploads', {
+          const response = await fetch('/api/uploads', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ image: msg.imageBase64 }),
           });
-
-          const data = await res.json();
-
-          if (!res.ok) throw new Error(data.error);
-          imageUrl = data.url;
-        } catch (error) {
-          console.error('Erro ao enviar imagem:', error);
-          alert('Erro ao enviar imagem');
+      
+          const result = await response.json();
+      
+          if (!response.ok) {
+            console.error('Erro na resposta do upload:', result.error);
+            throw new Error(result.error || 'Erro desconhecido ao enviar imagem');
+          }
+      
+          imageUrl = result.url;
+        } catch (err) {
+          console.error('Erro ao enviar imagem para o servidor:', err);
+          alert('Erro ao enviar imagem. Por favor, tente novamente.');
           return router.replace('/create');
         }
       }
