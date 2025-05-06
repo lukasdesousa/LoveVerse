@@ -1,5 +1,6 @@
 "use server";
 
+/*
 import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
@@ -48,3 +49,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Erro desconhecido!" }, { status: 500 });
   }
 }
+*/

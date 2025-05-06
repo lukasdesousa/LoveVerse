@@ -1,21 +1,24 @@
-// middleware.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  const cookies = request.cookies;
 
-  
-  try {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", req.url));
+  // aplica apenas na rota /failure
+  if (pathname === '/failure') {
+    const token = cookies.get('failure_token')
+
+    const isValid = token?.value
+
+    if (!isValid) {
+      return NextResponse.redirect(new URL('/create', request.url))
     }
-    return NextResponse.next();
-  } catch (error) {
-    console.error("Erro no middleware:", error);
-    return NextResponse.redirect(new URL("/login", req.url));
   }
+
+  return;
 }
 
 export const config = {
-  matcher: ["/create/:path*", "/user/:path*"],
-};
+  matcher: ['/failure'],
+}

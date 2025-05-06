@@ -2,47 +2,28 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Grid, Menu, Space, theme } from "antd";
+import { Button, Grid, Menu, theme } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
 import { HeadStyle } from "@/styles/components_styles/header/styled";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
 
-type Data = {
-  user: {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      messages: [];
-    }
-  }
-}
-
 export default function LoveHeader() {
   const { token } = useToken();
   const screens = useBreakpoint();
   const router = useRouter();
-  const data = useSelector((state: Data) => state.user.user);
 
-  const menuItems = [
+  const menuItems: Array<{
+    label: string;
+    key: string;
+    path?: string;
+    children?: Array<{ label: string; key: string; path?: string }>;
+  }> = [
     {
       label: "Criar mensagem",
       key: "mensagens",
       path: "/create",
-    },
-    {
-      label: "Perfil",
-      key: "SubMenu",
-      children: [
-        {
-          label: "Meu perfil",
-          key: "profile",
-          path: "/user/profile",
-        },
-      ],
     },
   ];
 
@@ -121,12 +102,6 @@ export default function LoveHeader() {
                 overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
               />
             </div>
-            {data ? '' : (
-              <Space>
-                {screens.md ? <Button type="text" onClick={() => router.push("/login")}>Log in</Button> : ""}
-                <Button style={{backgroundColor: '#aa00ff'}} type="primary" onClick={() => router.push("/register")}><span style={{color: 'white'}}>Registrar</span></Button>
-              </Space>
-            )}
           </div>
         </nav>
       </HeadStyle>

@@ -1,3 +1,4 @@
+/*
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -23,3 +24,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao buscar mensagens' }, { status: 500 });
   }
 }
+  */

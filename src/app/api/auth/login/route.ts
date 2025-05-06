@@ -1,5 +1,6 @@
 "use server";
 
+/*
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -62,3 +63,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Erro ao realizar login" }, { status: 500 });
   }
 }
+*/

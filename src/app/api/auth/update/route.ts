@@ -1,5 +1,6 @@
 "use server";
 
+/*
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
 
@@ -49,3 +50,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Erro ao editar usuário" }, { status: 500 });
   }
 }
+*/

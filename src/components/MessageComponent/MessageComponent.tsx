@@ -14,6 +14,14 @@ import { SpotifyCard } from "../Spotify/SpotifyCard";
 import dayjs from 'dayjs';
 import useTiltUpMessage from "@/hooks/useTiltUpMessage";
 import useSensorSupport from "@/hooks/useSensorSupport";
+import stars from 'public/img/stars.png';
+
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
+
+// Add this calculation below your existing daysSince definition
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -114,12 +122,27 @@ export default function MessagesComponent() {
     );
   });
 
-  const daysSince = message?.dateInit
-    ? dayjs().diff(dayjs(message.dateInit), 'day')
-    : null;
-
-
   const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  const calculateDetailedTimeSince = (startDate: string) => {
+    const now = dayjs(); // Data atual
+    const start = dayjs(startDate); // Data inicial
+    const totalDays = now.diff(start, 'day'); // Total de dias completos
+    const remainingHours = now.diff(start, 'hour') % 24; // Horas restantes após os dias
+    const remainingMinutes = now.diff(start, 'minute') % 60; // Minutos restantes após as horas
+    const remainingSeconds = now.diff(start, 'second') % 60; // Segundos restantes após os minutos
+  
+    return {
+      days: totalDays,
+      hours: remainingHours,
+      minutes: remainingMinutes,
+      seconds: remainingSeconds
+    };
+  };
+  
+  const detailedTimeSince = message?.dateInit
+    ? calculateDetailedTimeSince(message.dateInit)
+    : null;
 
   useShake(() => {
     setVisibility(1);
@@ -138,7 +161,53 @@ export default function MessagesComponent() {
     }
   }, imageContainerRef);
 
-  if (loading) return <CircularProgress style={{margin: 'auto', color: '#aa00ff'}}/>;
+  useEffect(() => {
+    if (showMessage) {
+      (gsap.utils.toArray(".stars01") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: -100, transform: "scale(0)" },
+          {
+            opacity: 1,
+            x: 0,
+            transform: "scale(1)",
+            duration: 1.5,
+            ease: "power2.out",
+          }
+        );
+      });
+
+      (gsap.utils.toArray(".date-text") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 10, transform: "scale(0)" },
+          {
+            opacity: 1,
+            y: 0,
+            transform: "scale(1)",
+            duration: 1.5,
+            ease: "power2.out",
+          }
+        );
+      });
+
+      (gsap.utils.toArray(".stars02") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 100, transform: "scale(0)" },
+          {
+            opacity: 1,
+            x: 0,
+            transform: "scale(1)",
+            duration: 1.5,
+            ease: "power2.out",
+          }
+        );
+      });
+    }
+  }, [showMessage]);
+
+  if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return notFound();
   console.log(message.spotifyLink)
 
@@ -153,7 +222,7 @@ export default function MessagesComponent() {
           <p className="title">COM CARINHO, DE {message.creatorName.toUpperCase()}</p>
         </Message>
         <Message className="message">
-          <p className="title">PARA: {message.destinataryName.toUpperCase()}</p>
+          <p className="title">PARA {message.destinataryName.toUpperCase()}</p>
         </Message>
         {message.spotifyLink && (
           <Message className="message">
@@ -167,18 +236,58 @@ export default function MessagesComponent() {
           </section>
         </Message>
         {message.dateInit && (
-           sensorSupport ? (<Message className="message">
+          sensorSupport ? (<Message className="message">
             <section className="day-container">
               <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
               {showMessage && (
-                <p>EU TE AMO HÁ {daysSince} DIAS</p>
+                <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Image
+                    src={stars}
+                    alt="estrelas do campo de data do LoveVerse"
+                    width={100}
+                    height={100}
+                    placeholder="blur"
+                    quality={100}
+                    className="stars01"
+                  />
+                  <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
+                  <Image
+                    src={stars}
+                    alt="estrelas do campo de data do LoveVerse"
+                    width={100}
+                    height={100}
+                    placeholder="blur"
+                    quality={100}
+                    className="stars02"
+                  />
+                </section>
               )}
             </section>
           </Message>
           ) : (
             <Message className="message">
               <section className="day-container">
-                <p>EU TE AMO HÁ {daysSince} DIAS</p>
+              <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Image
+                    src={stars}
+                    alt="estrelas do campo de data do LoveVerse"
+                    width={100}
+                    height={100}
+                    placeholder="blur"
+                    quality={100}
+                    className="stars01"
+                  />
+              <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
+              <Image
+                    src={stars}
+                    alt="estrelas do campo de data do LoveVerse"
+                    width={100}
+                    height={100}
+                    placeholder="blur"
+                    quality={100}
+                    className="stars02"
+                  />
+                </section>
               </section>
             </Message>)
         )}
@@ -210,7 +319,7 @@ export default function MessagesComponent() {
                     width={200}
                     height={200}
                     className="heart main-image"
-                    style={{maxWidth: '400px', maxHeight: '400px', borderRadius: '10px'}}
+                    style={{ maxWidth: '400px', maxHeight: '400px', borderRadius: '10px' }}
                   />
                 </div>
               </section>

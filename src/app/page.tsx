@@ -9,25 +9,25 @@ import Button from '@mui/joy/Button';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'LoveVerse - Crie mensagens encantadoras',
+  title: 'LoveVerse - Crie mensagens encantadoras e compartilhe amor',
   description:
-    'Utilize a ferramenta Analyser para analisar memecoins de forma rápida e eficiente. Descubra insights, dados e tendências do mercado cripto, acompanhe airdrops e muito mais.',
-  keywords: 'memecoins, análise cripto, Analyser, criptomoedas, investimento, mercado cripto, crypto, crypto market, rugcheck',
+    'Com o LoveVerse, você pode criar e enviar mensagens personalizadas, românticas e criativas para quem ama. Deixe o amor falar mais alto com mensagens únicas e inesquecíveis.',
+  keywords: 'LoveVerse, mensagens de amor, cartas românticas, frases para namorado, mensagens personalizadas, amor, romantismo, relacionamento, declarações de amor',
   alternates: {
-    canonical: 'https://lukasdesousa.github.io/MundoCriptoApp/',
+    canonical: 'https://www.loveverse.space/', // substitua pelo domínio real
   },
   openGraph: {
-    title: 'Mundo Cripto - Analise memecoins rapidamente com a ferramenta analyser.',
+    title: 'LoveVerse - Envie mensagens de amor inesquecíveis',
     description:
-      'Utilize a ferramenta Analyser para analisar memecoins de forma rápida e eficiente. Descubra insights, dados e tendências do mercado cripto.',
-    url: 'https://lukasdesousa.github.io/MundoCriptoApp/',
+      'Descubra a magia de expressar sentimentos com o LoveVerse. Crie mensagens personalizadas e surpreenda quem você ama.',
+    url: 'https://www.loveverse.space/',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mundo Cripto - Analise memecoins rapidamente com a ferramenta analyser.',
+    title: 'LoveVerse - Envie mensagens de amor inesquecíveis',
     description:
-      'Utilize a ferramenta Analyser para analisar memecoins de forma rápida e eficiente. Descubra insights, dados e tendências do mercado cripto.',
+      'Descubra a magia de expressar sentimentos com o LoveVerse. Crie mensagens personalizadas e surpreenda quem você ama.',
   },
 };
 
@@ -69,7 +69,7 @@ function Index() {
                   Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A LOVEVERSE é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
                 </Text>
               </Content>
-                <Content><Link href={'/exemplo_carta_loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver carta de exemplo</Button></Link></Content>
+                <Content><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver carta de exemplo</Button></Link></Content>
                 </Container>
           <Footer />
     </>

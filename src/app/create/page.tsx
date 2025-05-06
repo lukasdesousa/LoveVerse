@@ -1,6 +1,5 @@
 "use client";
 
-import { useDispatch, useSelector } from 'react-redux';
 import HomeHeader from '@/components/HomeHeader/HomeHeader';
 import TextArea from 'antd/es/input/TextArea';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
@@ -11,10 +10,7 @@ import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { DatePicker, Form } from 'antd';
 import ptBR from 'antd/es/date-picker/locale/pt_BR';
-import { createMessage } from '@/store/userSlice';
-import { AppDispatch } from '@/store/store';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image } from 'antd';
 import { SpotifyCard } from '@/components/Spotify/SpotifyCard';
 import { Checkbox } from 'antd';
@@ -24,37 +20,13 @@ import { InboxOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
 import InfoModal from '@/components/Modal/InfoModal';
-
+import useMercadoPago from '@/hooks/useMercadoPago';
+import dayjs from 'dayjs';
 
 const { Search } = Input;
 
-type Message = {
-  id: string;
-  creatorName: string;
-  destinataryName: string;
-  spotifyLink: string;
-  dateInit?: Date;
-  theme?: string;
-  content: string;
-  expiresAt: string;
-  imageUrl?: string;
-};
-
-type User = {
-  user: {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      email_verified: string;
-      messages: Message[];
-    }
-  }
-}
-
 function Index() {
-  const dispatch: AppDispatch = useDispatch();
-  const router = useRouter();
+  const { createMercadoPagoCheckout } = useMercadoPago();
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -68,11 +40,47 @@ function Index() {
   const [api, contextHolder] = notification.useNotification();
   const [count, setCount] = useState('');
 
-  const user = useSelector((state: User) => state.user.user);
+  interface SavedMessage {
+    Email?: string;
+    content?: string;
+    creatorName?: string;
+    destinataryName?: string;
+    imageBase64?: string;
+    interactivityMessage?: boolean;
+    spotifyLink?: string;
+    dateInit?: Date;
+  };
+  
+  const [savedMessage, setSavedMessage] = useState<SavedMessage>();
 
-  if(!user.email_verified) {
-    return router.push('/email_verification')
-  }
+  const raw = localStorage.getItem('pendingMessage');
+
+  useEffect(() => {
+    if(raw) {
+      const msg = JSON.parse(raw);
+      setSavedMessage(msg)
+      console.log(savedMessage)
+      return;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (savedMessage) {
+      form.setFieldsValue({
+        Email: savedMessage.Email,
+        creatorName: savedMessage.creatorName,
+        destinataryName: savedMessage.destinataryName,
+        spotifyLink: savedMessage.spotifyLink,
+        dateInit: savedMessage.dateInit ? dayjs(savedMessage.dateInit) : undefined,
+        content: savedMessage.content,
+      });
+      // Se tiver preview de imagem ou Spotify, ajuste também:
+      setPreview(savedMessage.imageBase64 || null);
+      setPreviewLink(savedMessage.spotifyLink || '');
+      setShowSpotifyCard(!!savedMessage.spotifyLink);
+    }
+  }, [savedMessage, form]);
 
   const onChange: CheckboxProps['onChange'] = (e) => {
     setInteractivityMessage(e.target.checked)
@@ -96,11 +104,12 @@ function Index() {
 
     setErrorLink(false);
     setLink(previewSpotify);
-    setShowSpotifyCard(true); // Exibe o SpotifyCard se o link for válido
+    setShowSpotifyCard(true);
   };
 
-  const uploadImageToCloudinary = async (file: File): Promise<string> => {
+  const convertToBase64 = async (file: File): Promise<string> => {
     if (invalidLink) return Promise.resolve('');
+    if (!file) return Promise.resolve('');
 
     const toBase64 = (file: File): Promise<string> =>
       new Promise((resolve, reject) => {
@@ -111,54 +120,42 @@ function Index() {
       });
 
     const base64 = await toBase64(file);
-
-    const res = await fetch('/api/uploads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: base64 }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.error);
-    return data.url;
+    return base64;
   };
 
-  const onFinish = async (values: Omit<Message, 'id'>) => {
+  const onFinish = async (values: {
+    creatorName: string;
+    destinataryName: string;
+    spotifyLink: string;
+    dateInit?: Date;
+    theme?: string;
+    content: string;
+    email: string;
+  }) => {
     if (invalidLink) return;
     setLoading(true);
 
-    try {
-      let imageUrl = '';
-      if (imageFile) {
-        imageUrl = await uploadImageToCloudinary(imageFile);
-      }
+    // 1) Gera ID único para o pagamento
+    const paymentId = crypto.randomUUID();
+    const imageBase64 = await convertToBase64(imageFile!);
 
-      const messageWithId = {
-        ...values,
-        imageUrl,
-        interactivityMessage,
-      };
+    // 2) Salva tudo no storage
+    localStorage.setItem('pendingMessage', JSON.stringify({
+      ...values,
+      imageBase64,
+      interactivityMessage,
+      spotifyLink,
+      paymentId,
+    }));
 
-      dispatch(createMessage(messageWithId))
-        .unwrap()
-        .then((response: Message[]) => {
-          if (response.length > 0) {
-            router.push(`/messages/${response[0].id}`);
-          } else {
-            alert('No message returned');
-          }
-        })
-        .catch((error) => {
-          alert(`Erro: ${error}`);
-        });
-    } catch (error) {
-      alert('Erro ao enviar imagem');
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    // 3) Chama o checkout e redireciona
+    await createMercadoPagoCheckout({
+      testeId: paymentId,
+      userEmail: values.email,
+    });
+    setLoading(false);
   };
+
 
   return (
     <>
@@ -173,20 +170,22 @@ function Index() {
                 <Form
                   form={form}
                   name="normal_signup"
-                  onFinish={(values) => onFinish({ ...values, id: user.id })}
+                  onFinish={(values) => onFinish({ ...values })}
                   layout="vertical"
                   requiredMark="optional"
                 >
-                  <Form.Item name="creatorName" rules={[{ required: true, message: "Insira um nome válido!" }]}>
-                    <Input size='large' placeholder="Nome do remetente" />
+                  <Form.Item label='Email' name="Email" extra={'Insira o email que irá receber o QR CODE da mensagem'} rules={[{ type: 'email', required: true, message: "Insira um email válido!" }]}>
+                    <Input type='email' size='large' placeholder="loveverse@email.com" />
                   </Form.Item>
-                  <Form.Item name="destinataryName" rules={[{ required: true, message: "Insira um destinatário válido!" }]}>
-                    <Input size='large' placeholder="Nome do destinatário" />
+                  <Form.Item label='O seu nome' name="creatorName" rules={[{ required: true, message: "Insira um nome válido!" }]}>
+                    <Input size='large' placeholder="João" />
                   </Form.Item>
-                  <Form.Item name="spotifyLink" extra="Copie e cole aqui o link da música do Spotify.">
+                  <Form.Item label='Nome do destinatário' name="destinataryName" rules={[{ required: true, message: "Insira um destinatário válido!" }]}>
+                    <Input size='large' placeholder="Maria" />
+                  </Form.Item>
+                  <Form.Item label='Link de sua música' name="spotifyLink" extra="Copie e cole aqui o link da música do Spotify.">
                     <Search
                       placeholder="https://open.spotify..."
-                      allowClear
                       enterButton="Pesquisar"
                       size="large"
                       onChange={(e) => setPreviewLink(e.currentTarget.value)}
@@ -202,20 +201,30 @@ function Index() {
                       <p style={{ fontWeight: '300' }}>Nenhuma música selecionada</p>
                     </div>
                   )}
-                  <Form.Item name="content" extra={`Restam ${700 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 700 }]}>
+                  <Form.Item label='Sua mensagem' name="content" extra={`Restam ${700 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 700 }]}>
                     <TextArea onChange={(e) => setCount(e.currentTarget.value)} placeholder='Dê o seu melhor!' size='large' maxLength={700} />
                   </Form.Item>
                   <Container>
                     <section className="checkbox">
                       <Checkbox onChange={onChange} defaultChecked={true} >Ativar mensagem iterativa?</Checkbox>
-                      <QuestionCircleOutlined onClick={() => setModal(true)}/>
-                      <InfoModal open={modal} onClose={() => setModal(false)}/>
+                      <QuestionCircleOutlined onClick={() => setModal(true)} />
+                      <InfoModal open={modal} onClose={() => setModal(false)} />
                     </section>
                   </Container>
-                  <Form.Item name="dateInit" extra="Escolha a data de início da relação (opcional).">
-                    <DatePicker size='large' style={{ width: '100%' }} format={'DD/MM/YYYY'} locale={ptBR} />
+                  <Form.Item label='Data do inicio do relacionamento' name="dateInit" extra="Como vai aparecer na mensagem: Eu te amo há X dias, X horas, X minutos, X segundos">
+                    <DatePicker
+                      size="large"
+                      style={{ width: "100%" }}
+                      format="DD/MM/YYYY"
+                      locale={ptBR}
+                      disabledDate={(current) => {
+                        // current é um objeto dayjs
+                        // bloqueia: current >= início de hoje
+                        return current && current.valueOf() >= dayjs().startOf("day").valueOf();
+                      }}
+                    />
                   </Form.Item>
-                  <Form.Item label="Imagem (opcional)">
+                  <Form.Item label="Imagem">
                     <Dragger
                       name="file"
                       multiple={false}
