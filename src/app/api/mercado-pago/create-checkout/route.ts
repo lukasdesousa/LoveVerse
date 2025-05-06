@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
             description: "Mensagem animada LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 0.50,
+            unit_price: 0.10,
             currency_id: "BRL",
             category_id: "5805",
           },

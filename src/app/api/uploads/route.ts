@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export const dynamic = 'force-dynamic'; // garante que não seja rota estática
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
