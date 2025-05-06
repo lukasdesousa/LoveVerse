@@ -1,0 +1,5 @@
+{
+  "/api/usermessages/[id]/route": "app/api/usermessages/[id]/route.js",
+  "/page": "app/page.js",
+  "/messages/[id]/page": "app/messages/[id]/page.js"
+}
