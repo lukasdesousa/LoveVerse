@@ -47,9 +47,9 @@ export async function POST(req: NextRequest) {
             description: "Mensagem animada LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 8.99,
+            unit_price: 0.50,
             currency_id: "BRL",
-            category_id: "category", // Recomendado inserir, mesmo que não tenha categoria - Aumenta a pontuação da sua integração com o Mercado Pago
+            category_id: "5805",
           },
         ],
         payment_methods: {
