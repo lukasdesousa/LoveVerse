@@ -28,7 +28,6 @@ export default function SuccessPage() {
             body: JSON.stringify({ image: msg.imageBase64 }),
           });
 
-          // Se não for 2xx, grave o texto bruto e lance erro
           if (!response.ok) {
             const text = await response.text();
             console.error('Upload falhou:', response.status, text);
