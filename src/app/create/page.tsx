@@ -22,6 +22,7 @@ import Dragger from 'antd/es/upload/Dragger';
 import InfoModal from '@/components/Modal/InfoModal';
 import useMercadoPago from '@/hooks/useMercadoPago';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const { Search } = Input;
 
@@ -135,12 +136,10 @@ function Index() {
     if (invalidLink) return;
     setLoading(true);
 
-    // 1) Gera ID único para o pagamento
-    const paymentId = crypto.randomUUID();
+    const paymentId = uuidv4();
 
-    const imageBase64 = imageFile
-      ? await convertToBase64(imageFile)
-      : savedMessage?.imageBase64 || '';
+    const imageBase64 = savedMessage?.imageBase64 ? savedMessage.imageBase64 
+    : await convertToBase64(imageFile!);
 
     // 2) Salva tudo no storage
     localStorage.setItem('pendingMessage', JSON.stringify({
@@ -281,3 +280,4 @@ const Container = styled.section`
 `;
 
 export default Index;
+
