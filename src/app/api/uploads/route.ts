@@ -12,10 +12,6 @@ cloudinary.config({
 // Force dynamic rendering for API route
 export const dynamic = 'force-dynamic';
 
-/**
- * POST /api/upload-image
- * Receives a base64 image string or URL and uploads to Cloudinary
- */
 export async function POST(req: Request) {
   try {
     const { image } = await req.json();

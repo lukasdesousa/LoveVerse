@@ -16,10 +16,8 @@ export default function SuccessPage() {
       if (!raw) return router.replace('/create');
 
       const msg = JSON.parse(raw);
-      localStorage.removeItem('pendingMessage');
-
+      
       let imageUrl = '';
-      console.log(msg.imageBase64)
       if (msg.imageBase64) {
         try {
           const response = await fetch('/api/uploads', {
@@ -36,8 +34,9 @@ export default function SuccessPage() {
             console.error('Erro na resposta do upload:', result.error);
             throw new Error(result.error || 'Erro desconhecido ao enviar imagem');
           }
-      
+          
           imageUrl = result.url;
+          localStorage.removeItem('pendingMessage');
         } catch (err) {
           console.error('Erro ao enviar imagem para o servidor:', err);
           alert('Erro ao enviar imagem. Por favor, tente novamente.');
