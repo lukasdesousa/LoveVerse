@@ -26,15 +26,6 @@ export async function POST(req: Request) {
     // Upload with basic optimization transformations
     const uploadResponse = await cloudinary.uploader.upload(image, {
       folder: 'loveverse_uploads',
-      // Limita dimensões e aplica compressão automática
-      transformation: [
-        { width: 800, crop: 'limit' },      // evita imagens muito grandes
-        { quality: 'auto' },                // compressão automática
-        { fetch_format: 'auto' },           // WebP/AVIF quando possível
-      ],
-      // Opcional: gerar URLs assinadas para segurança
-      // use_filename: true,
-      // unique_filename: false,
     });
 
     return NextResponse.json({
