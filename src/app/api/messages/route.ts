@@ -25,6 +25,7 @@ function validateInput(creatorName: string, destinataryName: string, content: st
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
+
         const validationError = validateInput(body.creatorName, body.destinataryName, body.content);
         if (validationError) {
             return NextResponse.json({ error: validationError }, { status: 400 });
@@ -42,7 +43,6 @@ export async function POST(req: NextRequest) {
             imageUrl: body.imageUrl || null,
             dateInit: body.dateInit || null,
         }});
-    
         return NextResponse.json({ message: [newMessage] }, { status: 201 });
     } catch (error) {
         console.error("Erro ao criar mensagem:", error);

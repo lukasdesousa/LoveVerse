@@ -42,13 +42,14 @@ function Index() {
   const [count, setCount] = useState('');
 
   interface SavedMessage {
-    Email?: string;
+    email?: string;
     content?: string;
     creatorName?: string;
     destinataryName?: string;
     imageBase64?: string;
     interactivityMessage?: boolean;
     spotifyLink?: string;
+    previewSpotify?: string;
     dateInit?: Date;
   };
 
@@ -69,7 +70,7 @@ function Index() {
   useEffect(() => {
     if (savedMessage) {
       form.setFieldsValue({
-        Email: savedMessage.Email,
+        email: savedMessage.email,
         creatorName: savedMessage.creatorName,
         destinataryName: savedMessage.destinataryName,
         spotifyLink: savedMessage.spotifyLink,
@@ -79,7 +80,13 @@ function Index() {
       // Se tiver preview de imagem ou Spotify, ajuste também:
       setPreview(savedMessage.imageBase64 || null);
       setPreviewLink(savedMessage.spotifyLink || '');
-      setShowSpotifyCard(!!savedMessage.spotifyLink);
+      setLink(savedMessage.spotifyLink || '');
+
+      if(savedMessage.spotifyLink) {
+        setShowSpotifyCard(true);
+      } else {
+        setShowSpotifyCard(false);
+      }
     }
   }, [savedMessage, form]);
 
@@ -102,7 +109,6 @@ function Index() {
       setShowSpotifyCard(false);
       return;
     }
-
     setErrorLink(false);
     setLink(previewSpotify);
     setShowSpotifyCard(true);
@@ -176,7 +182,7 @@ function Index() {
                   layout="vertical"
                   requiredMark="optional"
                 >
-                  <Form.Item label='Email' name="Email" extra={'Insira o email que irá receber o QR CODE da mensagem'} rules={[{ type: 'email', required: true, message: "Insira um email válido!" }]}>
+                  <Form.Item label='Email' name="email" extra={'Insira o email que irá receber o QR CODE da mensagem'} rules={[{ type: 'email', required: true, message: "Insira um email válido!" }]}>
                     <Input type='email' size='large' placeholder="loveverse@email.com" />
                   </Form.Item>
                   <Form.Item label='O seu nome' name="creatorName" rules={[{ required: true, message: "Insira um nome válido!" }]}>
@@ -190,7 +196,7 @@ function Index() {
                       placeholder="https://open.spotify..."
                       enterButton="Pesquisar"
                       size="large"
-                      onChange={(e) => setPreviewLink(e.currentTarget.value)}
+                      onChange={(e) => setLink(e.currentTarget.value)}
                       onSearch={() => setSpotiLink()}
                     />
                   </Form.Item>

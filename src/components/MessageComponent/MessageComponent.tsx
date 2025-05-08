@@ -83,6 +83,19 @@ export default function MessagesComponent() {
           }
         );
       });
+
+      (gsap.utils.toArray(".message01") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 1, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out",
+          }
+        );
+      });
     
     
       // Animação para a imagem com a classe .heart dentro da .image-container
@@ -215,13 +228,12 @@ export default function MessagesComponent() {
 
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return notFound();
-  console.log(message.spotifyLink)
 
   return (
     <main className="container" style={{ height: "100%", minHeight: '100%' }}>
       <HeartAnim />
       <MainContainer>
-        <Message className="message">
+        <Message className="message01">
           <p className="title">ROLE A TELA</p>
         </Message>
         <Message className="message">

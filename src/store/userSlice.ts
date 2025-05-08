@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-
 interface Message {
   id: string;
   creatorName: string;
   destinataryName: string;
   spotifyLink: string;
+  email: string;
   content: string;
   dateInit?: Date;
   expiresAt: string;
@@ -68,11 +68,10 @@ export const createMessage = createAsyncThunk(
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || 'Erro ao adicionar mensagem');
+      } else {
+        const data = await res.json();
+        return data.message as Message[];
       }
-
-      const data = await res.json();
-      console.log(typeof data.message)
-      return data.message as Message[];
     } catch (error: unknown) {
       if (error instanceof Error) {
         return rejectWithValue(error.message || 'Erro desconhecido');
@@ -81,7 +80,6 @@ export const createMessage = createAsyncThunk(
     }
   }
 );
-
 // Thunk para atualizar usuário (sem apagar mensagens)
 export const updateUser = createAsyncThunk(
   "user/updateUser",
