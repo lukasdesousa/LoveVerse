@@ -21,8 +21,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-// Add this calculation below your existing daysSince definition
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface Messages {
@@ -63,8 +61,7 @@ export default function MessagesComponent() {
   }, [id]);
 
   useEffect(() => {
-
-    if(message) {
+    if (message) {
       (gsap.utils.toArray(".message") as HTMLElement[]).forEach((el) => {
         gsap.fromTo(
           el,
@@ -96,8 +93,8 @@ export default function MessagesComponent() {
           }
         );
       });
-    
-    
+
+
       // Animação para a imagem com a classe .heart dentro da .image-container
       (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
         gsap.fromTo(
@@ -117,7 +114,7 @@ export default function MessagesComponent() {
           }
         );
       });
-    
+
       (gsap.utils.toArray(".hearts") as HTMLElement[]).forEach((el) => {
         gsap.fromTo(
           el,
@@ -138,7 +135,7 @@ export default function MessagesComponent() {
         );
       });
     }
-    
+
   }, [message])
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -150,7 +147,7 @@ export default function MessagesComponent() {
     const remainingHours = now.diff(start, 'hour') % 24; // Horas restantes após os dias
     const remainingMinutes = now.diff(start, 'minute') % 60; // Minutos restantes após as horas
     const remainingSeconds = now.diff(start, 'second') % 60; // Segundos restantes após os minutos
-  
+
     return {
       days: totalDays,
       hours: remainingHours,
@@ -158,7 +155,7 @@ export default function MessagesComponent() {
       seconds: remainingSeconds
     };
   };
-  
+
   const detailedTimeSince = message?.dateInit
     ? calculateDetailedTimeSince(message.dateInit)
     : null;
@@ -262,8 +259,8 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={100}
-                    height={100}
+                    width={90}
+                    height={90}
                     placeholder="blur"
                     quality={100}
                     className="stars01"
@@ -272,8 +269,8 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={100}
-                    height={100}
+                    width={90}
+                    height={90}
                     placeholder="blur"
                     quality={100}
                     className="stars02"
@@ -285,22 +282,22 @@ export default function MessagesComponent() {
           ) : (
             <Message className="message">
               <section className="day-container">
-              <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={100}
-                    height={100}
+                    width={90}
+                    height={90}
                     placeholder="blur"
                     quality={100}
                     className="stars01"
                   />
-              <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
-              <Image
+                  <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
+                  <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={100}
-                    height={100}
+                    width={90}
+                    height={90}
                     placeholder="blur"
                     quality={100}
                     className="stars02"
@@ -319,9 +316,11 @@ export default function MessagesComponent() {
                 <Image
                   src={message.imageUrl}
                   alt="imagem do usuário"
-                  width={450}
-                  height={450}
-                  className="heart main-image shake"
+                  layout="responsive"
+                  width={200}
+                  height={200}
+                  className="heart main-image"
+                  style={{ maxWidth: '400px', maxHeight: '400px', borderRadius: '10px' }}
                 />
               </section>
             </Message>

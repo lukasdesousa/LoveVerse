@@ -5,6 +5,16 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const cookies = request.cookies;
 
+  if (pathname === '/success') {
+    const token = cookies.get('success_token')
+
+    const isValid = token?.value
+
+    if (!isValid) {
+      return NextResponse.redirect(new URL('/create', request.url))
+    }
+  }
+
   // aplica apenas na rota /failure
   if (pathname === '/failure') {
     const token = cookies.get('failure_token')
@@ -20,5 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/failure'],
+  matcher: ['/failure', '/success'],
 }

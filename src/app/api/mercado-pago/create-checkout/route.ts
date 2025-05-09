@@ -23,6 +23,12 @@ export async function POST(req: NextRequest) {
     maxAge: 300, // 5 minutos
   });
 
+  cookieStore.set('success_token', jwt, {
+    path: '/',
+    httpOnly: true,
+    maxAge: 300, // 5 minutos
+  });
+
   try {
     const preference = new Preference(mpClient);
 
@@ -74,7 +80,7 @@ export async function POST(req: NextRequest) {
         },
         auto_return: "approved",
         back_urls: {
-          success: `${req.headers.get("origin")}/success`,
+          success: `${req.headers.get("origin")}/success?status=success?token=${jwt}?payment_id=${testeId}`,
           failure: `${req.headers.get("origin")}/failure?status=failure?token=${jwt}?payment_id=${testeId}`,
           pending: `${req.headers.get("origin")}/api/mercado-pago/pending`, 
         }

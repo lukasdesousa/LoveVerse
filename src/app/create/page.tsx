@@ -96,7 +96,7 @@ function Index() {
 
   const setSpotiLink = () => {
     const spotifyLinkPattern = /^https:\/\/(open|play)\.spotify\.com\/.+/;
-    const isSpotifyLink = spotifyLinkPattern.test(previewSpotify);
+    const isSpotifyLink = spotifyLinkPattern.test(spotifyLink);
 
     if (!isSpotifyLink) {
       setErrorLink(true);
@@ -110,7 +110,7 @@ function Index() {
       return;
     }
     setErrorLink(false);
-    setLink(previewSpotify);
+    setPreviewLink(spotifyLink)
     setShowSpotifyCard(true);
   };
 
@@ -209,12 +209,12 @@ function Index() {
                       <p style={{ fontWeight: '300' }}>Nenhuma música selecionada</p>
                     </div>
                   )}
-                  <Form.Item label='Sua mensagem' name="content" extra={`Restam ${700 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 700 }]}>
-                    <TextArea onChange={(e) => setCount(e.currentTarget.value)} placeholder='Dê o seu melhor!' size='large' maxLength={700} />
+                  <Form.Item label='Sua mensagem' name="content" extra={`Restam ${1200 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 1200 }]}>
+                    <TextArea onChange={(e) => setCount(e.currentTarget.value)} placeholder='Dê o seu melhor!' size='large' maxLength={1200} />
                   </Form.Item>
                   <Container>
                     <section className="checkbox">
-                      <Checkbox onChange={onChange} defaultChecked={true} >Ativar mensagem iterativa?</Checkbox>
+                      <Checkbox onChange={onChange} defaultChecked={true} >Ativar mensagem interativa?</Checkbox>
                       <QuestionCircleOutlined onClick={() => setModal(true)} />
                       <InfoModal open={modal} onClose={() => setModal(false)} />
                     </section>
