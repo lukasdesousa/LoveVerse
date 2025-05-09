@@ -1,34 +1,31 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// middleware.ts (na raiz do projeto)
+
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl;
   const cookies = request.cookies;
 
   if (pathname === '/success') {
-    const token = cookies.get('success_token')
-
-    const isValid = token?.value
-
-    if (!isValid) {
-      return NextResponse.redirect(new URL('/create', request.url))
+    const token = cookies.get('success_token');
+    if (!token?.value) {
+      // Redireciona para /create se não houver token válido
+      return NextResponse.redirect(new URL('/create', request.url));
     }
   }
 
-  // aplica apenas na rota /failure
   if (pathname === '/failure') {
-    const token = cookies.get('failure_token')
-
-    const isValid = token?.value
-
-    if (!isValid) {
-      return NextResponse.redirect(new URL('/create', request.url))
+    const token = cookies.get('failure_token');
+    if (!token?.value) {
+      return NextResponse.redirect(new URL('/create', request.url));
     }
   }
 
-  return;
+  // Continua normalmente para todas as outras requisições
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/failure', '/success'],
-}
+  matcher: ['/success', '/failure'],
+};

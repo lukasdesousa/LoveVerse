@@ -1,37 +1,44 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Preference } from "mercadopago";
-import mpClient from "@/lib/mercado-pago";
+// app/api/mercado-pago/create/route.ts
+import { NextResponse } from 'next/server';
+import { Preference } from 'mercadopago';
+import mpClient from '@/lib/mercado-pago';
 import { v4 as uuidv4 } from 'uuid';
-import { SignJWT } from 'jose' // ou jsonwebtoken
-import { cookies } from "next/headers";
+import { SignJWT } from 'jose';
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-export async function POST(req: NextRequest) {
+if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
+  throw new Error('Falta variável de ambiente MP_ACCESS_TOKEN');
+}
+if (!process.env.JWT_SECRET) {
+  throw new Error('Falta variável de ambiente JWT_SECRET');
+}
+
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+
+export async function POST(req: Request) {
   const { testeId, userEmail } = await req.json();
-  const externalReference = uuidv4();
-  const cookieStore = await cookies();
+  if (!testeId) {
+    return NextResponse.json({ error: 'testeId não fornecido' }, { status: 400 });
+  }
 
-  const jwt = await new SignJWT({ ext: externalReference })
+  // 1) Gera um JWT curto para proteger /success e /failure
+  const extRef = uuidv4();
+  const jwt = await new SignJWT({ ext: extRef })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('5m')
-    .sign(secret)
+    .sign(secret);
 
-  cookieStore.set('failure_token', jwt, {
-    path: '/',
-    httpOnly: true,
-    maxAge: 300, // 5 minutos
-  });
-
-  cookieStore.set('success_token', jwt, {
-    path: '/',
-    httpOnly: true,
-    maxAge: 300, // 5 minutos
-  });
+  // 2) Constroi as URLs de retorno, usando & corretamente
+  const origin = req.headers.get('origin')!;
+  const successUrl = `${origin}/success?status=success&token=${jwt}&payment_id=${testeId}`;
+  const failureUrl = `${origin}/failure?status=failure&token=${jwt}&payment_id=${testeId}`;
+  const pendingUrl = `${origin}/api/mercado-pago/pending`;
 
   try {
+    // 3) Cria a preferência no Mercado Pago
     const preference = new Preference(mpClient);
-
     const createdPreference = await preference.create({
       body: {
         external_reference: testeId, // IMPORTANTE: Isso aumenta a pontuação da sua integração com o Mercado Pago - É o id da compra no nosso sistema
@@ -80,23 +87,40 @@ export async function POST(req: NextRequest) {
         },
         auto_return: "approved",
         back_urls: {
-          success: `${req.headers.get("origin")}/success?status=success?token=${jwt}?payment_id=${testeId}`,
-          failure: `${req.headers.get("origin")}/failure?status=failure?token=${jwt}?payment_id=${testeId}`,
-          pending: `${req.headers.get("origin")}/api/mercado-pago/pending`, 
+          success: successUrl,
+          failure: failureUrl,
+          pending: pendingUrl,
         }
       },
     });
 
     if (!createdPreference.id) {
-      throw new Error("No preferenceID");
+      throw new Error('Erro: preference.id não foi retornado');
     }
 
-    return NextResponse.json({
+    // 4) Prepara a resposta e define os cookies de proteção
+    const response = NextResponse.json({
       preferenceId: createdPreference.id,
       initPoint: createdPreference.init_point,
     });
+
+    response.cookies.set('success_token', jwt, {
+      path: '/',
+      httpOnly: true,
+      maxAge: 5 * 60,
+    });
+    response.cookies.set('failure_token', jwt, {
+      path: '/',
+      httpOnly: true,
+      maxAge: 5 * 60,
+    });
+
+    return response;
   } catch (err) {
-    console.error(err);
-    return NextResponse.error();
+    console.error('Erro ao criar preferência Mercado Pago:', err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : 'Erro interno' },
+      { status: 500 }
+    );
   }
 }
