@@ -92,7 +92,7 @@ export default function SuccessPage() {
         setPercent(100);
         router.replace(`/messages/${created.id}`);
         // dispara o email após um breve delay (opcional)
-        setTimeout(() => SendEmail(created.email, created.id), 1000);
+        setTimeout(() => SendEmail(created.email, created.id), 10000);
       } catch (err) {
         alert(`Erro ao criar a mensagem: ${err instanceof Error ? err.message : 'Desconhecido'}`);
         router.replace('/create');
