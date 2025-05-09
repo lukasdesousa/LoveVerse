@@ -2,7 +2,6 @@
 
 import cron from "node-cron";
 import { PrismaClient } from "@prisma/client";
-console.log('oi')
 // Job que roda a cada 10 minutos para excluir mensagens expiradas
 cron.schedule("*/10 * * * *", async () => {
   console.log("🕒 Verificando mensagens expiradas...");

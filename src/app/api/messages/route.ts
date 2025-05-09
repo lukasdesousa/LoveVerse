@@ -45,8 +45,6 @@ export async function POST(req: NextRequest) {
                 dateInit: body.dateInit ? new Date(body.dateInit) : null
             }
         });
-
-        console.log(newMessage)
         return NextResponse.json({ message: newMessage }, { status: 201 });
     } catch (error) {
         console.error("Erro ao criar mensagem:", error);

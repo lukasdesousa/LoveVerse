@@ -27,5 +27,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/failure'],
+  matcher: ['/success', '/failure'],
 };

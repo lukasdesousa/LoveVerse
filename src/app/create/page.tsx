@@ -61,7 +61,6 @@ function Index() {
     if (raw) {
       const msg = JSON.parse(raw);
       setSavedMessage(msg)
-      console.log(savedMessage)
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
