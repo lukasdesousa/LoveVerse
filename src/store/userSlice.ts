@@ -70,7 +70,7 @@ export const createMessage = createAsyncThunk(
         throw new Error(errorData.error || 'Erro ao adicionar mensagem');
       } else {
         const data = await res.json();
-        return data.message as Message[];
+        return data.message;
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -141,11 +141,7 @@ const userSlice = createSlice({
       })
       .addCase(createMessage.fulfilled, (state, action) => {
         if (state.user) {
-          // Certifique-se de que messages é um array
-          if (!Array.isArray(state.user.messages)) {
-            state.user.messages = [];
-          }
-          state.user.messages.push(...action.payload);
+          state.user.messages.push(action.payload);
         }
         state.loading = false;
         state.error = null;

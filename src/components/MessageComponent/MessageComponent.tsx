@@ -319,7 +319,7 @@ export default function MessagesComponent() {
                   layout="responsive"
                   width={200}
                   height={200}
-                  className="heart main-image"
+                  className="heart main-image shake"
                   style={{ maxWidth: '400px', maxHeight: '400px', borderRadius: '10px' }}
                 />
               </section>
@@ -414,7 +414,6 @@ const Message = styled.section<{ isVisible?: number }>`
   }
 
   img.shake {
-    
     transition: 1.2s;
     ${(props) => `opacity: ${props.isVisible}`}
   }
