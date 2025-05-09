@@ -22,7 +22,7 @@ export default function SuccessPage() {
       let imageUrl = '';
       setPercent(30);
 
-      // Upload da imagem, se houver
+      // Upload da imagem, se houver base64
       if (msg.imageBase64) {
         try {
           const byteString = atob(msg.imageBase64.split(',')[1]);
@@ -40,19 +40,19 @@ export default function SuccessPage() {
           const formData = new FormData();
           formData.append('file', blob, 'image.jpg');
 
-          const response = await fetch('/api/uploads', {
+          const uploadRes = await fetch('/api/uploads', {
             method: 'POST',
             body: formData,
           });
           setPercent(55);
 
-          if (!response.ok) {
-            const resultText = await response.text();
-            throw new Error(resultText || `Erro HTTP ${response.status}`);
+          if (!uploadRes.ok) {
+            const resultText = await uploadRes.text();
+            throw new Error(resultText || `Erro HTTP ${uploadRes.status}`);
           }
 
-          const result = await response.json();
-          imageUrl = result.url;
+          const uploadData = await uploadRes.json();
+          imageUrl = uploadData.url;
           setPercent(60);
         } catch (err) {
           console.error('Erro no envio da imagem:', err);
@@ -61,39 +61,43 @@ export default function SuccessPage() {
         }
       }
 
+      // Limpa o localStorage e remove o base64 antes de enviar a mensagem
       localStorage.removeItem('pendingMessage');
-      const newMessage = { ...msg, imageUrl };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { imageBase64, ...rest } = msg;
+      const newMessage = { ...rest, imageUrl };
 
+      // Cria a mensagem no backend
       try {
-        const response = await fetch('/api/messages', {
+        const res = await fetch('/api/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newMessage),
         });
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || 'Erro ao criar mensagem');
+        // Se não for JSON, captura o texto de erro
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error(text);
         }
 
-        const data = await response.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Erro ao criar mensagem');
+        }
+
         const created = data.message;
         setPercent(100);
-
         router.replace(`/messages/${created.id}`);
-        sendMessageEmail(created.email, created.id);
+        // dispara o email após um breve delay (opcional)
+        setTimeout(() => SendEmail(created.email, created.id), 1000);
       } catch (err) {
-        alert(`Erro ao criar a mensagem: ${err instanceof Error ? err.message : 'Erro desconhecido'}`);
+        alert(`Erro ao criar a mensagem: ${err instanceof Error ? err.message : 'Desconhecido'}`);
         router.replace('/create');
       }
     };
-
-    function sendMessageEmail(email: string, id: string) {
-      if (!id) return;
-      setTimeout(() => {
-        SendEmail(email, id);
-      }, 19000);
-    }
 
     handleSuccess();
   }, [router]);
@@ -101,9 +105,9 @@ export default function SuccessPage() {
   return (
     <Container>
       <Message>Pagamento confirmado!</Message>
-      <Lottie animationData={animationData} loop={true} style={{ width: 300, height: 400 }} />
+      <Lottie animationData={animationData} loop style={{ width: 300, height: 400 }} />
       <Progress percent={percentValue} />
-      <Message style={{ fontWeight: '300', fontSize: '1.3rem' }}>
+      <Message style={{ fontWeight: 300, fontSize: '1.3rem' }}>
         Aguarde enquanto a mágica acontece...
       </Message>
     </Container>
@@ -119,10 +123,6 @@ const Container = styled.div`
   width: 90%;
   text-align: center;
   margin: auto;
-
-  h1 {
-    margin-bottom: 20px;
-  }
 `;
 
 const Message = styled.h1`
