@@ -29,7 +29,7 @@ export default function PriceCard() {
                 />
             </AspectRatio>
             <CardContent>
-                <Typography fontWeight={500} level="title-lg" id="card-description">
+                <Typography level="title-lg" id="card-description">
                     Mensagem LoveVerse
                 </Typography>
                 <Typography

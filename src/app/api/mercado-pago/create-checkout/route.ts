@@ -109,7 +109,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 5 * 60,
     });
-    
+      
     response.cookies.set('failure_token', jwt, {
       path: '/',
       httpOnly: true,
