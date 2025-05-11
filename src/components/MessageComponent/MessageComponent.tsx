@@ -15,7 +15,6 @@ import dayjs from 'dayjs';
 import useTiltUpMessage from "@/hooks/useTiltUpMessage";
 import useSensorSupport from "@/hooks/useSensorSupport";
 import stars from 'public/img/stars.png';
-
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);

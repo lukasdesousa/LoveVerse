@@ -5,7 +5,6 @@ import TextArea from 'antd/es/input/TextArea';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
 import { Box } from '@mui/material';
 import { Button, Input, notification } from "antd";
-import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { DatePicker, Form } from 'antd';
@@ -23,6 +22,7 @@ import InfoModal from '@/components/Modal/InfoModal';
 import useMercadoPago from '@/hooks/useMercadoPago';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+import PriceCard from '@/components/loveComponents/PriceCard/PriceCard';
 
 const { Search } = Input;
 
@@ -170,8 +170,8 @@ function Index() {
       {contextHolder}
       <ScrollReveal>
         <Typography level='h3' sx={{ textAlign: 'center', fontWeight: '300', margin: '20px auto' }}>Área de criação</Typography>
-        <Box>
-          <Card variant="outlined" sx={{ height: '10%', width: '90%', margin: '10px auto' }}>
+        <Box sx={{width: '80%', margin: '20px auto'}}>
+         <PriceCard />
             <CardContent sx={{ alignItems: 'center', justifyContent: 'flex-end', padding: '10px', borderRadius: '10px' }}>
               <CardContent sx={{ alignItems: "center" }}>
                 <Form
@@ -261,13 +261,13 @@ function Index() {
                   </Form.Item>
                   <Form.Item style={{ marginBottom: "0px" }}>
                     <Button block style={{ backgroundColor: '#aa00ff' }} type="primary" htmlType="submit" loading={loading}>
-                      Criar mensagem
+                      Pagar e criar mensagem
                     </Button>
                   </Form.Item>
                 </Form>
               </CardContent>
             </CardContent>
-          </Card>
+       
         </Box>
       </ScrollReveal>
     </>
