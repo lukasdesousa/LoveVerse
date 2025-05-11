@@ -57,10 +57,10 @@ export async function POST(req: Request) {
         items: [
           {
             id: testeId,
-            description: "Mensagem animada LoveVerse",
+            description: "Mensagem interativa LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 0.50,
+            unit_price: 7.90,
             currency_id: "BRL",
             category_id: "5805",
           },
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
           //       id: "credit_card",
           //     },
           //   ],
-          installments: 2, // Número máximo de parcelas permitidas - calculo feito automaticamente
+          installments: 1, // Número máximo de parcelas permitidas - calculo feito automaticamente
         },
         auto_return: "approved",
         back_urls: {
@@ -109,6 +109,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 5 * 60,
     });
+    
     response.cookies.set('failure_token', jwt, {
       path: '/',
       httpOnly: true,

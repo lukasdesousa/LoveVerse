@@ -6,6 +6,7 @@ import CardContent from '@mui/joy/CardContent';
 import Chip from '@mui/joy/Chip';
 import Typography from '@mui/joy/Typography';
 import priceIcon from 'public/img/price-icon.png';
+import styled from 'styled-components';
 
 export default function PriceCard() {
     return (
@@ -24,11 +25,11 @@ export default function PriceCard() {
                 <img
                     src={priceIcon.src}
                     loading="lazy"
-                    alt=""
+                    alt="Imagem envelope amor loveverse"
                 />
             </AspectRatio>
             <CardContent>
-                <Typography level="title-lg" id="card-description">
+                <Typography fontWeight={500} level="title-lg" id="card-description">
                     Mensagem LoveVerse
                 </Typography>
                 <Typography
@@ -41,7 +42,10 @@ export default function PriceCard() {
                         underline="none"
                         sx={{ color: 'text.tertiary', fontWeight: 'bold' }}
                     >
-                        <s style={{ color: 'red' }}>R$ 21,90</s> &nbsp; <span style={{ marginLeft: '2px', color: 'green' }}>R$ 8,90</span>
+                        <div>
+                            De: <OldPrice>R$ 21,90</OldPrice> &nbsp;<br />
+                            Por: <NewPrice>R$ 7,90</NewPrice>
+                        </div>
                     </Link>
                 </Typography>
                 <div style={{ display: 'flex' }}>
@@ -59,10 +63,20 @@ export default function PriceCard() {
                         size="sm"
                         sx={{ pointerEvents: 'none' }}
                     >
-                        Promoção
+                        Interativa
                     </Chip>
                 </div>
             </CardContent>
         </Card>
     );
 }
+
+const OldPrice = styled.span`
+  text-decoration: line-through;
+  color: gray;
+`;
+
+const NewPrice = styled.span`
+  font-weight: bold;
+  color: #07891a;
+`;
