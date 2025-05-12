@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Grid, Menu, theme } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import { HeadStyle } from "@/styles/components_styles/header/styled";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -86,7 +85,7 @@ export default function LoveHeader() {
   };
 
   return (
-      <HeadStyle>
+     
         <nav style={styles.header}>
           <div style={styles.container}>
             <div style={styles.menuContainer}>
@@ -104,6 +103,6 @@ export default function LoveHeader() {
             </div>
           </div>
         </nav>
-      </HeadStyle>
+      
   );
 }

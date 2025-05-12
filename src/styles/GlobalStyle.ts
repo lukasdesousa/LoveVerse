@@ -1,8 +1,8 @@
 'use client';
 
-import { createGlobalStyle, CSSProperties } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle<CSSProperties>`
+export const GlobalStyle = createGlobalStyle`
   
   * {
     margin: 0;

@@ -7,6 +7,7 @@ import { Content, Text, Title, Container, Introduction } from '@/styles/componen
 import { Apresentation } from '@/components/loveComponents/Apresentation/Apresentation';
 import Button from '@mui/joy/Button';
 import Link from 'next/link';
+import MessagePrice from '@/components/MessagePrice/MessagePrice';
 
 export const metadata = {
   title: 'LoveVerse - Crie mensagens encantadoras e compartilhe amor',
@@ -68,6 +69,12 @@ function Index() {
                 <Text>
                   Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A LOVEVERSE é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
                 </Text>
+              </Content>
+              <Content>
+                <Text>
+                  Confira nossos preços
+                </Text>
+                <MessagePrice />
               </Content>
                 <Content><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver carta de exemplo</Button></Link></Content>
                 </Container>

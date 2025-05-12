@@ -1,6 +1,5 @@
 import * as React from 'react';
 import AspectRatio from '@mui/joy/AspectRatio';
-import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Chip from '@mui/joy/Chip';
@@ -32,22 +31,10 @@ export default function PriceCard() {
                 <Typography level="title-lg" id="card-description">
                     Mensagem LoveVerse
                 </Typography>
-                <Typography
-                    level="body-sm"
-                    aria-describedby="card-description"
-                    sx={{ mb: 1 }}
-                >
-                    <Link
-                        overlay
-                        underline="none"
-                        sx={{ color: 'text.tertiary', fontWeight: 'bold' }}
-                    >
                         <div>
                             De: <OldPrice>R$ 21,90</OldPrice> &nbsp;<br />
                             Por: <NewPrice>R$ 7,90</NewPrice>
                         </div>
-                    </Link>
-                </Typography>
                 <div style={{ display: 'flex' }}>
                     <Chip
                         variant="outlined"
