@@ -52,7 +52,7 @@ export default function MessagePrice() {
             <ListItemDecorator>
               <Check />
             </ListItemDecorator>
-            Segura
+            Prático
           </ListItem>
           <ListItem>
             <ListItemDecorator>

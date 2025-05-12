@@ -76,7 +76,7 @@ function Index() {
                 </Text>
                 <MessagePrice />
               </Content>
-                <Content><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver carta de exemplo</Button></Link></Content>
+                <Content><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver mensagem de exemplo</Button></Link></Content>
                 </Container>
           <Footer />
     </>
