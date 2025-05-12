@@ -1,10 +1,12 @@
-"use client";
+'use client';
 
+import dynamic from "next/dynamic";
 import { FC } from "react";
-import Lottie from "lottie-react";
 import animationData from "@/assets/Animation.json";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
+
+const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
 
 const Container = styled.div`
   display: flex;

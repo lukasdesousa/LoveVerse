@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import MessageExample from "@/components/Examples/MessageExample";
 import SensorPermissionEx from "@/components/Examples/SensorPermissionEx/SensorPermissionEx";

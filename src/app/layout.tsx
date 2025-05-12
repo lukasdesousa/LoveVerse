@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Inter } from "next/font/google";
-import ReduxProvider from "@/store/reduxProvider";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata } from "next";
 
@@ -18,10 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >
-        <ReduxProvider>
-            <GlobalStyle />       
-            {children}
-        </ReduxProvider>
+              <GlobalStyle />
+              {children}
       </body>
     </html>
   );

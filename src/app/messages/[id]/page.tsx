@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import MessagesComponent from "@/components/MessageComponent/MessageComponent";
 import SensorPermissionGate from "@/components/SensorPermition/SensorPermition";
