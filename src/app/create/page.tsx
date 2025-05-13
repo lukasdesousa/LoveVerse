@@ -3,6 +3,8 @@ import { Metadata, Viewport } from "next";
 
 const ogUpdatedTime = new Date().toISOString();
 
+export const dynamic = 'force-dynamic';
+
 // eslint-disable-next-line react-refresh/only-export-components
 export async function generateMetadata(): Promise<Metadata> {
   return {

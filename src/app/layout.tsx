@@ -2,9 +2,11 @@
 import { Inter } from "next/font/google";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
-import StyledComponentsRegistry from "@/lib/registry";
+import ReduxProvider from "@/store/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -64,11 +66,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={inter.className}>
-      <body >
-            <StyledComponentsRegistry>
-              <GlobalStyle />
-                {children}
-            </StyledComponentsRegistry>
+      <body >        
+              <ReduxProvider>
+                <GlobalStyle />
+                  {children}
+              </ReduxProvider>
       </body>
     </html>
   );

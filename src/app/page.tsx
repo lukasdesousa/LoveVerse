@@ -10,7 +10,7 @@ import Link from 'next/link';
 import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 const ogUpdatedTime = new Date().toISOString();
 export async function generateMetadata(): Promise<Metadata> {
