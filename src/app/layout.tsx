@@ -21,12 +21,12 @@ export const metadata: Metadata = {
     "site para casais",
   ],
   applicationName: "LoveVerse",
-  authors: [{ name: "Lukas De Souza (DEV)" }],
+  authors: [{ name: "LoveVerse team" }],
   alternates: {
     canonical: "https://www.loveverse.space/",
   },
   icons: {
-    icon: "/favicon.ico",        // favicon padrão
+    icon: "/favicon.ico", 
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description:
       "Descubra a magia de expressar sentimentos com o LoveVerse. Crie mensagens personalizadas e surpreenda quem você ama.",
     images: ["https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png"],
-    creator: "",
+    creator: "@lukito_334",
   },
 };
 

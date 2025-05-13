@@ -1,7 +1,6 @@
 import Create from "@/components/create-component/Create";
 import { Metadata } from "next";
 
-
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
   title: "Crie uma mensagem",
