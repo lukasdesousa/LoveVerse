@@ -10,48 +10,51 @@ import Link from 'next/link';
 import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://www.loveverse.space'), // ESSENCIAL
-  title: {
-    template: '%s | LoveVerse',
-    default: 'LoveVerse – Mensagens de amor personalizadas',
-  },
-  description: 'Crie mensagens românticas únicas para quem você ama',
-  
-  // OpenGraph (Facebook, WhatsApp, etc.)
-  openGraph: {
-    type: 'website',
-    url: 'https://www.loveverse.space',
-    title: 'LoveVerse',
-    description: 'Crie mensagens românticas únicas',
-    siteName: 'LoveVerse',
-    images: [
-      {
-        url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png', // Caminho absoluto ou URL completa
-        width: 1200,
-        height: 630,
-        alt: 'LoveVerse - Compartilhe amor',
-      },
-    ],
-    locale: 'pt_BR',
-  },
+export const dynamic = 'force-static';
 
-  // Twitter
-  twitter: {
-    card: 'summary_large_image',
-    title: 'LoveVerse',
-    description: 'Crie mensagens românticas únicas',
-    images: ['https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png'], // Mesma imagem do OG
-  },
-
-  // WhatsApp requer estas tags adicionais
-  other: {
-    'og:image:width': '1200',
-    'og:image:height': '630',
-    'og:image:alt': 'LoveVerse - Compartilhe amor',
-    'og:image:type': 'image/png', // Especifique o tipo
-    'og:updated_time': new Date().toISOString(), // Evita cache
-  }
+const ogUpdatedTime = new Date().toISOString();
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    metadataBase: new URL('https://www.loveverse.space'),
+    title: {
+      default: 'LoveVerse – Mensagens de amor personalizadas',
+      template: '%s | LoveVerse',
+    },
+    description: 'Crie mensagens românticas únicas para quem você ama',
+    openGraph: {
+      type: 'website',
+      url: 'https://www.loveverse.space',
+      title: 'LoveVerse',
+      description: 'Crie mensagens românticas únicas',
+      siteName: 'LoveVerse',
+      images: [
+        {
+          url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png',
+          width: 1200,
+          height: 630,
+          alt: 'LoveVerse - Compartilhe amor',
+          type: 'image/png'
+        },
+      ],
+      locale: 'pt_BR',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'LoveVerse',
+      description: 'Crie mensagens românticas únicas',
+      images: [
+        'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png'
+      ],
+    },
+    other: {
+      'og:image': 'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png',
+      'og:image:width': '1200',
+      'og:image:height': '630',
+      'og:image:alt': 'LoveVerse - Compartilhe amor',
+      'og:image:type': 'image/png',
+      'og:updated_time': ogUpdatedTime,
+    },
+  };
 }
 
 export const viewport: Viewport = {
