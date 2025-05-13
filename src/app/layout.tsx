@@ -7,11 +7,12 @@ import ReduxProvider from "@/store/reduxProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LoveVerse – Crie mensagens encantadoras e compartilhe amor",
-  description:
-    "Com o LoveVerse, você pode criar e enviar mensagens personalizadas, românticas e criativas para quem ama.",
-  keywords: [
-    "LoveVerse",
+  title: {
+    template: "%s | LoveVerse",
+    default: "LoveVerse – Crie mensagens encantadoras e compartilhe amor",
+  },
+  description: "Com o LoveVerse, você pode criar e enviar mensagens personalizadas, românticas e criativas para quem ama.",
+  keywords: [ "LoveVerse",
     "mensagens de amor",
     "cartas românticas",
     "frases para namorado",
@@ -21,14 +22,16 @@ export const metadata: Metadata = {
     "site para casais",
   ],
   applicationName: "LoveVerse",
-  authors: [{ name: "LoveVerse team" }],
-  alternates: {
-    canonical: "https://www.loveverse.space/",
+  other: {
+    // Meta tags genéricas
+    "robots": "index, follow",
+    "revisit-after": "7 days",
+    // OpenGraph extras
+    "og:locale:alternate": "en_US",
   },
-  icons: {
-    icon: "/favicon.ico", 
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+  metadataBase: new URL("https://www.loveverse.space"),
+  alternates: {
+    canonical: "/",
   },
   openGraph: {
     title: "LoveVerse - Envie mensagens de amor inesquecíveis",
@@ -44,14 +47,15 @@ export const metadata: Metadata = {
         alt: "LoveVerse – Crie mensagens inesquecíveis",
       },
     ],
+    siteName: "LoveVerse",
+    locale: "pt_BR",
   },
   twitter: {
-    card: "summary_large_image",
+     card: "summary_large_image",
     title: "LoveVerse - Envie mensagens de amor inesquecíveis",
     description:
       "Descubra a magia de expressar sentimentos com o LoveVerse. Crie mensagens personalizadas e surpreenda quem você ama.",
     images: ["https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png"],
-    creator: "@lukito_334",
   },
 };
 
