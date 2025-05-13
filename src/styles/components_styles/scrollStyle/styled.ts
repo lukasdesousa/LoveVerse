@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const RevealContent = styled.div<{ $isVisible: boolean }>`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transform: ${({ $isVisible }) =>

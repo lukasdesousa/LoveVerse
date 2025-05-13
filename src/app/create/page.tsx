@@ -8,10 +8,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'LoveVerse – Mensagens de amor personalizadas',
+      default: 'LoveVerse – Crie uma mensagem personalizada',
       template: '%s | LoveVerse',
     },
-    description: 'Crie mensagens românticas únicas para quem você ama',
+    description: 'Crie mensagens românticas únicas e interativas por apenas R$7,90',
     openGraph: {
       type: 'website',
       url: 'https://www.loveverse.space',

@@ -2,6 +2,7 @@
 import { Inter } from "next/font/google";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
+import StyledComponentsRegistry from "@/lib/registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,8 +65,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >
-          <GlobalStyle />
-            {children}
+            <StyledComponentsRegistry>
+              <GlobalStyle />
+                {children}
+            </StyledComponentsRegistry>
       </body>
     </html>
   );

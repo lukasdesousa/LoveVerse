@@ -1,4 +1,5 @@
 // middleware.ts (na raiz do projeto)
+'use server';
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
