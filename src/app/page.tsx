@@ -15,7 +15,7 @@ export const dynamic = 'force-static';
 const ogUpdatedTime = new Date().toISOString();
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL('https://loveverse.space'),
+    metadataBase: new URL('https://www.loveverse.space'),
     title: {
       default: 'LoveVerse – Mensagens de amor personalizadas',
       template: '%s | LoveVerse',
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Crie mensagens românticas únicas para quem você ama',
     openGraph: {
       type: 'website',
-      url: 'https://loveverse.space',
+      url: 'https://www.loveverse.space',
       title: 'LoveVerse',
       description: 'Crie mensagens românticas únicas',
       siteName: 'LoveVerse',

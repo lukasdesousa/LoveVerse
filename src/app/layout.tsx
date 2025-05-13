@@ -2,14 +2,12 @@
 import { Inter } from "next/font/google";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
-import ReduxProvider from "@/store/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
-const ogUpdatedTime = new Date().toISOString();
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL('https://loveverse.space'),
+    metadataBase: new URL('https://www.loveverse.space'),
     title: {
       default: 'LoveVerse – Mensagens de amor personalizadas',
       template: '%s | LoveVerse',
@@ -17,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Crie mensagens românticas únicas para quem você ama',
     openGraph: {
       type: 'website',
-      url: 'https://loveverse.space',
+      url: 'https://www.loveverse.space',
       title: 'LoveVerse',
       description: 'Crie mensagens românticas únicas',
       siteName: 'LoveVerse',
@@ -46,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'og:image:height': '630',
       'og:image:alt': 'LoveVerse - Compartilhe amor',
       'og:image:type': 'image/png',
-      'og:updated_time': ogUpdatedTime,
+      'og:updated_time': new Date().toISOString(),
     },
   };
 }
@@ -66,10 +64,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >
-        <ReduxProvider>
           <GlobalStyle />
             {children}
-        </ReduxProvider>
       </body>
     </html>
   );
