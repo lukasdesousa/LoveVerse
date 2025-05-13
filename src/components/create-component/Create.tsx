@@ -23,6 +23,8 @@ import useMercadoPago from '@/hooks/useMercadoPago';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import PriceCard from '@/components/loveComponents/PriceCard/PriceCard';
+import mpLogo from 'public/img/logo-mercado-pago.svg';
+import NextImage from 'next/image';
 
 const { Search } = Input;
 
@@ -266,8 +268,8 @@ function Create() {
                 </Form>
               </CardContent>
             </CardContent>
-       
         </Box>
+            <Typography level='body-md' sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontWeight: '300', margin: '20px auto' }}>Pagamento seguro por <NextImage src={mpLogo} alt='Logo mercado pago' height={70} width={70}/></Typography>
       </ScrollReveal>
     </>
   );

@@ -12,6 +12,7 @@ import Typography from '@mui/joy/Typography';
 import Check from '@mui/icons-material/Check';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Link from 'next/link';
+import { SafetyOutlined } from '@ant-design/icons';
 
 export default function MessagePrice() {
   return (
@@ -29,10 +30,15 @@ export default function MessagePrice() {
         invertedColors
         sx={{ bgcolor: 'neutral.900' }}
       >
-        <Chip size="sm" variant="outlined">
-          Menor preço
-        </Chip>
-        <Typography level="h2">LoveMessage</Typography>
+        <div style={{display: 'flex'}}>
+          <Chip sx={{marginRight: '5px'}} size="sm" variant="outlined">
+            Menor preço
+          </Chip>
+          <Chip size="sm" variant="outlined">
+           Compra segura <SafetyOutlined />
+          </Chip>
+        </div>
+        <Typography level="h2">Mensagem LoveVerse</Typography>
         <Divider inset="none" />
         <List
           size="sm"
@@ -52,7 +58,7 @@ export default function MessagePrice() {
             <ListItemDecorator>
               <Check />
             </ListItemDecorator>
-            Prático
+           Preço baixo
           </ListItem>
           <ListItem>
             <ListItemDecorator>
@@ -64,13 +70,13 @@ export default function MessagePrice() {
             <ListItemDecorator>
               <Check />
             </ListItemDecorator>
-            Música
+            QR Code
           </ListItem>
           <ListItem>
             <ListItemDecorator>
               <Check />
             </ListItemDecorator>
-            QR Code
+            Música
           </ListItem>
         </List>
         <Divider inset="none" />
