@@ -20,8 +20,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-gsap.registerPlugin(ScrollTrigger);
-
 interface Messages {
   id: string;
   creatorName: string;
@@ -61,6 +59,9 @@ export default function MessagesComponent() {
 
   useEffect(() => {
     if (message) {
+
+      gsap.registerPlugin(ScrollTrigger);
+
       (gsap.utils.toArray(".message") as HTMLElement[]).forEach((el) => {
         gsap.fromTo(
           el,
@@ -418,23 +419,5 @@ const Message = styled.section<{ isVisible?: number }>`
     ${(props) => `opacity: ${props.isVisible}`}
   }
 
-`;
-
-const gradientAnimation = `
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-`;
-
-export const GlobalStyle = styled.div`
-  ${gradientAnimation}
 `;
 

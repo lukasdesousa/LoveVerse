@@ -2,7 +2,6 @@
 import { Inter } from "next/font/google";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
-import ReduxProvider from "@/store/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -67,10 +66,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >        
-              <ReduxProvider>
-                <GlobalStyle />
-                  {children}
-              </ReduxProvider>
+                
+                  <GlobalStyle />
+                    {children}
+               
       </body>
     </html>
   );

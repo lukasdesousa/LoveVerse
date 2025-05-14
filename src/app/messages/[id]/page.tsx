@@ -6,7 +6,7 @@ import SensorPermissionGate from "@/components/SensorPermition/SensorPermition";
 function Index() {
   return (
     <SensorPermissionGate>
-      <MessagesComponent />
+        <MessagesComponent />
     </SensorPermissionGate>
   );
 
