@@ -21,3 +21,15 @@ model Message {
   expiresAt DateTime
 }
 
+model Payment {
+  id                String   @id @default(cuid())
+  status            String   // pending, approved, rejected, etc.
+  paymentMethod   String?  // Ex: pix, credit_card, boleto
+  value             Decimal
+  approvedAt        DateTime? // data da aprovação
+  createdAt          DateTime  @default(now())
+  payerName       String?
+  payerEmail      String?
+  mpPaymentId       String?  // ID do pagamento no Mercado Pago
+}
+

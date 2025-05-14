@@ -23,6 +23,6 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`/success`, request.url));
   }
 
-  // Pagamentos pendentes. redirecionamos para a página inicial
-  return NextResponse.redirect(new URL("/", request.url));
+  // Pagamentos pendentes
+  return NextResponse.redirect(new URL(`/pending-payment?external_reference=${testeId}`, request.url));
 }

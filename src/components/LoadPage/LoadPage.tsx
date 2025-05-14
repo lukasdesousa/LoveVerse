@@ -26,7 +26,6 @@ export function LoadPage({ children }: { children: React.ReactNode; }) {
             height: '100vh' // opcional: para centralizar também verticalmente na tela toda
         }}>
             <CircularProgress style={{ color: '#aa00ff' }} />
-            <p style={{fontWeight: '300'}}>Alinhando tudo</p>
         </div>
     )
 };

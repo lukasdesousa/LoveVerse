@@ -4,6 +4,7 @@ import { Preference } from 'mercadopago';
 import mpClient from '@/lib/mercado-pago';
 import { v4 as uuidv4 } from 'uuid';
 import { SignJWT } from 'jose';
+import { PrismaClient } from '@prisma/client';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -16,6 +17,7 @@ if (!process.env.JWT_SECRET) {
 }
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   const { testeId, userEmail } = await req.json();
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
             description: "Mensagem interativa LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 7.90,
+            unit_price: 0.50,
             currency_id: "BRL",
             category_id: "5805",
           },
@@ -96,6 +98,22 @@ export async function POST(req: Request) {
 
     if (!createdPreference.id) {
       throw new Error('Erro: preference.id não foi retornado');
+    }
+
+    try {
+      await prisma.payment.create({
+        data: {
+          id: testeId,
+          status: "pending", // Status inicial até que o pagamento seja aprovado
+          value: 0.50, // O valor da transação
+          paymentMethod: "pending", // ou o tipo de pagamento conforme o que foi configurado
+          mpPaymentId: createdPreference.id, // ID da preferência no Mercado Pago
+          payerEmail: userEmail,
+        },
+      });
+    } catch(err) {
+      alert(`Erro ao criar checkout, tente novamente ${err}`)
+      return NextResponse.redirect('/create');
     }
 
     // 4) Prepara a resposta e define os cookies de proteção
