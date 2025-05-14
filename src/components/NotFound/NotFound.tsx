@@ -5,6 +5,7 @@ import { FC } from "react";
 import animationData from "@/assets/Animation.json";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
+import { LoadPage } from "../LoadPage/LoadPage";
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
 
@@ -29,23 +30,25 @@ const NotFound: FC = () => {
     const router = useRouter();
 
   return (
-    <Container>
-    <h1>Love<span style={{color: '#aa00ff'}}>Verse</span></h1>
-      <Lottie animationData={animationData} loop={true} style={{ width: 300, height: 400 }} />
-      <Message>Oops! Página não encontrada.</Message>
-      <button onClick={() => router.push('/')} style={{
-                            marginTop: "1rem",
-                            padding: "0.5rem 1.2rem",
-                            borderRadius: "8px",
-                            border: "none",
-                            background: "#aa00ff",
-                            color: "white",
-                            fontSize: "1rem",
-                            cursor: "pointer",
-                        }}>
-                            Retornar à home
-                        </button>
-    </Container>
+    <LoadPage>
+      <Container>
+      <h1>Love<span style={{color: '#aa00ff'}}>Verse</span></h1>
+        <Lottie animationData={animationData} loop={true} style={{ width: 300, height: 400 }} />
+        <Message>Oops! Página não encontrada.</Message>
+        <button onClick={() => router.push('/')} style={{
+                              marginTop: "1rem",
+                              padding: "0.5rem 1.2rem",
+                              borderRadius: "8px",
+                              border: "none",
+                              background: "#aa00ff",
+                              color: "white",
+                              fontSize: "1rem",
+                              cursor: "pointer",
+                          }}>
+                              Retornar à home
+                          </button>
+      </Container>
+    </LoadPage>
   );
 };
 

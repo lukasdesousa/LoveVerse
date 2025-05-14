@@ -1,5 +1,6 @@
 import Create from "@/components/create-component/Create";
 import { Metadata, Viewport } from "next";
+import { LoadPage } from "@/components/LoadPage/LoadPage";
 
 const ogUpdatedTime = new Date().toISOString();
 
@@ -64,7 +65,9 @@ export const viewport: Viewport = {
 
 function Index() {
   return (
-    <Create />
+    <LoadPage>
+      <Create />
+    </LoadPage>
   )
 };
 

@@ -9,7 +9,7 @@ export function LoadPage({ children }: { children: React.ReactNode; }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 1300)
+        }, 1000)
     }, [children])
 
     if (loading === false) {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import useSensorSupport from "@/hooks/useSensorSupport";
 import styled from "styled-components";
+import { LoadPage } from "@/components/LoadPage/LoadPage";
 
 export default function SensorPermissionEx({
     children,
@@ -55,27 +56,29 @@ export default function SensorPermissionEx({
     }
 
     return (
-        <Container>
-            <div style={{ color: "black", textAlign: "center" }}>
-                <h1>Love<span style={{ color: '#aa00ff' }}>Verse</span></h1><br />
-                <section className="info">
-                    <h2>Permita os sensores</h2>
-                    <p>Está página contém mensagens animadas, para acessar a mensagem completa, precisamos da sua permissão para usar sensores do dispositivo para exibir as mensagens animadas. <strong>Essa ação é necessária para usuários IOS</strong></p>
-                    <button onClick={requestPermission} style={{
-                        marginTop: "1rem",
-                        padding: "0.5rem 1.2rem",
-                        borderRadius: "8px",
-                        border: "none",
-                        background: "#aa00ff",
-                        color: "white",
-                        fontSize: "1rem",
-                        cursor: "pointer",
-                    }}>
-                        Permitir acesso
-                    </button>
-                </section>
-            </div>
-        </Container>
+        <LoadPage>
+            <Container>
+                <div style={{ color: "black", textAlign: "center" }}>
+                    <h1>Love<span style={{ color: '#aa00ff' }}>Verse</span></h1><br />
+                    <section className="info">
+                        <h2>Permita os sensores</h2>
+                        <p>Está página contém mensagens animadas, para acessar a mensagem completa, precisamos da sua permissão para usar sensores do dispositivo para exibir as mensagens animadas. <strong>Essa ação é necessária para usuários IOS</strong></p>
+                        <button onClick={requestPermission} style={{
+                            marginTop: "1rem",
+                            padding: "0.5rem 1.2rem",
+                            borderRadius: "8px",
+                            border: "none",
+                            background: "#aa00ff",
+                            color: "white",
+                            fontSize: "1rem",
+                            cursor: "pointer",
+                        }}>
+                            Permitir acesso
+                        </button>
+                    </section>
+                </div>
+            </Container>
+        </LoadPage>
     );
 }
 
