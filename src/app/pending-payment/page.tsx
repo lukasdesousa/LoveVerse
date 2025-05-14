@@ -17,7 +17,7 @@ export default function Index() {
     if (!reference) return;
 
     const interval = setInterval(async () => {
-      const res = await fetch(`/api/payment-status?reference=${reference}`);
+      const res = await fetch(`/api/mercado-pago/payment-status?reference=${reference}`);
       const data = await res.json();
 
       if (data.status === "approved") {
