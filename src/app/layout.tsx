@@ -6,6 +6,7 @@ import { LoadPage } from "@/components/LoadPage/LoadPage";
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] });
+export const dynamic = 'force-dynamic'; 
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
