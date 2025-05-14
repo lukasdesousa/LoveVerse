@@ -2,11 +2,9 @@
 import { Inter } from "next/font/google";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
-import { LoadPage } from "@/components/LoadPage/LoadPage";
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] });
-export const dynamic = 'force-dynamic'; 
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -67,11 +65,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >             
-                  <LoadPage>
+          
                     <GlobalStyle />
                       {children}
                       <Analytics />
-                  </LoadPage>
+                
       </body>
     </html>
   );
