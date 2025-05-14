@@ -216,7 +216,7 @@ export default function MessagesComponent() {
     <main className="container" style={{ height: "100%", minHeight: '100%' }}>
       <HeartAnim />
       <MainContainer>
-        <Message className="message01">
+        <Message className="message">
           <p className="title">ROLE A TELA</p>
         </Message>
         <Message className="message">
