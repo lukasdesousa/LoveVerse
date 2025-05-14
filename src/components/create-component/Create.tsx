@@ -269,7 +269,7 @@ function Create() {
               </CardContent>
             </CardContent>
         </Box>
-            <Typography level='body-md' sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontWeight: '300', margin: '20px auto' }}>Pagamento seguro por <NextImage src={mpLogo} alt='Logo mercado pago' height={70} width={70}/></Typography>
+               <NextImage src={mpLogo} alt='Logo mercado pago' height={70} width={70} style={{display: 'block', margin: 'auto'}}/>
       </ScrollReveal>
     </>
   );
