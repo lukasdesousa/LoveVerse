@@ -63,65 +63,65 @@ export default function MessagesComponent() {
       gsap.registerPlugin(ScrollTrigger);
 
       (gsap.utils.toArray(".message") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 100 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-            end: "top 50%",
-            scrub: true,
-          },
-        }
-      );
-    });
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              end: "top 50%",
+              scrub: true,
+            },
+          }
+        );
+      });
 
 
-    // Animação para a imagem com a classe .heart dentro da .image-container
-    (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, x: 100 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            end: "top 50%",
-            scrub: true,
-          },
-        }
-      );
-    });
+      // Animação para a imagem com a classe .heart dentro da .image-container
+      (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 100 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 80%",
+              end: "top 50%",
+              scrub: true,
+            },
+          }
+        );
+      });
 
-    (gsap.utils.toArray(".hearts") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, x: 100, transform: "scale(0)" },
-        {
-          transform: "scale(1)",
-          opacity: 1,
-          x: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            end: "top 50%",
-            scrub: true,
-          },
-        }
-      );
-    });
-  }
+      (gsap.utils.toArray(".hearts") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 100, transform: "scale(0)" },
+          {
+            transform: "scale(1)",
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 80%",
+              end: "top 50%",
+              scrub: true,
+            },
+          }
+        );
+      });
+    }
   }, [message])
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -245,8 +245,8 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
+                    width={100}
+                    height={100}
                     placeholder="blur"
                     quality={100}
                     className="stars01"
@@ -255,8 +255,8 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
+                    width={100}
+                    height={100}
                     placeholder="blur"
                     quality={100}
                     className="stars02"
@@ -272,8 +272,8 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
+                    width={150}
+                    height={150}
                     placeholder="blur"
                     quality={100}
                     className="stars01"
@@ -282,11 +282,11 @@ export default function MessagesComponent() {
                   <Image
                     src={stars}
                     alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
+                    width={150}
+                    height={150}
                     placeholder="blur"
                     quality={100}
-                    className="stars02"
+                    className="stars01"
                   />
                 </section>
               </section>
