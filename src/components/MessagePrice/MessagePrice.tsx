@@ -38,7 +38,7 @@ export default function MessagePrice() {
            Compra segura <SafetyOutlined />
           </Chip>
         </div>
-        <Typography level="h2">Mensagem LoveVerse</Typography>
+        <Typography level="h2">Mensagem</Typography>
         <Divider inset="none" />
         <List
           size="sm"

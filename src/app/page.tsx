@@ -10,6 +10,7 @@ import Link from 'next/link';
 import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
+import SpaceAnimation from '@/components/Space/SpaceAnimation';
 
 export const dynamic = 'force-dynamic';
 
@@ -109,6 +110,7 @@ function Index() {
                     Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A Love<span style={{color: '#aa00ff'}}>Verse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
                   </Text>
                 </Content>
+                <SpaceAnimation />
                 <Content>
                   <Text>
                     Confira nossos preços
