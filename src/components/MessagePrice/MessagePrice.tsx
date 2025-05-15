@@ -26,9 +26,7 @@ export default function MessagePrice() {
       <Card
         size="lg"
         variant="solid"
-        color="neutral"
-        invertedColors
-        sx={{ bgcolor: 'neutral.900' }}
+        sx={{ bgcolor: 'neutral.100' }}
       >
         <div style={{display: 'flex'}}>
           <Chip sx={{marginRight: '5px'}} size="sm" variant="outlined">
@@ -87,7 +85,7 @@ export default function MessagePrice() {
               / pagamento único
             </Typography>
           </Typography>
-          <Button endDecorator={<KeyboardArrowRight />}><Link style={{color: 'black', textDecoration: 'none'}} href={'/create'}>Criar agora</Link></Button>
+          <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/create'}>Criar agora</Link></Button>
         </CardActions>
       </Card>
     </Box>

@@ -11,6 +11,10 @@ import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
 import SpaceAnimation from '@/components/Space/SpaceAnimation';
+import gsap from 'gsap';
+import { ScrollSmoother } from 'gsap/all';
+
+gsap.registerPlugin(ScrollSmoother);
 
 export const dynamic = 'force-dynamic';
 
@@ -109,15 +113,17 @@ function Index() {
                   <Text>
                     Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A Love<span style={{color: '#aa00ff'}}>Verse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
                   </Text>
-                </Content>
-                <SpaceAnimation />
                 <Content>
                   <Text>
                     Confira nossos preços
                   </Text>
+                  <ScrollReveal>
                   <MessagePrice />
+                  </ScrollReveal>
+                  <Content style={{marginTop: '15px'}}><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#aa00ff', transition: '0.5s ease', color: 'white'}}>Ver mensagem de exemplo</Button></Link></Content>
                 </Content>
-                  <Content><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#6110ed75', transition: '0.5s ease', color: 'white'}}>Ver mensagem de exemplo</Button></Link></Content>
+                </Content>
+                <SpaceAnimation />
                   </Container>
             <Footer />
       </LoadPage>
