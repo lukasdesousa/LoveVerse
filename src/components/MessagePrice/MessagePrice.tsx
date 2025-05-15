@@ -29,10 +29,10 @@ export default function MessagePrice() {
         sx={{ bgcolor: 'neutral.100' }}
       >
         <div style={{display: 'flex'}}>
-          <Chip sx={{marginRight: '5px'}} size="sm" variant="outlined">
+          <Chip sx={{marginRight: '5px'}} size="lg" variant="outlined">
             Menor preço
           </Chip>
-          <Chip size="sm" variant="outlined">
+          <Chip size="lg" variant="outlined">
            Compra segura <SafetyOutlined />
           </Chip>
         </div>
