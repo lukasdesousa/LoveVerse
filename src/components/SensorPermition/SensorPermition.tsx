@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import useSensorSupport from "@/hooks/useSensorSupport";
 import styled from "styled-components";
+import { useParams } from "next/navigation";
+import { CircularProgress } from "@mui/material";
+
+type Message = {
+    interactiveMessage: boolean;
+}
 
 export default function SensorPermissionGate({
     children,
@@ -11,7 +17,30 @@ export default function SensorPermissionGate({
 }) {
     const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
     const [, setIsIOS] = useState(false);
+    const { id } = useParams(); // Obtém o ID da URL
+    const [message, setMessage] = useState<Message | null>(null);
+    // const user = useSelector((state: User) => state.user.user);
     const sensorSupport = useSensorSupport();
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        async function fetchMessage() {
+            try {
+                setLoading(true)
+                const res = await fetch(`/api/usermessages/${id}`);
+                if (!res.ok) throw new Error("Mensagem não encontrada");
+                const data = await res.json();
+                setMessage(data);
+            } catch {
+                setLoading(false)
+                alert('Erro ao buscar mensagem')
+            } finally {
+                setLoading(false)
+            }
+        }
+        if (id) fetchMessage();
+    }, [id]);
+
 
     useEffect(() => {
         const ua = window.navigator.userAgent;
@@ -35,6 +64,10 @@ export default function SensorPermissionGate({
             localStorage.setItem("sensor-permission", "granted");
         }
     }, [sensorSupport]);
+
+    if (message && message.interactiveMessage === false) {
+        return <>{children}</>;
+    }
 
     const requestPermission = async () => {
         try {
@@ -65,6 +98,18 @@ export default function SensorPermissionGate({
 
     return (
         <Container>
+            {loading ? (
+                <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '5px',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '100vh' // opcional: para centralizar também verticalmente na tela toda
+                        }}>
+                            <CircularProgress style={{ color: '#aa00ff' }} />
+                        </div>
+            ) : (
             <div style={{ color: "black", textAlign: "center" }}>
                 <h1>Love<span style={{ color: '#aa00ff' }}>Verse</span></h1><br />
                 <section className="info">
@@ -84,6 +129,7 @@ export default function SensorPermissionGate({
                     </button>
                 </section>
             </div>
+            )}
         </Container>
     );
 }

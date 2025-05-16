@@ -11,10 +11,6 @@ import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
 import SpaceAnimation from '@/components/Space/SpaceAnimation';
-import gsap from 'gsap';
-import { ScrollSmoother } from 'gsap/all';
-
-gsap.registerPlugin(ScrollSmoother);
 
 export const dynamic = 'force-dynamic';
 
