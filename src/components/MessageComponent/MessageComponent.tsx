@@ -95,7 +95,6 @@ export default function MessagesComponent() {
             trigger: el,
             start: "top 80%",
             end: "top 50%",
-            scrub: true,
           },
         }
       );
@@ -115,7 +114,6 @@ export default function MessagesComponent() {
             trigger: el,
             start: "top 80%",
             end: "top 50%",
-            scrub: true,
           },
         }
       );

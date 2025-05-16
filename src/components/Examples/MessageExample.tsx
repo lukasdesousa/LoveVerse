@@ -35,7 +35,6 @@ export default function MessagesExample() {
             trigger: el,
             start: "top 90%",
             end: "top 50%",
-            scrub: true,
           },
         }
       );
@@ -56,7 +55,6 @@ export default function MessagesExample() {
             trigger: el,
             start: "top 80%",
             end: "top 50%",
-            scrub: true,
           },
         }
       );
@@ -76,7 +74,6 @@ export default function MessagesExample() {
             trigger: el,
             start: "top 80%",
             end: "top 50%",
-            scrub: true,
           },
         }
       );
@@ -274,6 +271,7 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
+  background-color: black;
   
   section.message-container {
     
