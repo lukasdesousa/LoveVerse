@@ -209,7 +209,7 @@ return (
                 quality={100}
                 className="stars01"
               />
-              <p>EU TE AMO HÁ 1000 DIAS, 583 HORAS E 58 MINUTOS</p>
+              <p>EU TE AMO HÁ 1000 DIAS, 583 HORAS, 58 MINUTOS E 35 SEGUNDOS</p>
               <Image
                 src={stars}
                 alt="estrelas do campo de data do LoveVerse"
