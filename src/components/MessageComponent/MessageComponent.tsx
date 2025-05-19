@@ -7,7 +7,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { CircularProgress } from "@mui/material";
-import { notFound, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import HeartAnim from "../HeartsAnim/HeartsAnim";
 import useShake from "@/hooks/useShake";
 import { SpotifyCard } from "../Spotify/SpotifyCard";
@@ -17,6 +17,7 @@ import useSensorSupport from "@/hooks/useSensorSupport";
 import stars from 'public/img/stars.png';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MessageNotFound from "../loveComponents/messageNotFound/MessageNotFound";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -37,7 +38,6 @@ export default function MessagesComponent() {
   const [message, setMessage] = useState<Messages | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibility, setVisibility] = useState(0);
-  // const user = useSelector((state: User) => state.user.user);
   const showMessage = useTiltUpMessage();
   const sensorSupport = useSensorSupport();
 
@@ -56,8 +56,6 @@ export default function MessagesComponent() {
     }
     if (id) fetchMessage();
   }, [id]);
-
-  
 
   useEffect(() => {
     if (message) {
@@ -209,7 +207,7 @@ export default function MessagesComponent() {
   }, [showMessage]);
 
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
-  if (!message) return notFound();
+  if (!message) return <MessageNotFound />;
 
   return (
     <main className="container" style={{ height: "100%", minHeight: '100%' }}>
