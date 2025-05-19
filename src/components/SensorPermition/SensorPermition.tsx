@@ -33,7 +33,6 @@ export default function SensorPermissionGate({
                 setMessage(data);
             } catch {
                 setLoading(false)
-                alert('Erro ao buscar mensagem')
             } finally {
                 setLoading(false)
             }
