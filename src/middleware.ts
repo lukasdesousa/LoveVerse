@@ -8,6 +8,9 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const cookies = request.cookies;
 
+  const response = NextResponse.next();
+  response.headers.set('Content-Security-Policy', "frame-src 'self' https://open.spotify.com");
+
   if (pathname === '/success') {
     const token = cookies.get('success_token');
     if (!token?.value) {

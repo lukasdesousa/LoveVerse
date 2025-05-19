@@ -57,6 +57,8 @@ export default function MessagesComponent() {
     if (id) fetchMessage();
   }, [id]);
 
+  
+
   useEffect(() => {
     if (message) {
 
