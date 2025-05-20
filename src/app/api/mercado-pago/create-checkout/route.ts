@@ -62,7 +62,7 @@ export async function POST(req: Request) {
             description: "Mensagem interativa LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 7.90,
+            unit_price: 0.50,
             currency_id: "BRL",
             category_id: "5805",
           },
