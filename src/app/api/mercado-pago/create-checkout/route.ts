@@ -53,6 +53,8 @@ export async function POST(req: Request) {
         ...(userEmail && {
           payer: {
             email: userEmail,
+            name: 'Usuário',
+            surname: 'LoveVerse',
           },
         }),
 
