@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'LoveVerse',
       images: [
         {
-          url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png',
+          url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
           width: 1200,
           height: 630,
           alt: 'LoveVerse - Compartilhe amor',
@@ -45,11 +45,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'LoveVerse',
       description: 'Crie mensagens românticas únicas',
       images: [
-        'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png'
+        'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg'
       ],
     },
     other: {
-      'og:image': 'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png',
+      'og:image': 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
       'og:image:width': '1200',
       'og:image:height': '630',
       'og:image:alt': 'LoveVerse - Compartilhe amor',
