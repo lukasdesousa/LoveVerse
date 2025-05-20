@@ -50,20 +50,19 @@ export async function POST(req: Request) {
           // plan: '123'
           //etc
         },
-        binary_mode: "true",
         ...(userEmail && {
           payer: {
             email: userEmail,
           },
         }),
-        
+
         items: [
           {
             id: testeId,
             description: "Mensagem interativa LoveVerse",
             title: "Mensagem LoveVerse",
             quantity: 1,
-            unit_price: 0.50,
+            unit_price: 0.60,
             currency_id: "BRL",
             category_id: "5805",
           },
@@ -112,8 +111,7 @@ export async function POST(req: Request) {
           payerEmail: userEmail,
         },
       });
-    } catch(err) {
-      alert(`Erro ao criar checkout, tente novamente ${err}`)
+    } catch {
       return NextResponse.redirect('/create');
     }
 
