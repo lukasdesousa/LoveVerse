@@ -50,12 +50,13 @@ export async function POST(req: Request) {
           // plan: '123'
           //etc
         },
+        binary_mode: "true",
         ...(userEmail && {
           payer: {
             email: userEmail,
           },
         }),
-
+        
         items: [
           {
             id: testeId,
