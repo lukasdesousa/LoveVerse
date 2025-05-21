@@ -28,6 +28,7 @@ model Payment {
   value             Decimal
   approvedAt        DateTime? // data da aprovação
   createdAt          DateTime  @default(now())
+  expiresAt DateTime?
   payerName       String?
   payerEmail      String?
   mpPaymentId       String?  // ID do pagamento no Mercado Pago

@@ -18,10 +18,11 @@ export async function handleMercadoPagoPayment(paymentData: PaymentResponse) {
           data: {
           status: "approved",
           paymentMethod: paymentData.payment_method_id,
+          approvedAt: paymentData.date_approved,
         },
       });
-    } catch(err) {
-      alert(`Ocorreu um erro ao atualizar o pagamento: ${err instanceof Error ? err.message : 'Erro deconhecido'}`)
+    } catch {
+      // ignore
     }
   }
 
