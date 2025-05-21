@@ -70,15 +70,14 @@ export async function POST(req: Request) {
           },
         ],
         payment_methods: {
-          // Descomente para desativar métodos de pagamento
-          //   excluded_payment_methods: [
-          //     {
-          //       id: "bolbradesco",
-          //     },
-          //     {
-          //       id: "pec",
-          //     },
-          //   ],
+          excluded_payment_methods: [
+               {
+                id: "bolbradesco",
+               },
+              {
+               id: "pec",
+             },
+            ],
           //   excluded_payment_types: [
           //     {
           //       id: "debit_card",

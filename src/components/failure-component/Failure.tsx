@@ -32,7 +32,6 @@ const Failure: FC = () => {
   useEffect(() => {
     // Verifica query param 'status' vindo do retorno do Mercado Pago
     const status = searchParams.get('status');
-    alert(status)
     // Se não for 'failure', redireciona para criação
     if (status !== 'failure') {
       router.push('/create');
