@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 
+import { PrismaClient } from "@prisma/client";
+
+
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs'; // garante ambiente Node.js (com Buffer)
+
+const prisma = new PrismaClient();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -41,6 +46,16 @@ export async function POST(req: Request) {
         { fetch_format: 'auto' },
       ],
     });
+
+    if(uploadRes) {
+      await prisma.imageControl.create({
+        data: {
+          publicId: uploadRes.public_id,
+          url:      uploadRes.secure_url,
+          expiresAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), 
+        }
+      })
+    }
 
     // 5) Retorna JSON com a URL
     return NextResponse.json({

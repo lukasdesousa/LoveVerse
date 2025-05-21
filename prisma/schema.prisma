@@ -21,6 +21,13 @@ model Message {
   expiresAt DateTime
 }
 
+model ImageControl {
+  id                String   @id @default(cuid())
+  publicId String?
+  url String?
+  expiresAt DateTime?
+}
+
 model Payment {
   id                String   @id @default(cuid())
   status            String   // pending, approved, rejected, etc.
