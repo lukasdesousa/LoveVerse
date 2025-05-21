@@ -15,14 +15,22 @@ export function middleware(request: NextRequest) {
     const token = cookies.get('success_token');
     if (!token?.value) {
       // Redireciona para /create se não houver token válido
-      return NextResponse.redirect(new URL('/create', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
+  if (pathname === '/pending-payment') {
+    const token = cookies.get('pending_token');
+    if (!token?.value) {
+      // Redireciona para /create se não houver token válido
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
   if (pathname === '/failure') {
     const token = cookies.get('failure_token');
     if (!token?.value) {
-      return NextResponse.redirect(new URL('/create', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
@@ -31,5 +39,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/success', '/failure'],
+  matcher: ['/success', '/failure', '/pending-payment'],
 };
