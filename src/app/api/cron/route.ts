@@ -21,6 +21,16 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    await prisma.payment.deleteMany({
+      where: {
+        status: { in: ['pending', 'failure'] },
+      }
+    })
+  } catch {
+    //ignore
+  }
+
+  try {
     const now = new Date();
     await prisma.message.deleteMany({
       where: {

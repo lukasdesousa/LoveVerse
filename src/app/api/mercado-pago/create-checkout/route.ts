@@ -45,10 +45,7 @@ export async function POST(req: Request) {
       body: {
         external_reference: testeId, // IMPORTANTE: Isso aumenta a pontuação da sua integração com o Mercado Pago - É o id da compra no nosso sistema
         metadata: {
-          testeId, // O Mercado Pago converte para snake_case, ou seja, testeId vai virar teste_id
-          // userEmail: userEmail,
-          // plan: '123'
-          //etc
+          testeId,
         },
         ...(userEmail && {
           payer: {
@@ -106,14 +103,14 @@ export async function POST(req: Request) {
         data: {
           id: testeId,
           status: "pending", // Status inicial até que o pagamento seja aprovado
-          value: 0.50, // O valor da transação
+          value: 7.90, // O valor da transação
           paymentMethod: "pending", // ou o tipo de pagamento conforme o que foi configurado
           mpPaymentId: createdPreference.id, // ID da preferência no Mercado Pago
           payerEmail: userEmail,
         },
       });
     } catch {
-      return NextResponse.redirect('/create');
+      //ignore
     }
 
     // 4) Prepara a resposta e define os cookies de proteção
