@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key:    process.env.CLOUDINARY_API_KEY!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
   api_secret: process.env.CLOUDINARY_API_SECRET!,
   secure: true,
 });
@@ -59,9 +59,11 @@ export async function GET(req: NextRequest) {
         //ignore
       }
     }
-  
+
     return NextResponse.json({ ok: true });
-} catch {
-  return new NextResponse('Internal Server Error', { status: 500 });
-}
+  } catch {
+    return new NextResponse('Internal Server Error', { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
 }
