@@ -10,10 +10,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'LoveVerse – Mensagens de amor personalizadas',
+      default: 'Mensagens personalizadas para casais - LoveVerse',
       template: '%s | LoveVerse',
     },
-    description: 'Crie mensagens românticas únicas para quem você ama',
+    description: 'Mensagens personalizadas, única e interativa para casais. Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
     openGraph: {
       type: 'website',
       url: 'https://www.loveverse.space',
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Crie mensagens personalizadas únicas',
       images: [
         'https://res.cloudinary.com/diidbde0o/image/upload/v1747155241/23a5ad20-c297-474b-ae95-ecf42791b1ca_hibbb4.png'
       ],
@@ -64,12 +64,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={inter.className}>
-      <body >             
-          
-                    <GlobalStyle />
-                      {children}
-                      <Analytics />
-                
+      <body >
+
+        <GlobalStyle />
+        {children}
+        <Analytics />
+
       </body>
     </html>
   );

@@ -11,15 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'LoveVerse – Crie uma mensagem',
+      default: 'LoveVerse – Criar mensagem personalizada',
       template: '%s | LoveVerse',
     },
-    description: 'Crie mensagens românticas únicas e interativas por apenas R$7,90',
+    description: 'Crie mensagens de amor únicas e interativas. Com imagem, música e muito mais por apenas R$7,90',
     openGraph: {
       type: 'website',
       url: 'https://www.loveverse.space',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Crie mensagens personalizadas únicas',
       siteName: 'LoveVerse',
       images: [
         {
@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Crie mensagens personalizadas únicas',
       images: [
         'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg'
       ],

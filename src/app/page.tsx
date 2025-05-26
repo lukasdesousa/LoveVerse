@@ -19,22 +19,22 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'LoveVerse – Mensagens de amor personalizadas',
+      default: 'Mensagens personalizadas para casais - LoveVerse',
       template: '%s | LoveVerse',
     },
-    description: 'Crie mensagens românticas únicas para quem você ama',
+    description: 'Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
     openGraph: {
       type: 'website',
       url: 'https://www.loveverse.space',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Mensagens personalizadas para casais',
       siteName: 'LoveVerse',
       images: [
         {
           url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
           width: 1200,
           height: 630,
-          alt: 'LoveVerse - Compartilhe amor',
+          alt: 'Crie mensagens personalizadas únicas',
           type: 'image/png'
         },
       ],
@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Crie mensagens personalizadas únicas',
       images: [
         'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg'
       ],
