@@ -10,7 +10,7 @@ import Link from 'next/link';
 import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
-import SpaceAnimation from '@/components/Space/SpaceAnimation';
+import SpaceAnimation from '@/components/Anims/Space/SpaceAnimation';
 
 export const dynamic = 'force-dynamic';
 

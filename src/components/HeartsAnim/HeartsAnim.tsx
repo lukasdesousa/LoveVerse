@@ -347,13 +347,13 @@ const HeartAnim = () => {
           "options": {
             "image": {
               "src": '/img/heart-anim.png',
-              "width": 100,
-              "height": 100
+              "width": 800,
+              "height": 800
             }
           }
         },
         "size": {
-          "value": 10,
+          "value": 20,
           "animation": {
             "count": 0,
             "enable": false,
@@ -546,7 +546,6 @@ const HeartAnim = () => {
             "type": "images",
             "options": {
               "images": {
-                "src": "https://particles.js.org/images/cyan_amongus.png",
                 "width": 500,
                 "height": 634
               }

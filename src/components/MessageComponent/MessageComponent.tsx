@@ -63,62 +63,61 @@ export default function MessagesComponent() {
       gsap.registerPlugin(ScrollTrigger);
 
       (gsap.utils.toArray(".message") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 100 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-            end: "top 10%",
-          },
-        }
-      );
-    });
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              end: "top 10%",
+            },
+          }
+        );
+      });
 
+      // Animação para a imagem com a classe .heart dentro da .image-container
+      (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 100 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 80%",
+              end: "top 50%",
+            },
+          }
+        );
+      });
 
-    // Animação para a imagem com a classe .heart dentro da .image-container
-    (gsap.utils.toArray(".image-container") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, x: 100 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            end: "top 50%",
-          },
-        }
-      );
-    });
-
-    (gsap.utils.toArray(".hearts") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, x: 100, transform: "scale(0)" },
-        {
-          transform: "scale(1)",
-          opacity: 1,
-          x: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            end: "top 50%",
-          },
-        }
-      );
-    });
-  }
+      (gsap.utils.toArray(".hearts") as HTMLElement[]).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 100, transform: "scale(0)" },
+          {
+            transform: "scale(1)",
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 80%",
+              end: "top 50%",
+            },
+          }
+        );
+      });
+    }
   }, [message])
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -296,30 +295,48 @@ export default function MessagesComponent() {
                 <p className="title">
                   CHACOALHE O SEU SMARTPHONE
                 </p>
-                <Image
-                  src={message.imageUrl}
-                  alt="imagem do usuário"
-                  layout="responsive"
-                  width={200}
-                  height={200}
-                  className="heart main-image shake"
-                  style={{ maxWidth: '400px', maxHeight: '400px', borderRadius: '10px' }}
-                />
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '500px',      // ajuste o máximo que quiser
+                  aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                  margin: '0 auto'
+                }}>
+                  <Image
+                    src={message.imageUrl}
+                    alt="recordação"
+                    fill                      // preenche todo o container
+                    style={{
+                      objectFit: 'cover',    // ou 'contain'
+                      borderRadius: '10px'
+                    }}
+                    className="heart main-image shake"
+                    unoptimized
+                  />
+                </div>
               </section>
             </Message>
           ) : (
             <Message className="image-container message">
               <section>
-                <p>AGORA, UMA FOTO BEM BACANA!</p>
-                <div>
+                <p>AGORA, UMA LINDA RECORDAÇÃO!</p>
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '500px',      // ajuste o máximo que quiser
+                  aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                  margin: '0 auto'
+                }}>
                   <Image
                     src={message.imageUrl}
-                    alt="imagem do usuário"
-                    layout="responsive"
-                    width={200}
-                    height={200}
+                    alt="recordação"
+                    fill                      // preenche todo o container
+                    style={{
+                      objectFit: 'cover',    // ou 'contain'
+                      borderRadius: '10px'
+                    }}
                     className="heart main-image"
-                    style={{ maxWidth: '400px', maxHeight: '400px', borderRadius: '10px' }}
+                    unoptimized
                   />
                 </div>
               </section>

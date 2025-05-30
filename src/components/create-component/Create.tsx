@@ -1,290 +1,344 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import HomeHeader from '@/components/HomeHeader/HomeHeader';
 import TextArea from 'antd/es/input/TextArea';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
 import { Box } from '@mui/material';
-import { Button, Input, notification } from "antd";
+import { Button, Input, notification, Form, DatePicker, Steps, Image, ConfigProvider } from "antd";
 import CardContent from "@mui/joy/CardContent";
-import Typography from "@mui/joy/Typography";
-import { DatePicker, Form } from 'antd';
 import ptBR from 'antd/es/date-picker/locale/pt_BR';
 import { useEffect, useState } from 'react';
-import { Image } from 'antd';
 import { SpotifyCard } from '@/components/Spotify/SpotifyCard';
-import { Checkbox } from 'antd';
-import type { CheckboxProps } from 'antd';
-import styled from 'styled-components';
-import { InboxOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { DeleteOutlined } from '@ant-design/icons';
+import { InboxOutlined, DeleteOutlined } from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
-import InfoModal from '@/components/Modal/InfoModal';
 import useMercadoPago from '@/hooks/useMercadoPago';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
-import PriceCard from '@/components/loveComponents/PriceCard/PriceCard';
-import mpLogo from 'public/img/logo-mercado-pago.svg';
-import NextImage from 'next/image';
+import Giraffe from '@/components/Anims/Giraffe/Giraffe';
+import PreviewButton from './preview/button/PreviewButton';
 
 const { Search } = Input;
 
 function Create() {
   const { createMercadoPagoCheckout } = useMercadoPago();
   const [form] = Form.useForm();
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [previewSpotify, setPreviewLink] = useState('');
+  const [, setPreviewLink] = useState('');
   const [spotifyLink, setLink] = useState('');
-  const [modal, setModal] = useState(false);
-  const [invalidLink, setErrorLink] = useState(false);
+  const [, setErrorLink] = useState(false);
   const [showSpotifyCard, setShowSpotifyCard] = useState(false);
-  const [interactivityMessage, setInteractivityMessage] = useState(true);
-  const [api, contextHolder] = notification.useNotification();
+  const [, contextHolder] = notification.useNotification();
   const [count, setCount] = useState('');
+  const [current, setCurrent] = useState(0);
+  const [formIndex, setFormIndex] = useState(0)
 
-  interface SavedMessage {
-    email?: string;
-    content?: string;
-    creatorName?: string;
-    destinataryName?: string;
-    imageBase64?: string;
-    interactivityMessage?: boolean;
-    spotifyLink?: string;
-    previewSpotify?: string;
-    dateInit?: Date;
+  const getLastCompletedStep = (savedData: Record<string, any>) => {
+    for (let i = 0; i < fieldsPerStep.length; i++) {
+      const fields = fieldsPerStep[i];
+      const allFieldsFilled = fields.every(field => {
+        const value = savedData[field];
+        return value !== undefined && value !== null && value !== "";
+      });
+
+      if (!allFieldsFilled) return i; // retorna o índice do primeiro step incompleto
+    }
+    return fieldsPerStep.length; // todos os steps preenchidos
   };
 
-  const [savedMessage, setSavedMessage] = useState<SavedMessage>();
 
-  
-  useEffect(() => {
-    const raw = localStorage.getItem('pendingMessage');
-    if (raw) {
-      const msg = JSON.parse(raw);
-      setSavedMessage(msg)
-      return;
-    }
-  }, [])
-  
+  const handleImageRemove = () => {
+    setPreview('');
+    setImageFile(null);
+
+    const saved = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
+    delete saved.imageBase64;
+    localStorage.setItem('pendingMessage', JSON.stringify(saved));
+  };
 
   useEffect(() => {
-    if (savedMessage) {
-      form.setFieldsValue({
-        email: savedMessage.email,
-        creatorName: savedMessage.creatorName,
-        destinataryName: savedMessage.destinataryName,
-        spotifyLink: savedMessage.spotifyLink,
-        dateInit: savedMessage.dateInit ? dayjs(savedMessage.dateInit) : undefined,
-        content: savedMessage.content,
-      });
-      // Se tiver preview de imagem ou Spotify, ajuste também:
-      setPreview(savedMessage.imageBase64 || null);
-      setPreviewLink(savedMessage.spotifyLink || '');
-      setLink(savedMessage.spotifyLink || '');
+    setFormIndex(current);
+  }, [current])
 
-      if(savedMessage.spotifyLink) {
-        setShowSpotifyCard(true);
-      } else {
-        setShowSpotifyCard(false);
+  const fieldsPerStep = [
+    ['email'],
+    ['creatorName'],
+    ['destinataryName'],
+    ['spotifyLink'],
+    ['content'],
+    ['dateInit'],
+    []
+  ];
+
+  useEffect(() => {
+    const pendingMessage = localStorage.getItem('pendingMessage');
+    if (pendingMessage) {
+      const parsedMessage = JSON.parse(pendingMessage);
+      if (parsedMessage.dateInit) {
+        parsedMessage.dateInit = dayjs(parsedMessage.dateInit); // converte a string de volta para dayjs
       }
+      form.setFieldsValue(parsedMessage);
+      if (parsedMessage.imageBase64) {
+        setPreview(parsedMessage.imageBase64);
+      }
+      setImageFile(parsedMessage.imageBase64 ? new File([parsedMessage.imageBase64], 'image.png', { type: 'image/png' }) : null);
+      setLink(parsedMessage.spotifyLink || '');
+      setPreviewLink(parsedMessage.spotifyLink || '');
+      setCount(parsedMessage.content || '');
+      setCurrent(fieldsPerStep.findIndex(fields => fields.every(field => field in parsedMessage)));
+
+      const lastStep = getLastCompletedStep(parsedMessage);
+      setCurrent(lastStep);
+      setFormIndex(lastStep);
     }
-  }, [savedMessage, form]);
 
-  const onChange: CheckboxProps['onChange'] = (e) => {
-    setInteractivityMessage(e.target.checked)
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form])
 
-  const setSpotiLink = () => {
-    const spotifyLinkPattern = /^https:\/\/(open|play)\.spotify\.com\/.+/;
-    const isSpotifyLink = spotifyLinkPattern.test(spotifyLink);
+  // Função para converter base64 em File
 
-    if (!isSpotifyLink) {
-      setErrorLink(true);
-      api.error({
-        message: 'Link inválido',
-        description: 'O link deve ser do tipo https://open.spotify.com/',
-        showProgress: true,
-        duration: 5,
-      })
-      setShowSpotifyCard(false);
-      return;
+  const next = async () => {
+    if (current >= steps.length - 1) return;
+    try {
+      await form.validateFields(fieldsPerStep[current]);
+      if (current === 3) setErrorLink(false);
+
+      const currentData = form.getFieldsValue();
+
+      if (currentData.dateInit) {
+        currentData.dateInit = currentData.dateInit.toISOString();
+      }
+
+      const existingData = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
+      const mergedData = { ...existingData, ...currentData };
+
+      // 👇 Se for a etapa da imagem, salva a imagem em base64
+      // 👇 Salva base64 diretamente se existir preview
+      if (current === 6 && preview) {
+        mergedData.imageBase64 = preview;
+      }
+
+      localStorage.setItem('pendingMessage', JSON.stringify(mergedData));
+
+      setCurrent(prev => prev + 1);
+      setFormIndex(current + 1);
+    } catch (errorInfo) {
+      console.log('Validation failed:', errorInfo);
     }
-    setErrorLink(false);
-    setPreviewLink(spotifyLink)
-    setShowSpotifyCard(true);
   };
 
-  const convertToBase64 = async (file: File): Promise<string> => {
-    if (invalidLink) return Promise.resolve('');
-    if (!file) return Promise.resolve('');
 
-    const toBase64 = (file: File): Promise<string> =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-      });
-
-    const base64 = await toBase64(file);
-    return base64;
+  const prev = () => {
+    setFormIndex(current - 1);
+    setCurrent(prev => prev - 1)
   };
 
-  const onFinish = async (values: {
-    creatorName: string;
-    destinataryName: string;
-    spotifyLink: string;
-    dateInit?: Date;
-    theme?: string;
-    content: string;
-    email: string;
-  }) => {
-    if (invalidLink) return;
+  const steps = [
+    {
+      title: '1º',
+      content: (
+        <Form.Item extra='Insira o e-mail que irá receber o QR CODE da mensagem' label="E-mail" name="email" rules={[{ type: 'email', required: true }]}>
+          <Input size="large" style={{ width: '100%' }} placeholder="loveverse@email.com" />
+        </Form.Item>
+      )
+    },
+    {
+      title: '2º',
+      content: (
+        <Form.Item label="Seu nome" extra='Insira o seu nome ou apelido' name="creatorName" rules={[{ required: true }]}>
+          <Input size="large" style={{ width: '100%' }} placeholder="João de Souza" />
+        </Form.Item>
+      )
+    },
+    {
+      title: '3º',
+      content: (
+        <Form.Item label="Nome do parceiro(a)" extra='Insira o nome ou apelido do seu parceiro(a)' name="destinataryName" rules={[{ required: true }]}>
+          <Input size="large" style={{ width: '100%' }} placeholder="Maria" />
+        </Form.Item>
+      )
+    },
+    {
+      title: '4º',
+      content: (
+        <>
+          <Form.Item
+            label='Link de sua música'
+            name="spotifyLink"
+            rules={[
+              {
+                validator: (_, value) => {
+                  const isValid = /^https:\/\/(open|play)\.spotify\.com\/.+/.test(value || '');
+                  if (!isValid) {
+                    setErrorLink(true);
+                    return Promise.reject('Link inválido! Use: https://open.spotify.com/...');
+                  }
+                  setErrorLink(false);
+                  return Promise.resolve();
+                }
+              }
+            ]}
+            extra="Copie e cole aqui o link da música do Spotify." required={true}
+          >
+            <Search
+              placeholder="https://open.spotify..."
+              enterButton="Verificar"
+              size="large"
+              onSearch={() => setShowSpotifyCard(!!form.getFieldValue('spotifyLink'))}
+            />
+          </Form.Item>
+          {showSpotifyCard && form.getFieldValue('spotifyLink') ? (
+            <SpotifyCard link={form.getFieldValue('spotifyLink')} />
+          ) : <p style={{ textAlign: 'center', fontWeight: 300 }}>Nenhuma música selecionada</p>}
+        </>
+      )
+    },
+    {
+      title: '5º',
+      content: (
+        <Form.Item label="Sua mensagem" name="content" rules={[{ required: true, max: 1200 }]} extra={`Dê o seu melhor - Restam ${1200 - count.length} caracteres`}>
+          <TextArea rows={4} style={{ width: '100%' }} maxLength={1200} onChange={e => setCount(e.target.value)} />
+        </Form.Item>
+      )
+    },
+    {
+      title: '6º',
+      content: (
+        <Form.Item label="Data do início" extra='Insira uma data exata ou aproximada que marque o inicio do relacionamento, amizade e outros.' name="dateInit" required={true} rules={[{ required: true, message: 'Selecione uma data válida' }]}>
+          <DatePicker size="large" style={{ width: '100%' }} locale={ptBR} disabledDate={d => d && d.isAfter(dayjs(), 'day')} />
+        </Form.Item>
+      )
+    },
+    {
+      title: '7º',
+      content: (
+        <Form.Item label="Imagem" required={true} extra='Selecione a sua melhor recordação' rules={[{ required: true, message: 'Selecione uma imagem' }]}>
+          <Dragger
+            name="file"
+            multiple={false}
+            beforeUpload={(file) => {
+              // CORREÇÃO: Converter para base64 imediatamente
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                setPreview(e.target?.result as string);
+              };
+              reader.readAsDataURL(file);
+              return false;
+            }}
+            accept="image/*"
+            showUploadList={false}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Clique ou arraste a imagem aqui</p>
+            <p className="ant-upload-hint">Apenas uma imagem será enviada ao criar a mensagem.</p>
+          </Dragger>
+          {preview && (
+            <div style={{ margin: '20px auto', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+              <Image src={preview} alt="preview" style={{ borderRadius: '8px', maxWidth: '200px' }} />
+              <DeleteOutlined onClick={() => handleImageRemove()} style={{ transform: 'scale(2)' }} />
+            </div>
+          )}
+        </Form.Item>
+      )
+    },
+    {
+      title: 'Prévia',
+      content: (
+        <PreviewButton />
+      )
+    },
+  ];
+
+  const onFinish = async values => {
     setLoading(true);
+    await form.validateFields();
+    const id = uuidv4();
 
-    const paymentId = uuidv4();
+    // CORREÇÃO: Usar base64 diretamente do estado
+    const base64 = preview;
 
-    const imageBase64 = savedMessage?.imageBase64 ? savedMessage.imageBase64 
-    : await convertToBase64(imageFile!);
-
-    // 2) Salva tudo no storage
-    localStorage.setItem('pendingMessage', JSON.stringify({
+    const existing = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
+    const finalData = {
+      ...existing,
       ...values,
-      imageBase64,
-      interactivityMessage,
+      imageBase64: base64,
       spotifyLink,
-      paymentId,
-    }));
+      paymentId: id
+    };
 
-    // 3) Chama o checkout e redireciona
-    await createMercadoPagoCheckout({
-      testeId: paymentId,
-      userEmail: values.email,
-    });
+    localStorage.setItem('pendingMessage', JSON.stringify(finalData));
+
+    await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
     setLoading(false);
   };
-
 
   return (
     <>
       <HomeHeader />
       {contextHolder}
       <ScrollReveal>
-        <Typography level='h3' sx={{ textAlign: 'center', fontWeight: '300', margin: '20px auto' }}>Área de criação</Typography>
-        <Box sx={{width: '80%', margin: '20px auto'}}>
-         <PriceCard />
-            <CardContent sx={{ alignItems: 'center', justifyContent: 'flex-end', padding: '10px', borderRadius: '10px' }}>
-              <CardContent sx={{ alignItems: "center" }}>
-                <Form
-                  form={form}
-                  name="normal_signup"
-                  onFinish={(values) => onFinish({ ...values })}
-                  layout="vertical"
-                  requiredMark="optional"
-                >
-                  <Form.Item label='Email' name="email" extra={'Insira o email que irá receber o QR CODE da mensagem'} rules={[{ type: 'email', required: true, message: "Insira um email válido!" }]}>
-                    <Input type='email' size='large' placeholder="loveverse@email.com" />
-                  </Form.Item>
-                  <Form.Item label='O seu nome' name="creatorName" rules={[{ required: true, message: "Insira um nome válido!" }]}>
-                    <Input size='large' placeholder="João" />
-                  </Form.Item>
-                  <Form.Item label='Nome do destinatário' name="destinataryName" rules={[{ required: true, message: "Insira um destinatário válido!" }]}>
-                    <Input size='large' placeholder="Maria" />
-                  </Form.Item>
-                  <Form.Item label='Link de sua música' name="spotifyLink" extra="Copie e cole aqui o link da música do Spotify.">
-                    <Search
-                      placeholder="https://open.spotify..."
-                      enterButton="Pesquisar"
-                      size="large"
-                      onChange={(e) => setLink(e.currentTarget.value)}
-                      onSearch={() => setSpotiLink()}
-                    />
-                  </Form.Item>
-                  {showSpotifyCard && spotifyLink && previewSpotify ? (
-                    <div style={{ marginTop: '16px' }}>
-                      <SpotifyCard link={spotifyLink} />
-                    </div>
-                  ) : (
-                    <div style={{ margin: '20px auto', textAlign: 'center' }}>
-                      <p style={{ fontWeight: '300' }}>Nenhuma música selecionada</p>
-                    </div>
-                  )}
-                  <Form.Item label='Sua mensagem' name="content" extra={`Restam ${1200 - count.length} caracteres`} rules={[{ required: true, message: "Insira uma mensagem!", max: 1200 }]}>
-                    <TextArea onChange={(e) => setCount(e.currentTarget.value)} placeholder='Dê o seu melhor!' size='large' maxLength={1200} />
-                  </Form.Item>
-                  <Container>
-                    <section className="checkbox">
-                      <Checkbox onChange={onChange} defaultChecked={true} >Ativar mensagem interativa?</Checkbox>
-                      <QuestionCircleOutlined onClick={() => setModal(true)} />
-                      <InfoModal open={modal} onClose={() => setModal(false)} />
-                    </section>
-                  </Container>
-                  <Form.Item label='Data do inicio do relacionamento' name="dateInit" extra="Como vai aparecer na mensagem: Eu te amo há X dias, X horas, X minutos, X segundos">
-                    <DatePicker
-                      size="large"
-                      style={{ width: "100%" }}
-                      format="DD/MM/YYYY"
-                      locale={ptBR}
-                      disabledDate={(current) => {
-                        // current é um objeto dayjs
-                        // bloqueia: current >= início de hoje
-                        return current && current.valueOf() >= dayjs().startOf("day").valueOf();
-                      }}
-                    />
-                  </Form.Item>
-                  <Form.Item label="Imagem">
-                    <Dragger
-                      name="file"
-                      multiple={false}
-                      beforeUpload={(file) => {
-                        setImageFile(file);
-                        setPreview(URL.createObjectURL(file));
-                        return false;
-                      }}
-                      accept="image/*"
-                      showUploadList={false}
-                    >
-                      <p className="ant-upload-drag-icon">
-                        <InboxOutlined />
-                      </p>
-                      <p className="ant-upload-text">Clique ou arraste a imagem aqui</p>
-                      <p className="ant-upload-hint">Apenas uma imagem será enviada ao criar a mensagem.</p>
-                    </Dragger>
-                    {preview && (
-                      <div style={{ margin: '20px auto', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Image src={preview} alt="preview" style={{ borderRadius: '8px', maxWidth: '200px' }} />
-                        <DeleteOutlined onClick={() => {
-                          setPreview('')
-                          setImageFile(null)
-                        }} style={{ transform: 'scale(2)' }} />
-                      </div>
-                    )}
-                  </Form.Item>
-                  <Form.Item style={{ marginBottom: "0px" }}>
-                    <Button block style={{ backgroundColor: '#aa00ff' }} type="primary" htmlType="submit" loading={loading}>
-                      Pagar e criar mensagem
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </CardContent>
-            </CardContent>
+        <Box
+          sx={{
+            width: '100%', maxWidth: 800, mx: 'auto', my: 4,
+            '& .ant-steps': { display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' },
+            '& .ant-steps-item': { flex: '0 0 auto', width: 40, p: 0, m: 0 }, '& .ant-steps-item-icon': {
+              backgroundColor: '#000000 !important',
+              borderColor: '#000000 !important'
+            },
+            '& .ant-steps-item-icon .ant-steps-icon': {
+              color: '#0b0b0b !important'
+            },
+            // cor da linha que liga os dots
+            '& .ant-steps-item-tail': {
+              borderColor: '#000000 !important'
+            }
+          }}
+        >
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#aa00ff',
+              },
+            }}
+          >
+            <Steps
+              type="inline"
+              current={current}
+              items={steps.map((_, i) => ({ key: i.toString(), title: _.title, }))}
+              style={{ color: 'black' }}
+            />
+            {/* ... resto do seu formulário */}
+          </ConfigProvider>
         </Box>
-               <NextImage src={mpLogo} alt='Logo mercado pago' height={70} width={70} style={{display: 'block', margin: 'auto'}}/>
+        <Box sx={{ width: '80%', maxWidth: 600, mx: 'auto', marginBottom: '60px' }}>
+          <CardContent>
+            <Form form={form} layout="vertical" onFinish={onFinish} requiredMark='optional'>
+              {steps[current].content}
+              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+                {current > 0 && <Button onClick={prev}>Anterior</Button>}
+                {current < steps.length - 1 ? (
+                  <Button type="primary" onClick={next}>Próximo</Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    loading={loading}
+                    onClick={() => form.submit()} // chama submit apenas ao clicar
+                  >
+                    Criar
+                  </Button>
+                )}
+              </Box>
+            </Form>
+          </CardContent>
+        </Box>
+        <Giraffe formIndex={formIndex} />
       </ScrollReveal>
     </>
   );
 }
 
-const Container = styled.section`
-  margin: 20px auto;
-  
-  .checkbox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-`;
-
 export default Create;
-
