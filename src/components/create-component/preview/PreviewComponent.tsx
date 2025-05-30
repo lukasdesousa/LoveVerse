@@ -271,7 +271,7 @@ export default function PreviewComponent() {
 
                 {/* Imagem final */}
                 {sensorSupport ? (
-                    <Message ref={imageContainerRef} className="image-container message" style={{ opacity: visibility }}>
+                    <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
                         <p className="title">CHACOALHE O SEU SMARTPHONE</p>
                         {pendingMessage.imageBase64 && (
                             <div style={{
