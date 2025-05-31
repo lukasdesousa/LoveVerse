@@ -302,16 +302,16 @@ export default function PreviewComponent() {
                             <div style={{
                                 position: 'relative',
                                 width: '100%',
-                                maxWidth: '500px',      // ajuste o máximo que quiser
-                                aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                                maxWidth: '650px', 
+                                aspectRatio: '4/3',  
                                 margin: '0 auto'
                             }}>
                                 <Image
                                     src={pendingMessage.imageBase64!}
-                                    alt="recordação"
+                                    alt="Recordação do usuário"
                                     fill                      // preenche todo o container
                                     style={{
-                                        objectFit: 'cover',    // ou 'contain'
+                                        objectFit: 'contain',    // ou 'contain'
                                         borderRadius: '10px'
                                     }}
                                     className="heart main-image"

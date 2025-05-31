@@ -30,7 +30,7 @@ function Create() {
   const [spotifyLink, setLink] = useState('');
   const [, setErrorLink] = useState(false);
   const [showSpotifyCard, setShowSpotifyCard] = useState(false);
-  const [, contextHolder] = notification.useNotification();
+  const [api, contextHolder] = notification.useNotification();
   const [count, setCount] = useState('');
   const [current, setCurrent] = useState(0);
   const [formIndex, setFormIndex] = useState(0)
@@ -90,8 +90,12 @@ function Create() {
       setCurrent(fieldsPerStep.findIndex(fields => fields.every(field => field in parsedMessage)));
 
       const lastStep = getLastCompletedStep(parsedMessage);
-      setCurrent(lastStep);
-      setFormIndex(lastStep);
+      if (lastStep === 7 && !parsedMessage.imageBase64) {
+        setCurrent(6)
+      } else {
+        setCurrent(lastStep);
+        setFormIndex(lastStep);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,6 +124,16 @@ function Create() {
         mergedData.imageBase64 = preview;
       }
 
+      if (current === 6 && !preview) {
+        api.error({
+          message: 'A imagem é obrigatória',
+          description: 'Por favor, selecione uma imagem antes de prosseguir.',
+          duration: 5,
+          showProgress: true,
+        })
+        return;
+      }
+
       localStorage.setItem('pendingMessage', JSON.stringify(mergedData));
 
       setCurrent(prev => prev + 1);
@@ -139,7 +153,7 @@ function Create() {
     {
       title: '1º',
       content: (
-        <Form.Item extra='Insira o e-mail que irá receber o QR CODE da mensagem' label="E-mail" name="email" rules={[{ type: 'email', required: true }]}>
+        <Form.Item extra='Insira o e-mail que irá receber o QR CODE da mensagem' label="E-mail" name="email" rules={[{ type: 'email', required: true, message: 'O e-mail é obrigatório' }]}>
           <Input size="large" style={{ width: '100%' }} placeholder="loveverse@email.com" />
         </Form.Item>
       )
@@ -147,15 +161,15 @@ function Create() {
     {
       title: '2º',
       content: (
-        <Form.Item label="Seu nome" extra='Insira o seu nome ou apelido' name="creatorName" rules={[{ required: true }]}>
-          <Input size="large" style={{ width: '100%' }} placeholder="João de Souza" />
+        <Form.Item label="Seu nome" extra='Insira o seu nome ou apelido' name="creatorName" rules={[{ required: true, message: 'O seu nome é obrigatório' }]}>
+          <Input size="large" style={{ width: '100%' }} placeholder="João" />
         </Form.Item>
       )
     },
     {
       title: '3º',
       content: (
-        <Form.Item label="Nome do parceiro(a)" extra='Insira o nome ou apelido do seu parceiro(a)' name="destinataryName" rules={[{ required: true }]}>
+        <Form.Item label="Nome do parceiro(a)" extra='Insira o nome ou apelido do seu parceiro(a)' name="destinataryName" rules={[{ required: true, message: 'O nome do seu parceiro(a) é obrigatório' }]}>
           <Input size="large" style={{ width: '100%' }} placeholder="Maria" />
         </Form.Item>
       )
@@ -169,6 +183,8 @@ function Create() {
             name="spotifyLink"
             rules={[
               {
+                message: 'A música é obrigatória',
+                required: true,
                 validator: (_, value) => {
                   const isValid = /^https:\/\/(open|play)\.spotify\.com\/.+/.test(value || '');
                   if (!isValid) {
@@ -178,7 +194,7 @@ function Create() {
                   setErrorLink(false);
                   return Promise.resolve();
                 }
-              }
+              },
             ]}
             extra="Copie e cole aqui o link da música do Spotify." required={true}
           >
@@ -198,7 +214,7 @@ function Create() {
     {
       title: '5º',
       content: (
-        <Form.Item label="Sua mensagem" name="content" rules={[{ required: true, max: 1200 }]} extra={`Dê o seu melhor - Restam ${1200 - count.length} caracteres`}>
+        <Form.Item label="Sua mensagem" name="content" rules={[{ required: true, max: 1200, message: 'A mensagem é obrigatória' }]} extra={`Dê o seu melhor - Restam ${1200 - count.length} caracteres`}>
           <TextArea rows={4} style={{ width: '100%' }} maxLength={1200} onChange={e => setCount(e.target.value)} />
         </Form.Item>
       )
@@ -206,7 +222,7 @@ function Create() {
     {
       title: '6º',
       content: (
-        <Form.Item label="Data do início" extra='Insira uma data exata ou aproximada que marque o inicio do relacionamento, amizade e outros.' name="dateInit" required={true} rules={[{ required: true, message: 'Selecione uma data válida' }]}>
+        <Form.Item label="Data do início" extra='Insira uma data exata ou aproximada que marque o inicio do relacionamento, amizade e outros.' name="dateInit" rules={[{ required: true, message: 'A data é obrigatória' }]}>
           <DatePicker size="large" style={{ width: '100%' }} locale={ptBR} disabledDate={d => d && d.isAfter(dayjs(), 'day')} />
         </Form.Item>
       )
@@ -214,7 +230,9 @@ function Create() {
     {
       title: '7º',
       content: (
-        <Form.Item label="Imagem" required={true} extra='Selecione a sua melhor recordação' rules={[{ required: true, message: 'Selecione uma imagem' }]}>
+        <Form.Item required={true} label="Imagem" extra='Selecione a sua melhor recordação' rules={[{
+          required: true, message: 'A imagem é obrigatória',
+        }]}>
           <Dragger
             name="file"
             multiple={false}

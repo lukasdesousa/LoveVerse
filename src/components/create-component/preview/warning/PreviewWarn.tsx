@@ -11,7 +11,7 @@ export default function PreviewWarn() {
     <Container>
         <button onClick={() => {
             router.push('/create')
-            }} className="button-9">Está mensagem é apenas uma prévia, clique aqui para retornar a página de criação.</button>
+            }} className="button-9">Isso é apenas uma prévia, clique aqui para retornar a página de criação.</button>
     </Container>
     )
 
