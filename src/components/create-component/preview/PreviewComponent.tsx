@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
 import { gsap } from "gsap";
@@ -16,6 +17,8 @@ import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CircularProgress } from "@mui/material";
 import PreviewWarn from "./warning/PreviewWarn";
+import { useRouter } from "next/navigation";
+import NotFoundPreview from "./notfound/NotFoundPreview";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -30,10 +33,14 @@ export default function PreviewComponent() {
     const [, setShowSpotify] = useState(false);
     const [loading, setLoading] = useState(true);
     const imageContainerRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
+    const stored = localStorage.getItem('pendingMessage');
 
-    // Carrega do localStorage apenas uma vez
+    if(!stored) {
+        return <NotFoundPreview />;
+    }
+
     useEffect(() => {
-        const stored = localStorage.getItem('pendingMessage');
         if (stored) {
             try {
                 const parsed = JSON.parse(stored);
@@ -48,8 +55,9 @@ export default function PreviewComponent() {
             }
         }
         setLoading(false);
-    }, []);
-
+    }, [router, stored]);
+    
+    
     // Cálculo detalhado de tempo
     const calculateDetailedTimeSince = (startDate: dayjs.ConfigType) => {
         const now = dayjs();

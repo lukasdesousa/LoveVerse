@@ -22,6 +22,7 @@ const Container = styled.div`
 
 const Message = styled.h1`
   font-size: 1.8rem;
+  font-weight: 300;
   color: #555;
   margin-top: 2rem;
 `;
