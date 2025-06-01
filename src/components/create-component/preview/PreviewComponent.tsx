@@ -285,7 +285,7 @@ export default function PreviewComponent() {
                             <div style={{
                                 position: 'relative',
                                 width: '100%',
-                                maxWidth: '500px',      // ajuste o máximo que quiser
+                                maxWidth: '650px',      // ajuste o máximo que quiser
                                 aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
                                 margin: '0 auto'
                             }}>
@@ -294,7 +294,7 @@ export default function PreviewComponent() {
                                     alt="recordação"
                                     fill                      // preenche todo o container
                                     style={{
-                                        objectFit: 'cover',    // ou 'contain'
+                                        objectFit: 'contain',    // ou 'contain'
                                         borderRadius: '10px'
                                     }}
                                     className="heart main-image shake"
