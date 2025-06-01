@@ -19,7 +19,6 @@ export default function SensorPermissionGate({
     const [, setIsIOS] = useState(false);
     const { id } = useParams(); // Obtém o ID da URL
     const [message, setMessage] = useState<Message | null>(null);
-    // const user = useSelector((state: User) => state.user.user);
     const sensorSupport = useSensorSupport();
     const [loading, setLoading] = useState(false);
 

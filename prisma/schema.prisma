@@ -16,7 +16,6 @@ model Message {
   email String @default("example@example.com")
   spotifyLink  String?
   dateInit  DateTime? // Data inicial do relacionamento
-  interactiveMessage Boolean @default(true)
   createdAt DateTime @default(now())
   expiresAt DateTime
 }
