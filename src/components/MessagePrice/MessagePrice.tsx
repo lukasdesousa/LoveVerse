@@ -19,6 +19,7 @@ export default function MessagePrice() {
     <Box
       sx={{
         width: '100%',
+        maxWidth: '500px',
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
         gap: 2,
       }}

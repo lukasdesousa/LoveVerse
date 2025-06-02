@@ -5,12 +5,10 @@ import Footer from '@/components/Footer/Footer';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
 import { Content, Text, Title, Container, Introduction } from '@/styles/components_styles/mainStyle/styled';
 import { Apresentation } from '@/components/loveComponents/Apresentation/Apresentation';
-import Button from '@mui/joy/Button';
 import Link from 'next/link';
-import MessagePrice from '@/components/MessagePrice/MessagePrice';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
-import SpaceAnimation from '@/components/Anims/Space/SpaceAnimation';
+import { LottieApresentation } from '@/components/loveComponents/Apresentation/LottiesApresentation.tsx/LottieApresentation';
 
 export const dynamic = 'force-dynamic';
 
@@ -76,55 +74,52 @@ function Index() {
       <LoadPage>
         {/* Conteúdo da home */}
         <Header />
-                  <Container>
-                <Introduction>
-              <ScrollReveal>
-                  <section className="content">
-                    <h2>ENCANTE QUEM VOCÊ <span style={{color: 'pink'}}>AMA</span></h2>
-                      <Text>
-                        Com a LOVEVERSE a sua criatividade o seu amor é o limite! Explore sua criatividade criando bilhetes com mensagens encantadoras.
-                      </Text>
-                  </section>
-              </ScrollReveal>
-                </Introduction>
-              <section>
-                <ScrollReveal>
-                  <Content>
-                    <Title>Deixe quem você ama feliz</Title>
-                    <Text>
-                      Com a Love<span style={{color: '#aa00ff'}}>Verse</span>, agradar quem você ama ficou mais rápido e prático. Através de mensagens personalizadas, você pode criar uma experiência única e inesquecível para quem você ama.
-                    </Text>
-                  <Text>
-                    Uma simples mensagem bem feita pode salvar o seu relacionamento, ou até mesmo conquistar o coração de alguém especial. Aqui estão algumas dicas para criar mensagens encantadoras que podem fazer a diferença:
-                  </Text>
-                  <Text>
-                        Rápido, fácil e prático, e sem mensagens sem vida. Na LoveVerse, damos vida às suas palavras, transformando-as em mensagens únicas, interativas e inesquecíveis.
-                      </Text>
-                  </Content>
-                </ScrollReveal>
-                <section>
-                <Content>
-                </Content>
-                  <Apresentation />
-                </section>
+        <Container>
+          <Introduction>
+            <ScrollReveal>
+              <section className="content">
+                <h2>ENCANTE QUEM VOCÊ <span style={{ color: 'pink' }}>AMA</span></h2>
+                <Text>
+                  Com a LOVEVERSE a sua criatividade o seu amor é o limite! Explore sua criatividade criando bilhetes com mensagens encantadoras.
+                </Text>
               </section>
+            </ScrollReveal>
+          </Introduction>
+          <section>
+            <ScrollReveal>
               <Content>
-                  <Text>
-                    Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A Love<span style={{color: '#aa00ff'}}>Verse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
-                  </Text>
-                <Content>
-                  <Text>
-                    Confira nossos preços
-                  </Text>
-                  <ScrollReveal>
-                  <MessagePrice />
-                  </ScrollReveal>
-                  <Content style={{marginTop: '15px'}}><Link href={'/exemplo-carta-loveverse'}><Button variant='soft' sx={{backgroundColor: '#aa00ff', transition: '0.5s ease', color: 'white'}}>Ver mensagem de exemplo</Button></Link></Content>
-                </Content>
-                </Content>
-                <SpaceAnimation />
-                  </Container>
-            <Footer />
+                <Title>Deixe quem você ama feliz</Title>
+                <Text>
+                  Com a Love<span style={{ color: '#aa00ff' }}>Verse</span>, agradar quem você ama ficou mais rápido e prático. Através de mensagens personalizadas, você pode criar uma experiência única e inesquecível para quem você ama.
+                </Text>
+                <Text>
+                  Uma simples mensagem bem feita pode salvar o seu relacionamento, ou até mesmo conquistar o coração de alguém especial.
+                </Text>
+                <Text>
+                  Rápido, fácil e prático, e sem mensagens sem vida. Na LoveVerse, damos vida às suas palavras, transformando-as em mensagens únicas, interativas e inesquecíveis.
+                </Text>
+            <LottieApresentation />
+              </Content>
+            </ScrollReveal>
+          </section>
+          <Content>
+            <Text>
+              Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A Love<span style={{ color: '#aa00ff' }}>Verse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
+            </Text>
+          </Content>
+            <section>
+              <Apresentation />
+            </section>
+            <Content>
+              <Text>
+               Na LoveVerse, é possível criar mensagens que tocam o sentimento do seu amor, com fotos, músicas e textos personalizados. Tudo isso de forma simples e rápida, para que você possa surpreender quem ama em poucos minutos:
+              </Text>
+                         <Text>
+               Crie uma mensagem de prévia na página de <Link href={'/create'}>criação</Link>, fique a vontade para experimentar todos os recursos disponíveis e veja como é fácil e prático.
+              </Text>
+            </Content>
+        </Container>
+        <Footer />
       </LoadPage>
     </>
   );

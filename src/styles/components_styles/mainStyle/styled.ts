@@ -24,7 +24,7 @@ export const Content = styled.section`
 `;
 
 export const Text = styled.p`
-  font-weight: 200;
+  font-weight: 300;
 `;
 
 export const Introduction = styled.section`
