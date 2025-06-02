@@ -9,17 +9,41 @@ import letterAnim from "@/assets/Animation - 1748885612469.json";
 import spotifyAnim from '@/assets/Animation - 1748885383353.json';
 import photoAnim from '@/assets/Animation - 1748885527653.json';
 import useShake from '@/hooks/useShake';
-
+import featuresAnim from '@/assets/features_bg-anim.json';
 import type { LottieRefCurrentProps } from 'lottie-react';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 export const Apresentation = () => {
-    const lottieRef = useRef<LottieRefCurrentProps>(null);
+    const musicRef = useRef<LottieRefCurrentProps>(null);
+    const letterRef = useRef<LottieRefCurrentProps>(null);
+    const photoRef = useRef<LottieRefCurrentProps>(null);
+    const bgRef = useRef<LottieRefCurrentProps>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    
-    // Shake animation
+
+    function restartAnim() {
+        setTimeout(() => {
+            musicRef.current?.goToAndStop(0, true);
+            musicRef.current?.play(); 
+        }, 1000);
+        
+        setTimeout(() => {
+            letterRef.current?.goToAndStop(0, true); 
+            letterRef.current?.play();
+        }, 1000);
+
+        setTimeout(() => {
+            photoRef.current?.goToAndStop(0, true);
+            photoRef.current?.play();
+        }, 1000);
+
+        setTimeout(() => {
+            bgRef.current?.goToAndStop(0, true);
+            bgRef.current?.play();
+        }, 1000);
+    }
+
     useShake(() => {
-        lottieRef.current?.play();    
+       restartAnim();
     }, containerRef);
 
     gsap.registerPlugin(ScrollTrigger);
@@ -36,9 +60,8 @@ export const Apresentation = () => {
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 90%",
+                        start: "top 100%",
                         end: "top 50%",
-                        scrub: true,
                     },
                 }
             );
@@ -47,9 +70,25 @@ export const Apresentation = () => {
 
     return (
         <Container ref={containerRef}>
+            <Lottie
+                    lottieRef={bgRef}
+                    animationData={featuresAnim}
+                    loop={false} // não repetir
+                    autoplay={true} // não iniciar automaticamente
+                    style={{
+                    position: 'absolute',
+                    top: 0, left: 0,
+                    width: '100%',
+                    height: '100%',
+                    
+                }}
+                rendererSettings={{
+                    preserveAspectRatio: 'xMidYMid slice'
+                }}
+                />
             <SubContainer>
                 <Lottie
-                    lottieRef={lottieRef}
+                    lottieRef={musicRef}
                     animationData={spotifyAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
@@ -59,17 +98,17 @@ export const Apresentation = () => {
             </SubContainer>
             <SubContainer>
                 <Lottie
-                    lottieRef={lottieRef}
+                    lottieRef={letterRef}
                     animationData={letterAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
                     style={{ width: 350, height: 150 }}
                 />
-                <h3 className='image'>Deixe todo seu amor e carinho</h3>
+                <h3 className='image'>Escreva sua mensagem</h3>
             </SubContainer>
             <SubContainer>
                 <Lottie
-                    lottieRef={lottieRef}
+                    lottieRef={photoRef}
                     animationData={photoAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
@@ -77,25 +116,27 @@ export const Apresentation = () => {
                 />
                 <h3 className='image'>Insira sua melhor recordação</h3>
             </SubContainer>
+
         </Container>
+
     );
 }
+
 
 
 const Container = styled.section`
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center;
     flex-direction: column;
     margin: 0 auto;
+    overflow: hidden;
     padding: 20px;
-    gap: 90px;
-    width: 70vw;
-    text-align: center;
-    border-top: 1px solid #6110ed75;
-    border-bottom: 1px solid #6110ed75;
+    gap: 50px;
 
-   
+    text-align: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;;
 `;
 
 const SubContainer = styled.div`
@@ -103,11 +144,14 @@ const SubContainer = styled.div`
     flex-direction: column; /* ← aqui está a solução */
     align-items: center;
     justify-content: center;
+    width: 100%;
+    margin: 10px 0px;
+    overflow: hidden;
 
     h3 {
         font-style: italic;
-        font-weight: 300;
-        opacity: 0.8;
-        margin-top: 16px; /* opcional, espaço entre o Lottie e o texto */
+        font-weight: 200;
+
+        color: white;
     }
 `;
