@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
                 email: body.email,
                 expiresAt: body.expiresAt || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 spotifyLink: body.spotifyLink || null,
-                interactiveMessage: body.interactiveMessage,
                 imageUrl: body.imageUrl || null,
                 dateInit: body.dateInit ? new Date(body.dateInit) : null
             }
