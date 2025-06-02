@@ -66,12 +66,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={inter.className}>
       <body >
-
         <GlobalStyle />
         {children}
         <Analytics />
         <SpeedInsights />
-
       </body>
     </html>
   );

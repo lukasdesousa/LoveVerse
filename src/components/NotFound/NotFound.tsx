@@ -46,7 +46,7 @@ const NotFound: FC = () => {
                               fontSize: "1rem",
                               cursor: "pointer",
                           }}>
-                              Retornar à home
+                              Retornar
                           </button>
       </Container>
     </LoadPage>
