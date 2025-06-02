@@ -97,9 +97,6 @@ function Index() {
                   <Text>
                     Uma simples mensagem bem feita pode salvar o seu relacionamento, ou até mesmo conquistar o coração de alguém especial. Aqui estão algumas dicas para criar mensagens encantadoras que podem fazer a diferença:
                   </Text>
-                  <Text>
-                        Rápido, fácil e prático, e sem mensagens sem vida. Na LoveVerse, damos vida às suas palavras, transformando-as em mensagens únicas, interativas e inesquecíveis.
-                      </Text>
                   </Content>
                 </ScrollReveal>
                 <section>
