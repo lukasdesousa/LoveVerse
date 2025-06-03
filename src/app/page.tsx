@@ -3,14 +3,13 @@
 import Header from '@/components/HomeHeader/HomeHeader';
 import Footer from '@/components/Footer/Footer';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
-import { Content, Text, Title, Container, Introduction } from '@/styles/components_styles/mainStyle/styled';
+import { Content, Text, Title, Container } from '@/styles/components_styles/mainStyle/styled';
 import { Apresentation } from '@/components/loveComponents/Apresentation/Apresentation';
 import Link from 'next/link';
 import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
 import { LottieApresentation } from '@/components/loveComponents/Apresentation/LottiesApresentation.tsx/LottieApresentation';
-
-export const dynamic = 'force-dynamic';
+import Banner from '@/components/Banner/Banner';
 
 const ogUpdatedTime = new Date().toISOString();
 export async function generateMetadata(): Promise<Metadata> {
@@ -74,17 +73,8 @@ function Index() {
       <LoadPage>
         {/* Conteúdo da home */}
         <Header />
+          <Banner />
         <Container>
-          <Introduction>
-            <ScrollReveal>
-              <section className="content">
-                <h2>ENCANTE QUEM VOCÊ <span style={{ color: 'pink' }}>AMA</span></h2>
-                <Text>
-                  Com a LOVEVERSE a sua criatividade o seu amor é o limite! Explore sua criatividade criando bilhetes com mensagens encantadoras.
-                </Text>
-              </section>
-            </ScrollReveal>
-          </Introduction>
           <section>
             <ScrollReveal>
               <Content>

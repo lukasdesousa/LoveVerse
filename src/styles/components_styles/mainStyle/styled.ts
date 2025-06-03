@@ -1,7 +1,6 @@
 'use client';
 
 import styled from "styled-components";
-import backgroundMountain from 'public/img/background-mountain.svg';
 
 export const Container = styled.main`
     // style
@@ -24,7 +23,8 @@ export const Content = styled.section`
 `;
 
 export const Text = styled.p`
-  font-weight: 300;
+  font-weight: 400;
+  font-family: var(--font-quicksand);
 `;
 
 export const Introduction = styled.section`
@@ -32,7 +32,6 @@ export const Introduction = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: left;
-  background-image: url(${backgroundMountain.src});
   background-size: cover;
   background-position: center 40%;
   background-repeat: no-repeat;

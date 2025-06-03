@@ -4,6 +4,13 @@ import { GlobalStyle } from "@/styles/GlobalStyle";
 import { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Quicksand } from 'next/font/google'
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  variable: '--font-quicksand',
+  display: 'swap', // opcional, para evitar FOUT
+})
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,7 +71,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={inter.className}>
+    <html lang="pt-BR" className={`${inter.className} ${quicksand.variable}`}>
       <body >
         <GlobalStyle />
         {children}

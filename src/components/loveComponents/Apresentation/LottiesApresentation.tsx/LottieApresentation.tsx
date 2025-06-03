@@ -68,7 +68,7 @@ export const LottieApresentation = () => {
     }, [])
 
     return (
-        <Container ref={containerRef}>
+        <Container ref={containerRef} onScrollCapture={() => alert('Scroll')}>
             <SubContainer>
                 <Lottie
                     lottieRef={musicRef}
@@ -114,7 +114,6 @@ const Container = styled.section`
     margin: 0 auto;
     overflow: hidden;
     padding: 20px;
-
     gap: 50px;
     text-align: center;
     border-top: 1px solid #aa00ff;

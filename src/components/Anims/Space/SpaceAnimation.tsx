@@ -6,7 +6,6 @@ import animationData from "@/assets/space-animation.json";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
 
 const Container = styled.div`

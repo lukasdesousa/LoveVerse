@@ -3,6 +3,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
+
+:root {
+    --font-primary: var(--font-quicksand);
+  }
   
   * {
     margin: 0;
