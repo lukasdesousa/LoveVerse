@@ -22,11 +22,11 @@ export const LottieApresentation = () => {
     function restartAnim() {
         setTimeout(() => {
             musicRef.current?.goToAndStop(0, true);
-            musicRef.current?.play(); 
+            musicRef.current?.play();
         }, 1000);
-        
+
         setTimeout(() => {
-            letterRef.current?.goToAndStop(0, true); 
+            letterRef.current?.goToAndStop(0, true);
             letterRef.current?.play();
         }, 1000);
 
@@ -42,7 +42,7 @@ export const LottieApresentation = () => {
     }
 
     useShake(() => {
-       restartAnim();
+        restartAnim();
     }, containerRef);
 
     gsap.registerPlugin(ScrollTrigger);
@@ -70,36 +70,42 @@ export const LottieApresentation = () => {
     return (
         <Container ref={containerRef} onScrollCapture={() => alert('Scroll')}>
             <SubContainer>
-                <Lottie
-                onClick={() => restartAnim()}
-                    lottieRef={musicRef}
-                    animationData={spotifyAnim}
-                    loop={false} // não repetir
-                    autoplay={true} // não iniciar automaticamente
-                    style={{ width: 300, height: 100, cursor: 'pointer' }}
-                />
+                <ClickableLottie>
+                    <Lottie
+                        onMouseEnter={() => restartAnim()}
+                        lottieRef={musicRef}
+                        animationData={spotifyAnim}
+                        loop={false} // não repetir
+                        autoplay={true} // não iniciar automaticamente
+                        style={{ width: 300, height: 100, cursor: 'pointer' }}
+                    />
+                </ClickableLottie>
                 <h3 className='image'>Coloque sua música favorita</h3>
             </SubContainer>
             <SubContainer>
-                <Lottie
-                onClick={() => restartAnim()}
-                    lottieRef={letterRef}
-                    animationData={letterAnim}
-                    loop={false} // não repetir
-                    autoplay={true} // não iniciar automaticamente
-                    style={{ width: 350, height: 150, cursor: 'pointer' }}
-                />
+                <ClickableLottie>
+                    <Lottie
+                        onMouseEnter={() => restartAnim()}
+                        lottieRef={letterRef}
+                        animationData={letterAnim}
+                        loop={false} // não repetir
+                        autoplay={true} // não iniciar automaticamente
+                        style={{ width: 350, height: 150, cursor: 'pointer' }}
+                    />
+                </ClickableLottie>
                 <h3 className='image'>Escreva sua mensagem</h3>
             </SubContainer>
             <SubContainer>
-                <Lottie
-                onClick={() => restartAnim()}
-                    lottieRef={photoRef}
-                    animationData={photoAnim}
-                    loop={false} // não repetir
-                    autoplay={true} // não iniciar automaticamente
-                    style={{ width: 400, height: 150, cursor: 'pointer' }}
-                />
+                <ClickableLottie>
+                    <Lottie
+                        onMouseEnter={() => restartAnim()}
+                        lottieRef={photoRef}
+                        animationData={photoAnim}
+                        loop={false} // não repetir
+                        autoplay={true} // não iniciar automaticamente
+                        style={{ width: 400, height: 150, cursor: 'pointer' }}
+                    />
+                </ClickableLottie>
                 <h3 className='image'>Insira sua melhor recordação</h3>
             </SubContainer>
         </Container>
@@ -107,7 +113,10 @@ export const LottieApresentation = () => {
     );
 }
 
-
+const ClickableLottie = styled.div`
+    cursor:  pointer;
+    -webkit-tap-highlight-color: transparent;
+`;
 
 const Container = styled.section`
     display: flex;
@@ -121,6 +130,7 @@ const Container = styled.section`
     text-align: center;
     border-top: 1px solid #aa00ff;
     border-bottom: 1px solid #aa00ff;
+    
 `;
 
 const SubContainer = styled.div`
@@ -133,8 +143,21 @@ const SubContainer = styled.div`
     overflow: hidden;
 
     h3 {
-        font-style: italic;
-        font-weight: 200;
+         background: linear-gradient(
+      to right,
+      #884ada 20%,
+      #00affa 30%,
+      #0190cd 70%,
+      #cd43e9 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+    white-space: nowrap; /* ← impede quebra de linha */
+        font-weight: 700;
         color: #000000;
+        font-family: var(--font-quicksand);
     }
 `;

@@ -126,8 +126,9 @@ const Container = styled.section`
   padding: 20px;
   height: 100vh;
   width: 100%;
+  margin-bottom: 20px;
   text-align: center;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(182, 46, 240, 0.4) 0px 5px, rgba(201, 46, 240, 0.3) 0px 10px, rgba(46, 227, 240, 0.2) 0px 15px, rgba(240, 46, 211, 0.1) 0px 20px, rgba(46, 217, 240, 0.05) 0px 25px;
 `;
 
 const Overlay = styled.div`

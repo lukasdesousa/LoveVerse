@@ -86,7 +86,7 @@ export default function MessagePrice() {
               / pagamento único
             </Typography>
           </Typography>
-          <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/create'}>Criar agora</Link></Button>
+          <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/create'}>Criar</Link></Button>
         </CardActions>
       </Card>
     </Box>
