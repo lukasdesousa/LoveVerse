@@ -94,7 +94,7 @@ function Index() {
           </section>
           <Content>
             <Text>
-              Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A Love<span style={{ color: '#aa00ff' }}>Verse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
+              Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A <span style={{fontWeight: '1000'}}>LoveVerse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
             </Text>
           </Content>
             <section>
@@ -102,7 +102,7 @@ function Index() {
             </section>
             <Content>
               <Text>
-               Na LoveVerse, é possível criar mensagens que tocam o sentimento do seu amor, com fotos, músicas e textos personalizados. Tudo isso de forma simples e rápida, para que você possa surpreender quem ama em poucos minutos:
+               Aqui, é possível criar mensagens que tocam o sentimento do seu amor, com fotos, músicas e textos personalizados. Tudo isso de forma simples e rápida, para que você possa surpreender quem ama em poucos minutos:
               </Text>
                          <Text>
                Crie uma mensagem de prévia na página de <Link href={'/create'}>criação</Link>, fique a vontade para experimentar todos os recursos disponíveis e veja como é fácil e prático.
