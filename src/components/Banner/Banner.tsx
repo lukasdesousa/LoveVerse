@@ -34,7 +34,7 @@ export default function Banner() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex(prev => (prev + 1) % messages.length);
-    }, 4000);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -158,12 +158,13 @@ const TextContainer = styled.div`
 
   .highlight {
     font-weight: 1000;
+    font-size: 1.1rem;
     background: linear-gradient(
       to right,
-      #7953cd 20%,
+      #884ada 20%,
       #00affa 30%,
       #0190cd 70%,
-      #764ada 80%
+      #ffffff 80%
     );
     -webkit-background-clip: text;
     background-clip: text;

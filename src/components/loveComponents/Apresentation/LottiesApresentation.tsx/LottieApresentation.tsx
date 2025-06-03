@@ -71,31 +71,34 @@ export const LottieApresentation = () => {
         <Container ref={containerRef} onScrollCapture={() => alert('Scroll')}>
             <SubContainer>
                 <Lottie
+                onClick={() => restartAnim()}
                     lottieRef={musicRef}
                     animationData={spotifyAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
-                    style={{ width: 300, height: 100 }}
+                    style={{ width: 300, height: 100, cursor: 'pointer' }}
                 />
                 <h3 className='image'>Coloque sua música favorita</h3>
             </SubContainer>
             <SubContainer>
                 <Lottie
+                onClick={() => restartAnim()}
                     lottieRef={letterRef}
                     animationData={letterAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
-                    style={{ width: 350, height: 150 }}
+                    style={{ width: 350, height: 150, cursor: 'pointer' }}
                 />
                 <h3 className='image'>Escreva sua mensagem</h3>
             </SubContainer>
             <SubContainer>
                 <Lottie
+                onClick={() => restartAnim()}
                     lottieRef={photoRef}
                     animationData={photoAnim}
                     loop={false} // não repetir
                     autoplay={true} // não iniciar automaticamente
-                    style={{ width: 400, height: 150 }}
+                    style={{ width: 400, height: 150, cursor: 'pointer' }}
                 />
                 <h3 className='image'>Insira sua melhor recordação</h3>
             </SubContainer>
