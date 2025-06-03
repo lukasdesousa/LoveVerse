@@ -2,11 +2,14 @@
 
 import { LoadPage } from "@/components/LoadPage/LoadPage";
 import PreviewComponent from "@/components/create-component/preview/PreviewComponent";
+import SensorPermissionEx from "@/components/Examples/SensorPermissionEx/SensorPermissionEx";
 
 export default function Index() {
     return (
         <LoadPage>
-            <PreviewComponent />
+            <SensorPermissionEx>
+                <PreviewComponent />
+            </SensorPermissionEx>
         </LoadPage>
     );
 }

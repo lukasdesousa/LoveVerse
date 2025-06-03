@@ -59,7 +59,7 @@ export const LottieApresentation = () => {
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 100%",
+                        start: "top 90%",
                         end: "top 50%",
                     },
                 }

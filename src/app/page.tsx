@@ -80,7 +80,7 @@ function Index() {
               <Content>
                 <Title>Deixe quem você ama feliz</Title>
                 <Text>
-                  Com a Love<span style={{ color: '#aa00ff' }}>Verse</span>, agradar quem você ama ficou mais rápido e prático. Através de mensagens personalizadas, você pode criar uma experiência única e inesquecível para quem você ama.
+                  Com a <span style={{fontWeight: '1000'}}>LoveVerse</span>, agradar quem você ama ficou mais rápido e prático. Através de mensagens personalizadas, você pode criar uma experiência única e inesquecível para quem você ama.
                 </Text>
                 <Text>
                   Uma simples mensagem bem feita pode salvar o seu relacionamento, ou até mesmo conquistar o coração de alguém especial.

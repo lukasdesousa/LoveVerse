@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Grid, Menu, theme } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -90,7 +91,7 @@ export default function LoveHeader() {
           <div style={styles.container}>
             <div style={styles.menuContainer}>
               <a style={styles.logo} href="/">
-                <h1>Love<span style={{color: '#aa00ff'}}>Verse</span></h1>
+                <h1 style={{fontFamily: 'var(--font-quicksand)'}}>Love<Span>Verse</Span></h1>
               </a>
               <Menu
                 style={styles.menu}
@@ -106,3 +107,22 @@ export default function LoveHeader() {
       
   );
 }
+
+const Span = styled.span`
+   background: linear-gradient(
+      to right,
+      #884ada 20%,
+      #00affa 30%,
+      #0190cd 70%,
+      #cd43e9 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+    white-space: nowrap; /* ← impede quebra de linha */
+        font-weight: 700;
+        color: #000000;
+        font-family: var(--font-quicksand);
+`;

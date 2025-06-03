@@ -7,9 +7,9 @@ export const FooterStyle = styled.footer<React.CSSProperties>`
     border-top: 1px solid rgba(0, 0, 0, 0.53);
     width: 100%;
     
-    h3 {
+    p {
         padding: 25px 0;
-        font-weight: 200;
+        font-weight: 600;
         text-align: center;
         font-size: 1rem;
     }

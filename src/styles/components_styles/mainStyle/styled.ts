@@ -6,6 +6,25 @@ export const Container = styled.main`
     // style
 `;
 
+export const Span = styled.span`
+   background: linear-gradient(
+      to right,
+      #884ada 20%,
+      #00affa 30%,
+      #0190cd 70%,
+      #cd43e9 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+    white-space: nowrap; /* ← impede quebra de linha */
+        font-weight: 700;
+        color: #000000;
+        font-family: var(--font-quicksand);
+`;
+
 export const Content = styled.section`
   align-items: center;
   justify-content: center;
