@@ -78,6 +78,7 @@ export default function MessagePrice() {
             Música
           </ListItem>
         </List>
+        <span style={{color: 'black', fontFamily: 'var(--font-quicksand)'}}>Duração de 5 dias</span>
         <Divider inset="none" />
         <CardActions>
           <Typography level="title-lg" sx={{ mr: 'auto' }}>
