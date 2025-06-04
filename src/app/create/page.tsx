@@ -5,6 +5,7 @@ import { LoadPage } from "@/components/LoadPage/LoadPage";
 const ogUpdatedTime = new Date().toISOString();
 
 export const dynamic = 'force-dynamic';
+const publicImageUrl = 'https://www.loveverse.space/img/LoveVerse-banner.png';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'LoveVerse',
       images: [
         {
-          url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
+          url: publicImageUrl,
           width: 1200,
           height: 630,
           alt: 'LoveVerse - Compartilhe amor',
@@ -37,11 +38,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'LoveVerse',
       description: 'Crie mensagens personalizadas únicas',
       images: [
-        'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg'
+        publicImageUrl
       ],
     },
     other: {
-      'og:image': 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
+      'og:image': publicImageUrl,
       'og:image:width': '1200',
       'og:image:height': '630',
       'og:image:alt': 'LoveVerse - Compartilhe amor',

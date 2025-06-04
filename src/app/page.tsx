@@ -12,6 +12,8 @@ import { LottieApresentation } from '@/components/loveComponents/Apresentation/L
 import Banner from '@/components/Banner/Banner';
 
 const ogUpdatedTime = new Date().toISOString();
+const publicImageUrl = 'https://www.loveverse.space/img/LoveVerse-banner.png';
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
@@ -22,13 +24,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
     openGraph: {
       type: 'website',
-      url: 'https://www.loveverse.space',
+      url: publicImageUrl,
       title: 'LoveVerse',
       description: 'Mensagens personalizadas para casais',
       siteName: 'LoveVerse',
       images: [
         {
-          url: 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
+          url: publicImageUrl,
           width: 1200,
           height: 630,
           alt: 'Crie mensagens personalizadas únicas',
@@ -42,11 +44,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'LoveVerse',
       description: 'Crie mensagens personalizadas únicas',
       images: [
-        'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg'
+        publicImageUrl
       ],
     },
     other: {
-      'og:image': 'https://res.cloudinary.com/diidbde0o/image/upload/v1747767779/loveverse_f5jnyz.jpg',
+      'og:image': publicImageUrl,
       'og:image:width': '1200',
       'og:image:height': '630',
       'og:image:alt': 'LoveVerse - Compartilhe amor',
