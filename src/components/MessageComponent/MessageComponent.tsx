@@ -398,7 +398,8 @@ const Message = styled.section<{ isVisible?: number }>`
     text-align: center;
     padding: 20px;
     color: white;
-    font-weight: 100;
+    font-weight: 1000;
+    font-family: var(--font-quicksand);
   }
 
   p.main-content {
@@ -406,7 +407,7 @@ const Message = styled.section<{ isVisible?: number }>`
     border-radius: 10px;
     text-align: left;
     background-color: #8810a6f6;
-    font-weight: 250;
+    font-weight: 1000;
   }
 
   p.title {
