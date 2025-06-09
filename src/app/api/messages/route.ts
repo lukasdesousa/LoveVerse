@@ -48,14 +48,12 @@ export async function POST(req: NextRequest) {
         });
 
         if (newMessage.id && !newMessage.emailSent) {
-            setTimeout(async () => {
                 await SendEmail(newMessage.email, newMessage.id, newMessage.creatorName, newMessage.destinataryName)
-
+                
                 await prisma.message.update({
                     where: { id: newMessage.id },
                     data: { emailSent: true }
                 });
-            }, 10000);
         }
         return NextResponse.json({ message: newMessage }, { status: 201 });
     } catch (error) {
