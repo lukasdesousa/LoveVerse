@@ -15,8 +15,8 @@ model Message {
   imageUrl  String?
   email String @default("example@example.com")
   spotifyLink  String?
+  emailSent Boolean @default(false)
   dateInit  DateTime? // Data inicial do relacionamento
-  interactiveMessage Boolean @default(true)
   createdAt DateTime @default(now())
   expiresAt DateTime
 }

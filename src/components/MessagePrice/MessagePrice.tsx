@@ -82,9 +82,9 @@ export default function MessagePrice() {
         <Divider inset="none" />
         <CardActions>
           <Typography level="title-lg" sx={{ mr: 'auto' }}>
-            R$7,90{' '}
+            R$0,00{' '}
             <Typography textColor="text.tertiary" sx={{ fontSize: 'sm' }}>
-              / pagamento único
+              / por tempo limitado
             </Typography>
           </Typography>
           <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/create'}>Criar</Link></Button>

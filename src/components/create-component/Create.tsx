@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
 import HomeHeader from '@/components/HomeHeader/HomeHeader';
 import TextArea from 'antd/es/input/TextArea';
@@ -12,16 +12,17 @@ import { useEffect, useState } from 'react';
 import { SpotifyCard } from '@/components/Spotify/SpotifyCard';
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
-import useMercadoPago from '@/hooks/useMercadoPago';
+//import useMercadoPago from '@/hooks/useMercadoPago';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import Giraffe from '@/components/Anims/Giraffe/Giraffe';
 import PreviewButton from './preview/button/PreviewButton';
+import { useRouter } from 'next/navigation';
 
 const { Search } = Input;
 
 function Create() {
-  const { createMercadoPagoCheckout } = useMercadoPago();
+  //const { createMercadoPagoCheckout } = useMercadoPago();
   const [form] = Form.useForm();
   const [, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -34,6 +35,7 @@ function Create() {
   const [count, setCount] = useState('');
   const [current, setCurrent] = useState(0);
   const [formIndex, setFormIndex] = useState(0)
+  const router = useRouter();
 
   const getLastCompletedStep = (savedData: Record<string, any>) => {
     for (let i = 0; i < fieldsPerStep.length; i++) {
@@ -133,9 +135,8 @@ function Create() {
         })
         return;
       }
-
+      
       localStorage.setItem('pendingMessage', JSON.stringify(mergedData));
-
       setCurrent(prev => prev + 1);
       setFormIndex(current + 1);
     } catch (errorInfo) {
@@ -191,6 +192,7 @@ function Create() {
                     setErrorLink(true);
                     return Promise.reject('Link inválido! Use: https://open.spotify.com/...');
                   }
+                  setLink(value);
                   setErrorLink(false);
                   return Promise.resolve();
                 }
@@ -290,7 +292,8 @@ function Create() {
 
     localStorage.setItem('pendingMessage', JSON.stringify(finalData));
 
-    await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
+    //await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
+    router.push('/success');
     setLoading(false);
   };
 
@@ -344,7 +347,7 @@ function Create() {
                   <Button
                     type="primary"
                     loading={loading}
-                    onClick={() => form.submit()} // chama submit apenas ao clicar
+                    onClick={() => form.submit()}
                   >
                     Criar
                   </Button>

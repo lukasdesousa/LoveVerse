@@ -39,5 +39,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/success', '/failure', '/pending-payment'],
+  matcher: ['/failure', '/pending-payment'],
 };

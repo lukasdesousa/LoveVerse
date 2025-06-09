@@ -204,6 +204,7 @@ export default function MessagesComponent() {
       });
     }
   }, [showMessage]);
+  console.log(message)
 
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return <MessageNotFound />;
@@ -223,7 +224,7 @@ export default function MessagesComponent() {
         </Message>
         {message.spotifyLink && (
           <Message className="message">
-            <p className="title">ANTES, DE PLAY NO TRECHO QUE {message.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ</p>
+            <p className="title">DE PLAY NO TRECHO QUE {message.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ</p>
             <SpotifyCard link={message.spotifyLink} />
           </Message>
         )}

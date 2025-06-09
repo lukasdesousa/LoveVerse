@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-export async function SendEmail(email: string, id: string) {
+export async function SendEmail(email: string, id: string, creatorName: string, destinataryName: string) {
   try {
     const messageLink = `https://loveverse.space/messages/${id}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(messageLink)}`;
@@ -52,7 +52,7 @@ export async function SendEmail(email: string, id: string) {
     await resend.emails.send({
       from: 'LoveVerse <noreply@loveverse.space>',
       to: email,
-      subject: `Seu QR CODE da mensagem ${id}`,
+      subject: `Seu QR CODE da mensagem de ${creatorName} & ${destinataryName}`,
       html: html,
     });
 

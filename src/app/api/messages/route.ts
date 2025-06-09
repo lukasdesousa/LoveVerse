@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
+import { SendEmail } from "@/lib/SendEmail";
 
 const prisma = new PrismaClient();
 
@@ -41,9 +42,21 @@ export async function POST(req: NextRequest) {
                 expiresAt: body.expiresAt || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 spotifyLink: body.spotifyLink || null,
                 imageUrl: body.imageUrl || null,
-                dateInit: body.dateInit ? new Date(body.dateInit) : null
+                dateInit: body.dateInit ? new Date(body.dateInit) : null,
+                emailSent: false,
             }
         });
+
+        if (newMessage.id && !newMessage.emailSent) {
+            setTimeout(async () => {
+                await SendEmail(newMessage.email, newMessage.id, newMessage.creatorName, newMessage.destinataryName)
+
+                await prisma.message.update({
+                    where: { id: newMessage.id },
+                    data: { emailSent: true }
+                });
+            }, 10000);
+        }
         return NextResponse.json({ message: newMessage }, { status: 201 });
     } catch (error) {
         console.error("Erro ao criar mensagem:", error);

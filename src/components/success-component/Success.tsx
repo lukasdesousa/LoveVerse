@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import animationData from "@/assets/lovepet.json";
 import { Progress } from 'antd';
-import { SendEmail } from '@/lib/SendEmail';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
 
@@ -93,8 +92,6 @@ export default function SuccessPage() {
         const created = data.message;
         setPercent(100);
         router.replace(`/messages/${created.id}`);
-        // dispara o email após um breve delay (opcional)
-        setTimeout(() => SendEmail(created.email, created.id), 10000);
       } catch (err) {
         alert(`Erro ao criar a mensagem: ${err instanceof Error ? err.message : 'Desconhecido'}`);
         router.replace('/create');
@@ -106,10 +103,10 @@ export default function SuccessPage() {
 
   return (
     <Container>
-      <Message>Pagamento confirmado!</Message>
+      <Message>Tudo pronto!</Message>
       <Lottie animationData={animationData} loop style={{ width: 300, height: 400 }} />
       <Progress percent={percentValue} />
-      <Message style={{ fontWeight: 300, fontSize: '1.3rem' }}>
+      <Message style={{ fontWeight: 600, fontSize: '1.3rem' }}>
         Aguarde enquanto a mágica acontece...
       </Message>
     </Container>
@@ -131,4 +128,5 @@ const Message = styled.h1`
   font-size: 1.8rem;
   color: #555;
   margin: 10px auto;
+  font-family: var(--font-quicksand);
 `;
