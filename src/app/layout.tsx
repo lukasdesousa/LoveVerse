@@ -72,6 +72,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${inter.className} ${quicksand.variable}`}>
+       <head>
+        <meta name="google-adsense-account" content="ca-pub-3912537462625302" />
+      </head>
       <body >
         <GlobalStyle />
         {children}
