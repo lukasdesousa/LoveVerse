@@ -204,7 +204,6 @@ export default function MessagesComponent() {
       });
     }
   }, [showMessage]);
-  console.log(message)
 
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return <MessageNotFound />;
