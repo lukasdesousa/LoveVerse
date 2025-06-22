@@ -1,6 +1,6 @@
 'use client';
 
-import NotFound from "@/components/NotFound/NotFound";
+import NotFound from "@/components/Pages/NotFound/NotFound";
 import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 

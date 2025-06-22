@@ -36,7 +36,7 @@ const HeartAnim = () => {
       autoPlay: true,
       "background": {
         "color": {
-          "value": "#000000"
+          "value": "#c50df3"
         },
         "image": "",
         "position": "",

@@ -1,12 +1,8 @@
 'use client';
 
-import dynamic from "next/dynamic";
 import { FC, useEffect, useState } from "react";
-import animationData from "@/assets/Animation - 1748552624340.json";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-
-const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +18,7 @@ const Container = styled.div`
 
 const MessageWrapper = styled.div`
   text-align: center;
-
+  font-family: var(--font-quicksand);
 `;
 
 const messages = [
@@ -49,7 +45,7 @@ const Giraffe: FC<GiraffeProps> = ({ formIndex }) => {
 
   return (
     <Container>
-      <Lottie animationData={animationData} loop={true} style={{ width: 250, height: 300 }} />
+
       <MessageWrapper>
         <AnimatePresence mode="wait">
           <motion.h1
@@ -58,7 +54,7 @@ const Giraffe: FC<GiraffeProps> = ({ formIndex }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            style={{ marginBottom: '30px', fontSize: "1.2rem", fontWeight: '270' }}
+            style={{ marginBottom: '30px', fontSize: "1.2rem", fontWeight: 500 }}
           >
             {messages[index]}
           </motion.h1>

@@ -358,7 +358,7 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
-  background-color: black;
+  background-color: #c50df3;
   
   section.message-container {
     

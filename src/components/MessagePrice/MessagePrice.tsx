@@ -87,7 +87,7 @@ export default function MessagePrice() {
               / por tempo limitado
             </Typography>
           </Typography>
-          <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/create'}>Criar</Link></Button>
+          <Button style={{backgroundColor: '#000000'}} endDecorator={<KeyboardArrowRight />}><Link style={{color: 'white', textDecoration: 'none'}} href={'/criar'}>Criar</Link></Button>
         </CardActions>
       </Card>
     </Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import Failure from "@/components/failure-component/Failure";
+import Failure from "@/components/Pages/failure-component/Failure";
 import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 

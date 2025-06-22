@@ -1,128 +1,186 @@
 'use client';
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button, Grid, Menu, theme } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
-import styled from "styled-components";
-
-const { useToken } = theme;
-const { useBreakpoint } = Grid;
+import styled from 'styled-components';
+import { Drawer } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { useMediaQuery } from '@mui/material';
+import Link from 'next/link';
 
 export default function LoveHeader() {
-  const { token } = useToken();
-  const screens = useBreakpoint();
-  const router = useRouter();
 
-  const menuItems: Array<{
-    label: string;
-    key: string;
-    path?: string;
-    children?: Array<{ label: string; key: string; path?: string }>;
-  }> = [
-    {
-      label: "Criar mensagem",
-      key: "mensagens",
-      path: "/create",
-    },
-  ];
-
-  const [current, setCurrent] = useState("projects");
-
-  const onClick = (e) => {
-    const selectedItem = menuItems.find(
-      (item) => item.key === e.key || item.children?.some((child) => child.key === e.key)
-    );
-
-    if (selectedItem) {
-      const path = selectedItem.path || selectedItem.children?.find((child) => child.key === e.key)?.path;
-      if (path) {
-        router.push(path);
-      }
+  const [open, setOpen] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 968px)');
+  
+  useEffect(() => {
+    if(!isSmallScreen) {
+      setOpen(false);
     }
+  }, [isSmallScreen])
 
-    setCurrent(e.key);
+  const showDrawer = () => {
+    setOpen(true);
   };
 
-  const styles = {
-    container: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-      margin: "0 auto",
-      maxWidth: token.screenXL,
-      padding: screens.md ? `0px ${token.paddingLG}px` : `0px ${token.padding}px`,
-    },
-    header: {
-      borderBottom: `${token.lineWidth}px ${token.lineType} ${token.colorSplit}`,
-      position: "relative" as React.CSSProperties["position"],
-    },
-    logo: {
-      display: "block" as React.CSSProperties["display"],
-      height: token.sizeLG,
-      left: "50%",
-      position: screens.md ? "static" as React.CSSProperties["position"] : "absolute" as React.CSSProperties["position"],
-      top: "50%",
-      transform: screens.md ? " " : "translate(-50%, -50%)",
-      textDecoration: "none",
-      color: 'black',
-    },
-    menu: {
-      backgroundColor: "transparent",
-      borderBottom: "none",
-      lineHeight: screens.sm ? "4rem" : "3.5rem",
-      marginLeft: screens.md ? "0px" : `-${token.size}px`,
-      width: screens.md ? "inherit" : token.sizeXXL,
-      menuItems: {
-        color: token.colorTextBase,
-      }
-    },
-    menuContainer: {
-      alignItems: "center",
-      display: "flex",
-      gap: token.size,
-      width: "100%",
-    },
+  const onClose = () => {
+    setOpen(false);
   };
 
   return (
-     
-        <nav style={styles.header}>
-          <div style={styles.container}>
-            <div style={styles.menuContainer}>
-              <a style={styles.logo} href="/">
-                <h1 style={{fontFamily: 'var(--font-quicksand)'}}>Love<Span>Verse</Span></h1>
-              </a>
-              <Menu
-                style={styles.menu}
-                mode="horizontal"
-                items={menuItems}
-                onClick={onClick}
-                selectedKeys={screens.md ? [current] : []}
-                overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
-              />
-            </div>
-          </div>
-        </nav>
-      
+    <HeaderContainer>
+      <Link href={'/'} style={{textDecoration: 'none', color: 'inherit'}}>
+        <Logo>Love<span>Verse</span></Logo>
+      </Link>
+
+      <Menu>
+        <MenuItem href="/criar">Criar mensagem</MenuItem>
+        <MenuItem href="/termos/loveverse">Termos de uso</MenuItem>
+        <MenuItem href="/tutorial/loveverse">Tutorial</MenuItem>
+      </Menu>
+
+        <Drawer
+          placement='bottom'
+          width={500}
+          closeIcon={false}
+          height={400}
+          style={{borderRadius: '30px 30px 0px 0px'}}
+          onClose={onClose}
+          open={open}
+        >
+          <Line />
+          <DrawerMenuOpts>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/criar'}><h1>Criar mensagem</h1></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/termos/loveverse'}><h1>Termos de uso</h1></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/tutorial/loveverse'}><h1>Tutorial</h1></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/contato/loveverse'}><h1>Contato</h1></Link>
+          </DrawerMenuOpts>
+          <Line02 />
+          <LtTitle>
+            <p>©2025 LoveVerse Space</p>
+          </LtTitle>
+        </Drawer>
+
+    <RightAction href={'/contato/loveverse'}>Contato</RightAction>
+    <MenuOutlined className='btn-menu' onClick={() => showDrawer()}/>
+    </HeaderContainer>
   );
 }
 
-const Span = styled.span`
-   background: linear-gradient(
-      to right,
-      #884ada 20%,
-      #00affa 30%,
-      #0190cd 70%,
-      #cd43e9 80%
-    );
+const Line = styled.span`
+  display: block;
+  margin: auto;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
+  height: 7px;
+  background-color: #e6e6e6;
+  width: 50px;
+`;
+
+const Line02 = styled.span`
+  display: block;
+  margin: 40px auto 0px auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background-color: #e6e6e6;
+  width: 100%;
+`;
+
+const LtTitle = styled.section`
+  text-align: center;
+
+  p {
+    margin-top: 20px;
+    font-weight: bold;
+    opacity: 0.7;
+    font-family: var(--font-quicksand);
+  }
+`;
+
+const DrawerMenuOpts = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: start;
+  gap: 30px;
+  margin-top: 70px;
+
+  h1 {
+    font-family: var(--font-quicksand);
+  }
+`;
+
+const HeaderContainer = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 90px;
+  font-family: var(--font-quicksand);
+
+  .btn-menu {
+    @media (min-width: 968px) {
+    display: none;
+  }
+  }
+
+  @media (max-width: 968px) {
+    justify-content: space-between;
+    padding: 25px 34px
+  }
+`;
+const Logo = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+
+  span {
+    background: linear-gradient(to right, #884ada, #00affa, #0190cd, #cd43e9);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 500% auto;
     animation: textShine 5s ease-in-out infinite alternate;
-    white-space: nowrap; /* ← impede quebra de linha */
-        font-weight: 700;
-        color: #000000;
-        font-family: var(--font-quicksand);
+  }
+`;
+
+const Menu = styled.nav`
+  display: flex;
+  gap: 28px;
+
+  @media (max-width: 968px) {
+    display: none;
+  }
+`;
+
+const MenuItem = styled(Link)`
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #884ada;
+  }
+`;
+
+const RightAction = styled(Link)`
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #111;
+  text-decoration: none;
+  cursor: pointer;
+
+  @media (max-width: 968px) {
+    display: none;
+  }
+
+  &:hover {
+    color: #884ada;
+  }
 `;

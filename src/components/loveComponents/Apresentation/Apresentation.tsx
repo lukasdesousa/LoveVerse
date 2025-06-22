@@ -1,39 +1,26 @@
 'use client';
 
 import styled from 'styled-components';
-import {  useRef } from 'react';
+import { useRef } from 'react';
 import dynamic from "next/dynamic";
-import featuresAnim from '@/assets/features_bg-anim.json';
-import type { LottieRefCurrentProps } from 'lottie-react';
-import MessagePrice from '@/components/MessagePrice/MessagePrice';
+import mainPageLottie from '@/assets/mainpagelottie.json';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 export const Apresentation = () => {
-    const bgRef = useRef<LottieRefCurrentProps>(null);
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (
         <Container ref={containerRef}>
-            <Lottie
-                    lottieRef={bgRef}
-                    animationData={featuresAnim}
-                    loop={true} // não repetir
-                    autoplay={true} // não iniciar automaticamente
-                    style={{
-                    position: 'absolute',
-                    top: 0, left: 0,
-                    width: '100%',
-                    height: '100%',
-                    
-                }}
-                rendererSettings={{
-                    preserveAspectRatio: 'xMidYMid slice'
-                }}
-                />
             <SubContainer>
-                <MessagePrice />
+                <Lottie
+                className='lottie'
+                    animationData={mainPageLottie}
+                    loop={true}
+                    autoplay={true}
+                    style={{ width: '50%', height: '50%', minWidth: 400, minHeight: 400}}
+                />
             </SubContainer>
-
         </Container>
 
     );
@@ -46,11 +33,9 @@ const Container = styled.section`
     justify-content: center;
     flex-direction: column;
     margin: 10px auto;
-    overflow: hidden;
     padding: 20px;
     gap: 100px;
     text-align: center;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;;
 `;
 
 const SubContainer = styled.div`
@@ -59,8 +44,12 @@ const SubContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin: 40px 0px;
-    overflow: hidden;
+    margin: 20px 0px;
+
+    .lottie {
+        position: relative;
+        bottom: 100px;
+    }
 
     h3 {
         font-style: italic;

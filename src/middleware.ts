@@ -14,7 +14,6 @@ export function middleware(request: NextRequest) {
   if (pathname === '/success') {
     const token = cookies.get('success_token');
     if (!token?.value) {
-      // Redireciona para /create se não houver token válido
       return NextResponse.redirect(new URL('/', request.url));
     }
   }

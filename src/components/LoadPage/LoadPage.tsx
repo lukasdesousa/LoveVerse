@@ -9,7 +9,7 @@ export function LoadPage({ children }: { children: React.ReactNode; }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 1000)
+        }, 500)
     }, [children])
 
     if (loading === false) {
@@ -23,7 +23,7 @@ export function LoadPage({ children }: { children: React.ReactNode; }) {
             gap: '5px',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100vh' // opcional: para centralizar também verticalmente na tela toda
+            height: '100vh'
         }}>
             <CircularProgress style={{ color: '#aa00ff' }} />
         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from "react";
-import SuccessPage from "@/components/success-component/Success";
+import SuccessPage from "@/components/Pages/success-component/Success";
 import { CircularProgress } from "@mui/material";
 
 export default function Index() {

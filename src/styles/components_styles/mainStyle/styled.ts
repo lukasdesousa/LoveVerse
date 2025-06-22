@@ -3,7 +3,47 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-    // style
+    padding-top: 40px;
+`;
+
+export const MainText = styled.h2`
+  font-size: 3.2rem;
+  text-align: left;
+  font-weight: 1000;
+  max-width: 400px;
+  line-height: 1;
+  font-family: var(--font-quicksand);
+`;
+
+export const MainTextContainer = styled.section`
+  display: flex;
+
+  align-items: first baseline;
+ @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 40px;
+      justify-content: left;
+  }
+  justify-content: space-between;
+  margin: 70px auto;
+  width: 100%;
+  gap: 100px;
+  border-bottom: 1px solid #e6e6E6;
+  padding-bottom: 60px;
+  
+  .subtext-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  p {
+    text-align: left;
+    font-family: var(--font-quicksand);
+  }
 `;
 
 export const Span = styled.span`
@@ -27,18 +67,21 @@ export const Span = styled.span`
 
 export const Content = styled.section`
   align-items: center;
-  justify-content: center;
   margin: 0 auto;
-  padding: 20px;
-  width: 100%;
-  max-width: 700px;
   text-align: center;
+   @media (max-width: 768px) {
+    width: 90%;
+   }
+  width: 70%;
 
-  p {
-    width: 100%;
-    margin: 20px auto;
+  .txt-statistic {
+     background: linear-gradient(to right, #884ada, #00affa, #0190cd, #cd43e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
   }
-
 `;
 
 export const Text = styled.p`

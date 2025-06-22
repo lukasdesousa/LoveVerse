@@ -1,115 +1,57 @@
-/* eslint-disable react-refresh/only-export-components */
-// pages/index.tsx
+'use client';
+
 import Header from '@/components/HomeHeader/HomeHeader';
 import Footer from '@/components/Footer/Footer';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
-import { Content, Text, Title, Container } from '@/styles/components_styles/mainStyle/styled';
+import { Content, Container, MainText, MainTextContainer } from '@/styles/components_styles/mainStyle/styled';
 import { Apresentation } from '@/components/loveComponents/Apresentation/Apresentation';
-import Link from 'next/link';
-import { Metadata, Viewport } from 'next';
 import { LoadPage } from '@/components/LoadPage/LoadPage';
-import { LottieApresentation } from '@/components/loveComponents/Apresentation/LottiesApresentation.tsx/LottieApresentation';
-import Banner from '@/components/Banner/Banner';
+import BubbleButton from '@/components/MainPage/buttons/BubbleButton';
+import { Statistic, StatisticProps } from 'antd';
+import CountUp from 'react-countup';
+import { UsingTech } from '@/components/MainPage/Lotties/Tech/UsingTech';
+import Features from '@/components/MainPage/Containers/Features/Features';
+import BlackContainer from '@/components/MainPage/Containers/BlackContainer/BlackContainer';
 
-const ogUpdatedTime = new Date().toISOString();
-const publicImageUrl = 'https://www.loveverse.space/img/LoveVerse-banner.png';
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    metadataBase: new URL('https://www.loveverse.space'),
-    title: {
-      default: 'Mensagens personalizadas para casais - LoveVerse',
-      template: '%s | LoveVerse',
-    },
-    description: 'Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
-    openGraph: {
-      type: 'website',
-      url: publicImageUrl,
-      title: 'LoveVerse',
-      description: 'Mensagens personalizadas para casais',
-      siteName: 'LoveVerse',
-      images: [
-        {
-          url: publicImageUrl,
-          width: 1200,
-          height: 630,
-          alt: 'Crie mensagens personalizadas únicas',
-          type: 'image/png'
-        },
-      ],
-      locale: 'pt_BR',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'LoveVerse',
-      description: 'Crie mensagens personalizadas únicas',
-      images: [
-        publicImageUrl
-      ],
-    },
-    other: {
-      'og:image': publicImageUrl,
-      'og:image:width': '1200',
-      'og:image:height': '630',
-      'og:image:alt': 'LoveVerse - Compartilhe amor',
-      'og:image:type': 'image/png',
-      'og:updated_time': ogUpdatedTime,
-    },
-  };
-}
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
+const formatter: StatisticProps['formatter'] = (value) => (
+  <CountUp end={value as number} separator="," />
+);
 
 function Index() {
   return (
     <>
       <LoadPage>
-        {/* Conteúdo da home */}
         <Header />
-          <Banner />
         <Container>
-          <section>
-            <ScrollReveal>
-              <Content>
-                <Title>Deixe quem você ama feliz</Title>
-                <Text>
-                  Com a <span style={{fontWeight: '1000'}}>LoveVerse</span>, agradar quem você ama ficou mais rápido e prático. Através de mensagens personalizadas, você pode criar uma experiência única e inesquecível para quem você ama.
-                </Text>
-                <Text>
-                  Uma simples mensagem bem feita pode salvar o seu relacionamento, ou até mesmo conquistar o coração de alguém especial.
-                </Text>
-                <Text>
-                  Rápido, fácil e prático, e sem mensagens sem vida. Na LoveVerse, damos vida às suas palavras, transformando-as em mensagens únicas, interativas e inesquecíveis.
-                </Text>
-            <LottieApresentation />
-              </Content>
-            </ScrollReveal>
-          </section>
-          <Content>
-            <Text>
-              Não há um método melhor para conquistar alguém do que uma mensagem personalizada e cheia de afeto. A <span style={{fontWeight: '1000'}}>LoveVerse</span> é a ferramenta perfeita para você expressar seus sentimentos de forma única e especial.
-            </Text>
-          </Content>
-            <section>
-              <Apresentation />
-            </section>
+          <ScrollReveal>
             <Content>
-              <Text>
-               Aqui, é possível criar mensagens que tocam o sentimento do seu amor, com fotos, músicas e textos personalizados. Tudo isso de forma simples e rápida, para que você possa surpreender quem ama em poucos minutos:
-              </Text>
-                         <Text>
-               Crie uma mensagem de prévia na página de <Link href={'/create'}>criação</Link>, fique a vontade para experimentar todos os recursos disponíveis e veja como é fácil e prático.
-              </Text>
+              <ScrollReveal>
+                <MainTextContainer>
+                  <MainText>Encante quem você ama com a LoveVerse.</MainText>
+                  <section className='subtext-container'>
+                    <p>Compartilhe emoções, lembranças e amores junto à LoveVerse. Crie a sua mensagem agora mesmo.</p>
+                    <BubbleButton />
+                  </section>
+                </MainTextContainer>
+              </ScrollReveal>
+              <ScrollReveal>
+                <Content style={{ textAlign: 'left' }}>
+                    <section style={{display: 'flex', justifyContent: 'space-between', alignItems: 'start'}}>
+                      <Statistic title={<span style={{ fontSize: '1rem', fontWeight: '500', fontFamily: 'var(--font-quicksand)', margin: 0 }}>Casais satisfeitos</span>} value={'1000'} formatter={formatter} />
+                      <p style={{fontFamily: 'var(--font-quicksand)', marginTop: '10px'}}>Gratuito</p>
+                    </section>
+                </Content>
+              </ScrollReveal>
+              <ScrollReveal>
+                <Apresentation />
+              </ScrollReveal>
+                <ScrollReveal>
+                  <UsingTech />
+                </ScrollReveal>
             </Content>
+          </ScrollReveal><br />
+              <Features />
+            <BlackContainer />
         </Container>
         <Footer />
       </LoadPage>

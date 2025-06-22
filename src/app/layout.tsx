@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'Mensagens personalizadas para casais - LoveVerse',
+      default: 'LoveVerse',
       template: '%s | LoveVerse',
     },
     description: 'Mensagens personalizadas, única e interativa para casais. Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
