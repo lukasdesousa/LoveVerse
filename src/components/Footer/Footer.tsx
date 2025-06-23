@@ -29,10 +29,10 @@ const Footer: React.FC = () => {
                             </Item>
                         </ItensContainer>
                         <SocialMediaContainer>
-                            <Item href={'/contato'}>
+                            <Item href={'https://www.tiktok.com/@loveverse.space?is_from_webapp=1&sender_device=pc'} target="_blank" rel="noopener noreferrer">
                                 <h4>TikTok</h4>
                             </Item>
-                            <Item href={'/contato'}>
+                            <Item href={'https://www.instagram.com/loveversespace/'} target="_blank" rel="noopener noreferrer">
                                 <h4>Instagram</h4>
                             </Item>
                         </SocialMediaContainer>
