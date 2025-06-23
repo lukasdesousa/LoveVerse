@@ -20,7 +20,7 @@ export default function ContactFeatures() {
                         </TextContainer>
                     <SubContainer>
                         <div><FeaturesCard title="Email" description="Entre em contato conosco através de nosso e-mail: loveversespace@gmail.com" src={email} /></div>
-                        <div><FeaturesCard title="Instagram" description="Também poderá encontrar a LoveVerse nas redes sociais: @loveverse.space" src={metalicInstagram} /></div>
+                        <div><FeaturesCard title="Instagram" description="Também poderá encontrar a LoveVerse nas redes sociais: @loveversespace" src={metalicInstagram} /></div>
                     </SubContainer>
                 </Content>
             </Container>
