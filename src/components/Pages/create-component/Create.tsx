@@ -104,12 +104,12 @@ function Create() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form])
 
-  
+
   const next = async () => {
     const rouletteItens = localStorage.getItem('rouletteItens');
 
     if (current >= steps.length - 1) return;
-    if(current === 7 && !rouletteItens) {
+    if (current === 7 && !rouletteItens) {
       api.warning({
         message: 'Aviso',
         description: 'Você não preencheu os campos da roleta. Ela não será exibida. Certifique-se de preencher todos os campos e clicar em "feito".',
@@ -145,7 +145,7 @@ function Create() {
         })
         return;
       }
-      
+
       localStorage.setItem('pendingMessage', JSON.stringify(mergedData));
       setCurrent(prev => prev + 1);
       setFormIndex(current + 1);
@@ -275,11 +275,11 @@ function Create() {
         </Form.Item>
       )
     },
-     {
+    {
       title: '8º',
       content: (
         <div>
-          <h2 style={{fontFamily: 'var(--font-quicksand)', fontWeight: '500', textAlign: 'center'}}>Roleta LoveVerse</h2>
+          <h2 style={{ fontFamily: 'var(--font-quicksand)', fontWeight: '500', textAlign: 'center' }}>Roleta LoveVerse</h2>
           <RouletteInputs />
         </div>
       )
@@ -328,8 +328,8 @@ function Create() {
       <ScrollReveal>
         <Box
           sx={{
-          maxWidth: 800, mx: 'auto', my: 10,
-            '& .ant-steps': { display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', alignItems: 'center'},
+            maxWidth: 800, mx: 'auto', my: 10,
+            '& .ant-steps': { display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', alignItems: 'center' },
             '& .ant-steps-item': { flex: '0 0 auto', p: 0, m: 0 }, '& .ant-steps-item-icon': {
               backgroundColor: '#000000 !important',
               borderColor: '#000000 !important'
@@ -359,7 +359,11 @@ function Create() {
         </Box>
         <Box sx={{ width: '80%', maxWidth: 600, mx: 'auto', marginBottom: '60px' }}>
           <CardContent>
-            <Form form={form} layout="vertical" onFinish={onFinish} requiredMark='optional'>
+            <Form form={form} layout="vertical" onFinish={onFinish} requiredMark='optional' onKeyDown={(e) => {
+              if (e.key === 'Enter' && current < steps.length - 1) {
+                e.preventDefault();
+              }
+            }}>
               {steps[current].content}
               <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
                 {current > 0 && <Button onClick={prev}>Anterior</Button>}

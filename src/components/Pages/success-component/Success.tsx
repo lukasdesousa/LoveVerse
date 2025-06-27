@@ -64,6 +64,8 @@ export default function SuccessPage() {
 
       // Limpa o localStorage e remove o base64 antes de enviar a mensagem
       localStorage.removeItem('pendingMessage');
+      localStorage.removeItem('rouletteItens');
+      localStorage.removeItem('rouletteTitle');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { imageBase64, ...rest } = msg;
       const newMessage = { ...rest, imageUrl };
