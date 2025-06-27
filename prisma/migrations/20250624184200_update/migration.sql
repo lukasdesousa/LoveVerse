@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Message" ADD COLUMN     "rouletteTitle" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "theme" INTEGER NOT NULL DEFAULT 1,
+ALTER COLUMN "email" SET DEFAULT '';

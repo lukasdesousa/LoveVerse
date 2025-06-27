@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: validationError }, { status: 400 });
         }
 
-
         const newMessage = await prisma.message.create({
             data: {
                 creatorName: body.creatorName,
@@ -41,6 +40,8 @@ export async function POST(req: NextRequest) {
                 email: body.email,
                 expiresAt: body.expiresAt || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 spotifyLink: body.spotifyLink || null,
+                rouletteTitle: body.rouletteTitle || null,
+                rouletteItens: body.rouletteItens || null,
                 imageUrl: body.imageUrl || null,
                 dateInit: body.dateInit ? new Date(body.dateInit) : null,
                 emailSent: false,

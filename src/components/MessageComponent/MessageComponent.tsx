@@ -18,6 +18,7 @@ import stars from 'public/img/stars.png';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MessageNotFound from "../loveComponents/messageNotFound/MessageNotFound";
+import PreviewRoullette from "../Pages/create-component/preview/PreviewRoulette/PreviewRoulette";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -31,10 +32,12 @@ interface Messages {
   userId: string;
   expiresAt: string;
   dateInit: string;
+  rouletteTitle?: string;
+  rouletteItens?: string[];
 }
 
 export default function MessagesComponent() {
-  const { id } = useParams(); // Obtém o ID da URL
+  const { id } = useParams(); 
   const [message, setMessage] = useState<Messages | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibility, setVisibility] = useState(0);
@@ -205,6 +208,7 @@ export default function MessagesComponent() {
     }
   }, [showMessage]);
 
+
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return <MessageNotFound />;
 
@@ -340,9 +344,14 @@ export default function MessagesComponent() {
                   />
                 </div>
               </section>
+              
             </Message>
           )
-
+        )}
+        {message.rouletteItens && message.rouletteItens.length > 0 && (
+            <section>
+              <PreviewRoullette inComponent={true} title={message.rouletteTitle || "Roda da Sorte"} itens={message.rouletteItens} />
+            </section>
         )}
       </MainContainer>
     </main>

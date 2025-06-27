@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import styled from "styled-components";
-import animationData from "@/assets/pending-payment-animation.json";
+import animationData from "@/lotties/pending-payment-animation.json";
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 

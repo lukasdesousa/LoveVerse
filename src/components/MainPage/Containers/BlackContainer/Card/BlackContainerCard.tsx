@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
-import animationData from "@/assets/space-02.json";
+import animationData from "@/lotties/space-02.json";
 import styled from "styled-components";
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });

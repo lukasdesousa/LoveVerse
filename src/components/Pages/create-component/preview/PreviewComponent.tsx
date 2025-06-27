@@ -19,6 +19,8 @@ import { CircularProgress } from "@mui/material";
 import PreviewWarn from "./warning/PreviewWarn";
 import { useRouter } from "next/navigation";
 import NotFoundPreview from "./notfound/NotFoundPreview";
+import PreviewRoullette from "./PreviewRoulette/PreviewRoulette";
+
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -35,6 +37,9 @@ export default function PreviewComponent() {
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const stored = localStorage.getItem('pendingMessage');
+    const rouletteTitle = localStorage.getItem('rouletteTitle');
+    const rouletteItensRaw = localStorage.getItem('rouletteItens');
+    const rouletteItens: string[] = rouletteItensRaw ? JSON.parse(rouletteItensRaw) : [];
 
     if(!stored) {
         return <NotFoundPreview />;
@@ -329,6 +334,11 @@ export default function PreviewComponent() {
                         )}
                     </Message>
                 )}
+                {rouletteTitle && rouletteItens && rouletteItens.length > 0 && (
+                    <section>
+                        <PreviewRoullette itens={rouletteItens} title={rouletteTitle} inComponent={true} />
+                    </section>
+                )}
             </MainContainer>
         </main>
         </>
@@ -344,7 +354,7 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
-  background-color: black;
+  background-color: #c50df3;
   
   section.message-container {
     

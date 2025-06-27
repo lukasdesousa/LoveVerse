@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
-import animationData from "@/assets/Animation.json";
+import animationData from "@/lotties/Animation.json";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { LoadPage } from "../../LoadPage/LoadPage";

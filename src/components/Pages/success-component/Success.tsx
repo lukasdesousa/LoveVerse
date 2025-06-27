@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import animationData from "@/assets/lovepet.json";
+import animationData from "@/lotties/lovepet.json";
 import { Progress } from 'antd';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false})

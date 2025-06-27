@@ -3,10 +3,11 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import dynamic from "next/dynamic";
-import square from '@/assets/square_metallic.json';
+import square from '@/lotties/square_metallic.json';
 import { Button } from 'antd';
 import { ExportOutlined } from '@ant-design/icons';
 import ScrollReveal from '@/components/Scroll/ScrollReveal';
+import Link from 'next/link';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 export const UsingTech = () => {
@@ -41,7 +42,7 @@ export const UsingTech = () => {
                         <p style={{ opacity: '0.8', fontFamily: 'var(--font-quicksand)', marginBottom: '20px' }}>Também como objetivo, simplificar a forma de obter algo criativo e rápido. Digitalizando a boa e velha carta a mão.</p>
                     </div>
                 </section>
-                        <Button>Saiba mais <ExportOutlined /> </Button>
+                        <Link href={'/tutorial/loveverse'}><Button>Saiba mais <ExportOutlined /> </Button></Link>
             </section>
         </Container>
 

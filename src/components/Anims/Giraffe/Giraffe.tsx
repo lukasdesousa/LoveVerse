@@ -29,6 +29,7 @@ const messages = [
   "Agora, deixe a criatividade fluir...",
   "Sabe aquela data especial? Coloque aqui...",
   "Agora, uma linda foto...",
+  "",
   "Veja uma prévia da sua mensagem",
 ];
 

@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Giraffe from '@/components/Anims/Giraffe/Giraffe';
 import PreviewButton from './preview/button/PreviewButton';
 import { useRouter } from 'next/navigation';
+import RouletteInputs from './RouletteInputs/RouletteInputs';
 
 const { Search } = Input;
 
@@ -103,9 +104,19 @@ function Create() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form])
 
-
+  
   const next = async () => {
+    const rouletteItens = localStorage.getItem('rouletteItens');
+
     if (current >= steps.length - 1) return;
+    if(current === 7 && !rouletteItens) {
+      api.warning({
+        message: 'Aviso',
+        description: 'Você não preencheu os campos da roleta. Ela não será exibida. Certifique-se de preencher todos os campos e clicar em "feito".',
+        duration: 9,
+        showProgress: true,
+      })
+    }
     try {
       await form.validateFields(fieldsPerStep[current]);
       if (current === 3) setErrorLink(false);
@@ -264,6 +275,15 @@ function Create() {
         </Form.Item>
       )
     },
+     {
+      title: '8º',
+      content: (
+        <div>
+          <h2 style={{fontFamily: 'var(--font-quicksand)', fontWeight: '500', textAlign: 'center'}}>Roleta LoveVerse</h2>
+          <RouletteInputs />
+        </div>
+      )
+    },
     {
       title: 'Prévia',
       content: (
@@ -277,19 +297,24 @@ function Create() {
     await form.validateFields();
     const id = uuidv4();
 
-    // CORREÇÃO: Usar base64 diretamente do estado
     const base64 = preview;
 
+    const rouletteTitle = localStorage.getItem('rouletteTitle') || '';
+    const rouletteItens = JSON.parse(localStorage.getItem('rouletteItens') as string);
+    console.log(rouletteItens, rouletteTitle)
     const existing = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
     const finalData = {
       ...existing,
       ...values,
+      rouletteTitle: rouletteTitle,
+      rouletteItens: rouletteItens,
       imageBase64: base64,
       spotifyLink,
       paymentId: id
     };
 
     localStorage.setItem('pendingMessage', JSON.stringify(finalData));
+    console.log(localStorage.getItem('pendingMessage'));
 
     //await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
     router.push('/success');

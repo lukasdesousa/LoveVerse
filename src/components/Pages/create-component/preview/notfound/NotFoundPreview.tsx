@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
-import animationData from "@/assets/space-animation.json";
+import animationData from "@/lotties/space-animation.json";
 import styled from "styled-components";
-import space404 from '@/assets/404-space.json';
+import space404 from '@/lotties/404-space.json';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
-import animationData from "@/assets/Failure-animation.json";
+import animationData from "@/lotties/Failure-animation.json";
 import styled from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
 

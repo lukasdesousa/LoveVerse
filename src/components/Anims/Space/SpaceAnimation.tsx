@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { FC, useEffect, useState } from "react";
-import animationData from "@/assets/space-animation.json";
+import animationData from "@/lotties/space-animation.json";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 

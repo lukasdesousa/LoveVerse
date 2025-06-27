@@ -13,8 +13,11 @@ model Message {
   destinataryName String
   content   String
   imageUrl  String?
-  email String @default("example@example.com")
+  email String @default("")
   spotifyLink  String?
+  rouletteItens String[]
+  rouletteTitle String? @default("")
+  theme Int @default(1)
   emailSent Boolean @default(false)
   dateInit  DateTime? // Data inicial do relacionamento
   createdAt DateTime @default(now())

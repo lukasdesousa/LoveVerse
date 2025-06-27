@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import dynamic from "next/dynamic";
-import mainPageLottie from '@/assets/mainpagelottie.json';
+import mainPageLottie from '@/lotties/mainpagelottie.json';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 export const Apresentation = () => {
@@ -40,7 +40,7 @@ const Container = styled.section`
 
 const SubContainer = styled.div`
     display: flex;
-    flex-direction: column; /* ← aqui está a solução */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
