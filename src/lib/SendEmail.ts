@@ -9,41 +9,64 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
     const messageLink = `https://loveverse.space/messages/${id}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(messageLink)}`;
 
-    const html = `
-  <div style="font-family: Arial, sans-serif; background-color: #f6f6f6; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px;">
-    <div style="background-color: #fff; padding: 20px; border-radius: 8px;">
-      <h2 style="color: #aa00ff;">Sua mensagem foi criada com sucesso!</h2>
-      <p>Clique no botão abaixo ou escaneie o QR Code para visualizar:</p>
-      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: auto;">
-        <img src="${qrCodeUrl}" alt="QR Code" width="200" height="200" />
-      </div>
-      <div style="margin-top: 20px;">
-        <a href="${qrCodeUrl}" style="
-          display: inline-block;
-          padding: 10px 20px;
-          background-color: #aa00ff;
-          color: white;
-          text-decoration: none;
-          border-radius: 5px;
-          font-weight: bold;
-        ">Visualizar QR Code</a>
-        <p style="margin-top: 10px; font-size: 12px; color: #888;">
-          Ao visualizar, clique em "Baixar imagem" para salvar o QR CODE na sua galeria
+  const html = `
+  <div style="font-family: Arial, sans-serif; background-color: #f6f6f6; padding: 30px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;">
+      <h2 style="color: #aa00ff; margin-bottom: 10px;">Mensagem criada com sucesso!</h2>
+      <p style="font-size: 15px; color: #444; margin-bottom: 20px;">
+        Sua mensagem está pronta! Você pode escanear o QR Code abaixo ou clicar nos botões para acessar.
+      </p>
+
+      <img src="${qrCodeUrl}" alt="QR Code" width="200" height="200" style="margin: 20px auto; display: block;" />
+
+      <a href="${qrCodeUrl}" style="
+        display: inline-block;
+        margin-top: 10px;
+        background-color: #aa00ff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+      ">Baixar QR Code</a>
+
+      <p style="margin-top: 10px; font-size: 13px; color: #888;">
+        Toque e segure para salvar na galeria.
+      </p>
+
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;" />
+
+      <a href="${messageLink}" style="
+        display: inline-block;
+        background-color: #aa00ff;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+      ">Ver Mensagem</a>
+
+      <div style="margin-top: 40px;">
+        <h3 style="color: #333; font-size: 18px;">Ajude-nos a melhorar</h3>
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+          Envie sugestões para tornar o LoveVerse ainda melhor 💖
         </p>
-      </div>
-      <div style="margin-top: 20px;">
-        <a href="${messageLink}" style="
+        <a href="https://loveverse.space/melhorias/loveverse" style="
           display: inline-block;
-          padding: 10px 20px;
           background-color: #aa00ff;
           color: white;
+          padding: 10px 20px;
           text-decoration: none;
-          border-radius: 5px;
+          border-radius: 6px;
           font-weight: bold;
-        ">Ver Mensagem</a>
+          font-size: 14px;
+        ">Dar Sugestões</a>
       </div>
-      <p style="margin-top: 40px; font-size: 12px; color: #888;">
-        Obrigado por usar o LoveVerse 💖
+
+      <p style="margin-top: 40px; font-size: 12px; color: #aaa;">
+        Obrigado por usar a LoveVerse 💜
       </p>
     </div>
   </div>
