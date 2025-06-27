@@ -11,7 +11,6 @@ import useSensorSupport from "@/hooks/useSensorSupport";
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
-
 const Intro = ({ children }: { children: React.ReactNode }) => {
   const [next, setNext] = useState(false);
   const [animation, setAnimation] = useState(false);

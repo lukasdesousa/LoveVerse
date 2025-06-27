@@ -1,11 +1,11 @@
 'use client';
 
-import Home from "@/components/Pages/Main/Home";
+import HelpUs from "@/components/Pages/help-us/HelpUs";
 
 export default function Index() {
   return (
     <>
-    <Home />
+    <HelpUs />
     </>
   )
 }

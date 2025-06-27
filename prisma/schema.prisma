@@ -24,6 +24,11 @@ model Message {
   expiresAt DateTime
 }
 
+model help_us {
+  id       String   @id @default(uuid())
+  text_content String?
+}
+
 model ImageControl {
   id                String   @id @default(cuid())
   publicId String?
