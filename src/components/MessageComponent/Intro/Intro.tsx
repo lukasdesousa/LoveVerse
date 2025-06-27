@@ -24,7 +24,10 @@ const Intro = ({ children }: { children: React.ReactNode }) => {
   useShake(() => {
     if (lottieRef.current) {
       setAnimation(true)
-      lottieRef.current.play()
+      lottieRef.current.play();
+      setTimeout(() => {
+        setVisibility(true);
+      }, 1500);
       setTimeout(() => {
         setBoxAnim(true)
       }, 3000)
