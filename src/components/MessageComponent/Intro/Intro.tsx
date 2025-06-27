@@ -120,6 +120,12 @@ const SubContainer = styled.div.withConfig({ shouldForwardProp: (prop) => prop !
     animation-delay: ${({ showAnim }) => (showAnim ? 'none' : '2s')}; 
     cursor: pointer;
     position: relative;
+    *:focus {
+    outline: none !important;
+    }
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 
   .animation-done {
