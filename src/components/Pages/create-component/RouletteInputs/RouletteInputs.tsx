@@ -52,7 +52,7 @@ const RouletteInputs: React.FC = () => {
               name="title"
               size="large"
               style={{ width: '100%' }}
-              placeholder="Eu te conquistei com..."
+              placeholder="O que vamos comer hoje é..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
