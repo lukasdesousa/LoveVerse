@@ -303,7 +303,7 @@ export default function MessagesComponent() {
   );
 }
 
-const MainContainer = styled.main`
+const MainContainer = styled.main.withConfig({ shouldForwardProp: (prop) => prop !== 'theme' }) <{ theme?: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -312,7 +312,7 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
-  background-color: #c50df3;
+  background-color: ${({ theme }) => (theme === 2 ? '#f7fb0e' : '#c50df3')};;
   
   section.message-container {
     

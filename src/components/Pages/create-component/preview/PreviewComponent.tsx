@@ -297,7 +297,7 @@ export default function PreviewComponent() {
     );
 }
 
-const MainContainer = styled.main`
+const MainContainer = styled.main.withConfig({ shouldForwardProp: (prop) => prop !== 'theme' }) <{ theme?: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -306,7 +306,7 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
-  background-color: #f7fb0e;
+  background-color: ${({ theme }) => (theme === 2 ? '#f7fb0e' : '#c50df3')};;
 
   .theme-02 {
     text-shadow: 0 1px 0 #ffffff, 
