@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
-  const id = request.nextUrl.pathname.split('/').pop(); // Captura o [id] da URL
+  const id = request.nextUrl.pathname.split('/').pop();
 
   if (!id) {
     return NextResponse.json({ error: "ID não fornecido" }, { status: 400 });

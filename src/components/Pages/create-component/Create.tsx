@@ -50,9 +50,9 @@ function Create() {
         return value !== undefined && value !== null && value !== "";
       });
 
-      if (!allFieldsFilled) return i; // retorna o índice do primeiro step incompleto
+      if (!allFieldsFilled) return i;
     }
-    return fieldsPerStep.length; // todos os steps preenchidos
+    return fieldsPerStep.length;
   };
 
 
@@ -77,7 +77,8 @@ function Create() {
     ['spotifyLink'],
     ['content'],
     ['dateInit'],
-    []
+    [],
+    [],
   ];
 
   useEffect(() => {
@@ -99,7 +100,13 @@ function Create() {
       setCurrent(fieldsPerStep.findIndex(fields => fields.every(field => field in parsedMessage)));
 
       const lastStep = getLastCompletedStep(parsedMessage);
-      if (lastStep === 8 && !parsedMessage.imageBase64) {
+      const roulette = localStorage.getItem('roulleteItens')
+      
+      if(roulette && roulette?.length > 0) {
+        setCurrent(10)
+      } 
+    
+      if (lastStep === 9 && !parsedMessage.imageBase64) {
         setCurrent(7)
       } else {
         setCurrent(lastStep);

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import useSensorSupport from "@/hooks/useSensorSupport";
 import styled from "styled-components";
+import { LoadPage } from "../LoadPage/LoadPage";
 
 export default function SensorPermissionGate({
     children,
@@ -64,52 +65,68 @@ export default function SensorPermissionGate({
     }
 
     return (
-        <Container>
-            <div style={{ color: "black", textAlign: "center" }}>
-                <h1>Love<span style={{ color: '#aa00ff' }}>Verse</span></h1><br />
-                <section className="info">
-                    <h2>Permita os sensores</h2>
-                    <p>Está página contém mensagens animadas, para acessar a mensagem completa, precisamos da sua permissão para usar sensores do dispositivo para exibir as mensagens animadas. <strong>Essa ação é necessária para usuários IOS</strong></p>
-                    <button onClick={requestPermission} style={{
-                        marginTop: "1rem",
-                        padding: "0.5rem 1.2rem",
-                        borderRadius: "8px",
-                        border: "none",
-                        background: "#aa00ff",
-                        color: "white",
-                        fontSize: "1rem",
-                        cursor: "pointer",
-                    }}>
-                        Permitir acesso
-                    </button>
-                </section>
-            </div>
-        </Container>
+        <LoadPage>
+            <Container>
+                <div style={{ color: "black", textAlign: "center" }}>
+                    <h1>Love<span>Verse</span></h1>
+                    <section className="info">
+                        <h2>Habilite o sensores</h2>
+                        <p>A página contém mensagens animadas, utilizamos dos sensores do seu smartphone para melhorar a sua experiência. Isso não é obrigatório. <strong>Essa ação é necessária somente para usuários IOS.</strong></p>
+                        <button onClick={requestPermission} style={{
+                            marginTop: "1rem",
+                            padding: "0.5rem 1.2rem",
+                            borderRadius: "8px",
+                            border: "none",
+                            background: "#aa00ff",
+                            color: "white",
+                            fontSize: "1rem",
+                            cursor: "pointer",
+                        }}>
+                            Permitir acesso
+                        </button>
+                    </section>
+                </div>
+            </Container>
+        </LoadPage>
     );
 }
 
 const Container = styled.section`
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  font-family: var(--font-quicksand);
+
+  h1 {
+    span {
+    background: linear-gradient(to right, #884ada, #00affa, #0190cd, #cd43e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+  }
+  }
     
-    h2 {
-        margin-top: 20px;
-    }
 
     section.info {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 20px;
+        gap: 30px;
         width: 80%;
-        margin: 200px auto;
+        max-width: 500px;
+        margin: 120px auto;
     }
 
     p {
-        font-weight: 300;
+        font-weight: 500;
+        text-align: left;
     }
 `;

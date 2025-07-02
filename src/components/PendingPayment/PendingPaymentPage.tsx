@@ -6,7 +6,6 @@ import animationData from "@/lotties/pending-payment-animation.json";
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
 
 export default function PendingPaymentPage() {
@@ -15,7 +14,7 @@ export default function PendingPaymentPage() {
   const reference = searchParams.get("external_reference");
 
   useEffect(() => {
-    if (!reference) return;
+    if (!reference) return router.replace('/criar');
 
     const interval = setInterval(async () => {
       const res = await fetch(`/api/mercado-pago/payment-status?reference=${reference}`);
@@ -24,7 +23,7 @@ export default function PendingPaymentPage() {
       if (data.status === "approved") {
         router.replace("/success");
       }
-    }, 4000); // verifica a cada 3 segundos
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [reference, router]);
@@ -33,11 +32,11 @@ export default function PendingPaymentPage() {
       <Container>
         <Message>Pagamento pendente</Message>
         <Lottie animationData={animationData} loop style={{ width: 300, height: 400 }} />
-        <Message style={{ fontWeight: 300, fontSize: '1.3rem' }}>
+        <Message style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
           Aguardando a confirmação de pagamento...
         </Message>
-        <Message style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
-          Não saia desta página
+        <Message style={{ fontWeight: '400', fontSize: '1.3rem' }}>
+          Aguarde, você será redirecionado automaticamente.
         </Message>
       </Container>
   );
@@ -52,6 +51,7 @@ const Container = styled.div`
   width: 90%;
   text-align: center;
   margin: auto;
+  font-family: var(--font-quicksand);
 `;
 
 const Message = styled.h1`

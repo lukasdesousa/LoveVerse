@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs'; // garante ambiente Node.js (com Buffer)
+export const runtime = 'nodejs';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +18,6 @@ cloudinary.config({
 
 export async function POST(req: Request) {
   try {
-    // 1) Pega o FormData
     const formData = await req.formData();
     const file = formData.get('file');
 
@@ -29,15 +28,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2) Converte o File (Web API) para Buffer Node.js
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // 3) Monta a data URI (base64)
     const base64 = buffer.toString('base64');
     const dataUri = `data:${file.type};base64,${base64}`;
 
-    // 4) Faz o upload direto usando uploader.upload()
     const uploadRes = await cloudinary.uploader.upload(dataUri, {
       folder: 'loveverse_uploads',
       transformation: [
@@ -57,7 +53,7 @@ export async function POST(req: Request) {
       })
     }
 
-    // 5) Retorna JSON com a URL
+    // Retorna JSON com a URL
     return NextResponse.json({
       url:       uploadRes.secure_url,
       public_id: uploadRes.public_id,

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import animationData from "@/lotties/lovepet.json";
 import { Progress } from 'antd';
 
-const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export default function SuccessPage() {
   const router = useRouter();
@@ -70,7 +70,6 @@ export default function SuccessPage() {
       const { imageBase64, ...rest } = msg;
       const newMessage = { ...rest, imageUrl };
 
-      // Cria a mensagem no backend
       try {
         const res = await fetch('/api/messages', {
           method: 'POST',
@@ -78,7 +77,6 @@ export default function SuccessPage() {
           body: JSON.stringify(newMessage),
         });
 
-        // Se não for JSON, captura o texto de erro
         const text = await res.text();
         let data;
         try {
@@ -107,7 +105,7 @@ export default function SuccessPage() {
     <Container>
       <Message>Tudo pronto!</Message>
       <Lottie animationData={animationData} loop style={{ width: 300, height: 400 }} />
-      <Progress percent={percentValue} />
+      <Progress style={{ width: '90%', maxWidth: '400px' }} percent={percentValue} />
       <Message style={{ fontWeight: 600, fontSize: '1.3rem' }}>
         Aguarde enquanto a mágica acontece...
       </Message>
