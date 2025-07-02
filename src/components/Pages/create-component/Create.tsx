@@ -19,6 +19,9 @@ import Giraffe from '@/components/Anims/Giraffe/Giraffe';
 import PreviewButton from './preview/button/PreviewButton';
 import { useRouter } from 'next/navigation';
 import RouletteInputs from './RouletteInputs/RouletteInputs';
+import Themes from './themes/Themes';
+import DateAnim from '@/components/MessageComponent/DateAnim/DateAnim';
+import ptBR_FORM from 'antd/es/locale/pt_BR';
 
 const { Search } = Input;
 
@@ -27,6 +30,7 @@ function Create() {
   const [form] = Form.useForm();
   const [, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [previewDate, setPreviewDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [, setPreviewLink] = useState('');
   const [spotifyLink, setLink] = useState('');
@@ -69,6 +73,7 @@ function Create() {
     ['email'],
     ['creatorName'],
     ['destinataryName'],
+    [],
     ['spotifyLink'],
     ['content'],
     ['dateInit'],
@@ -87,14 +92,15 @@ function Create() {
         setPreview(parsedMessage.imageBase64);
       }
       setImageFile(parsedMessage.imageBase64 ? new File([parsedMessage.imageBase64], 'image.png', { type: 'image/png' }) : null);
+      setPreviewDate(parsedMessage.dateInit)
       setLink(parsedMessage.spotifyLink || '');
       setPreviewLink(parsedMessage.spotifyLink || '');
       setCount(parsedMessage.content || '');
       setCurrent(fieldsPerStep.findIndex(fields => fields.every(field => field in parsedMessage)));
 
       const lastStep = getLastCompletedStep(parsedMessage);
-      if (lastStep === 7 && !parsedMessage.imageBase64) {
-        setCurrent(6)
+      if (lastStep === 8 && !parsedMessage.imageBase64) {
+        setCurrent(7)
       } else {
         setCurrent(lastStep);
         setFormIndex(lastStep);
@@ -109,7 +115,7 @@ function Create() {
     const rouletteItens = localStorage.getItem('rouletteItens');
 
     if (current >= steps.length - 1) return;
-    if (current === 7 && !rouletteItens) {
+    if (current === 8 && !rouletteItens) {
       api.warning({
         message: 'Aviso',
         description: 'Você não preencheu os campos da roleta. Ela não será exibida. Certifique-se de preencher todos os campos e clicar em "feito".',
@@ -130,13 +136,11 @@ function Create() {
       const existingData = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
       const mergedData = { ...existingData, ...currentData };
 
-      // 👇 Se for a etapa da imagem, salva a imagem em base64
-      // 👇 Salva base64 diretamente se existir preview
-      if (current === 6 && preview) {
+      if (current === 7 && preview) {
         mergedData.imageBase64 = preview;
       }
 
-      if (current === 6 && !preview) {
+      if (current === 7 && !preview) {
         api.error({
           message: 'A imagem é obrigatória',
           description: 'Por favor, selecione uma imagem antes de prosseguir.',
@@ -188,6 +192,14 @@ function Create() {
     {
       title: '4º',
       content: (
+        <Form.Item label="Tema" extra='Escolha seu tema (poderá visualizar o tema na prévia)' name="theme" rules={[{ required: true, message: 'Selecione o seu tema' }]}>
+          <Themes />
+        </Form.Item>
+      )
+    },
+    {
+      title: '5º',
+      content: (
         <>
           <Form.Item
             label='Link de sua música'
@@ -224,7 +236,7 @@ function Create() {
       )
     },
     {
-      title: '5º',
+      title: '6º',
       content: (
         <Form.Item label="Sua mensagem" name="content" rules={[{ required: true, max: 1200, message: 'A mensagem é obrigatória' }]} extra={`Dê o seu melhor - Restam ${1200 - count.length} caracteres`}>
           <TextArea rows={4} style={{ width: '100%' }} maxLength={1200} onChange={e => setCount(e.target.value)} />
@@ -232,15 +244,20 @@ function Create() {
       )
     },
     {
-      title: '6º',
+      title: '7º',
       content: (
-        <Form.Item label="Data do início" extra='Insira uma data exata ou aproximada que marque o inicio do relacionamento, amizade e outros.' name="dateInit" rules={[{ required: true, message: 'A data é obrigatória' }]}>
-          <DatePicker size="large" style={{ width: '100%' }} locale={ptBR} disabledDate={d => d && d.isAfter(dayjs(), 'day')} />
-        </Form.Item>
+        <div style={{ margin: '0px auto', overflow: 'hidden' }}>
+          <Form.Item label="Data especial" extra='Insira uma data exata ou aproximada que marque o inicio do relacionamento, amizade e outros.' name="dateInit">
+            <DatePicker size="large" onChange={(_value, dateString) => setPreviewDate(dateString as string)} style={{ width: '100%' }} locale={ptBR} disabledDate={d => d && d.isAfter(dayjs(), 'day')} />
+          </Form.Item>
+          {previewDate && (
+            <DateAnim date={previewDate} />
+          )}
+        </div>
       )
     },
     {
-      title: '7º',
+      title: '8º',
       content: (
         <Form.Item required={true} label="Imagem" extra='Selecione a sua melhor recordação' rules={[{
           required: true, message: 'A imagem é obrigatória',
@@ -276,7 +293,7 @@ function Create() {
       )
     },
     {
-      title: '8º',
+      title: '9º',
       content: (
         <div>
           <h2 style={{ fontFamily: 'var(--font-quicksand)', fontWeight: '500', textAlign: 'center' }}>Roleta LoveVerse</h2>
@@ -300,22 +317,20 @@ function Create() {
     const base64 = preview;
 
     const rouletteTitle = localStorage.getItem('rouletteTitle') || '';
-    const rouletteItens = JSON.parse(localStorage.getItem('rouletteItens') as string);
-    console.log(rouletteItens, rouletteTitle)
+    const rouletteItens = JSON.parse(localStorage.getItem('rouletteItens') as string) || [];
+    const theme = Number(localStorage.getItem('theme') || 1);
     const existing = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
     const finalData = {
       ...existing,
       ...values,
       rouletteTitle: rouletteTitle,
       rouletteItens: rouletteItens,
+      theme: theme,
       imageBase64: base64,
       spotifyLink,
       paymentId: id
     };
-
     localStorage.setItem('pendingMessage', JSON.stringify(finalData));
-    console.log(localStorage.getItem('pendingMessage'));
-
     //await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
     router.push('/success');
     setLoading(false);
@@ -328,7 +343,7 @@ function Create() {
       <ScrollReveal>
         <Box
           sx={{
-            maxWidth: 800, mx: 'auto', my: 10,
+            maxWidth: 800, mx: 'auto', my: 12,
             '& .ant-steps': { display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', alignItems: 'center' },
             '& .ant-steps-item': { flex: '0 0 auto', p: 0, m: 0 }, '& .ant-steps-item-icon': {
               backgroundColor: '#000000 !important',
@@ -343,6 +358,7 @@ function Create() {
           }}
         >
           <ConfigProvider
+            locale={ptBR_FORM}
             theme={{
               token: {
                 colorPrimary: '#aa00ff',
@@ -353,18 +369,22 @@ function Create() {
               type="inline"
               current={current}
               items={steps.map((_, i) => ({ key: i.toString(), title: _.title, }))}
-              style={{ color: 'black' }}
+              style={{ color: 'black', width: '80%', margin: 'auto', maxWidth: '1000px' }}
             />
           </ConfigProvider>
         </Box>
-        <Box sx={{ width: '80%', maxWidth: 600, mx: 'auto', marginBottom: '60px' }}>
+        <Box sx={{ width: '90%', maxWidth: 600, mx: 'auto', marginBottom: '35px' }}>
           <CardContent>
             <Form form={form} layout="vertical" onFinish={onFinish} requiredMark='optional' onKeyDown={(e) => {
               if (e.key === 'Enter' && current < steps.length - 1) {
                 e.preventDefault();
               }
             }}>
-              {steps[current].content}
+              <ConfigProvider
+                locale={ptBR_FORM}
+              >
+                {steps[current].content}
+              </ConfigProvider>
               <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
                 {current > 0 && <Button onClick={prev}>Anterior</Button>}
                 {current < steps.length - 1 ? (

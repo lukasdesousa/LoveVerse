@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
                 spotifyLink: body.spotifyLink || null,
                 rouletteTitle: body.rouletteTitle || null,
                 rouletteItens: body.rouletteItens || null,
+                theme: body.theme,
                 imageUrl: body.imageUrl || null,
                 dateInit: body.dateInit ? new Date(body.dateInit) : null,
                 emailSent: false,

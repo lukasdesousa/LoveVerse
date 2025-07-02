@@ -6,12 +6,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import HeartAnim from "../../../HeartsAnim/HeartsAnim";
+import Anim from "../../../HeartsAnim/HeartsAnim";
 import useShake from "@/hooks/useShake";
 import { SpotifyCard } from "../../../Spotify/SpotifyCard";
 import useTiltUpMessage from "@/hooks/useTiltUpMessage";
 import useSensorSupport from "@/hooks/useSensorSupport";
-import stars from 'public/img/stars.png';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -20,6 +19,7 @@ import PreviewWarn from "./warning/PreviewWarn";
 import { useRouter } from "next/navigation";
 import NotFoundPreview from "./notfound/NotFoundPreview";
 import PreviewRoullette from "./PreviewRoulette/PreviewRoulette";
+import DateAnim from "@/components/MessageComponent/DateAnim/DateAnim";
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -37,11 +37,12 @@ export default function PreviewComponent() {
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const stored = localStorage.getItem('pendingMessage');
+    const theme = Number(localStorage.getItem('theme')) || 1;
     const rouletteTitle = localStorage.getItem('rouletteTitle');
     const rouletteItensRaw = localStorage.getItem('rouletteItens');
     const rouletteItens: string[] = rouletteItensRaw ? JSON.parse(rouletteItensRaw) : [];
 
-    if(!stored) {
+    if (!stored) {
         return <NotFoundPreview />;
     }
 
@@ -61,21 +62,6 @@ export default function PreviewComponent() {
         }
         setLoading(false);
     }, [router, stored]);
-    
-    
-    // Cálculo detalhado de tempo
-    const calculateDetailedTimeSince = (startDate: dayjs.ConfigType) => {
-        const now = dayjs();
-        const start = dayjs(startDate);
-        const days = now.diff(start, 'day');
-        const hours = now.diff(start, 'hour') % 24;
-        const minutes = now.diff(start, 'minute') % 60;
-        const seconds = now.diff(start, 'second') % 60;
-        return { days, hours, minutes, seconds };
-    };
-    const detailedTimeSince = pendingMessage.dateInit
-        ? calculateDetailedTimeSince(pendingMessage.dateInit)
-        : null;
 
     // GSAP scroll animations
     useEffect(() => {
@@ -209,138 +195,101 @@ export default function PreviewComponent() {
 
     return (
         <>
-        <PreviewWarn />
-        <main style={{ minHeight: '100vh', backgroundColor: 'black' }}>
-            <HeartAnim />
+            <PreviewWarn />
+            <main style={{ minHeight: '100vh', backgroundColor: 'black' }}>
+                <Anim theme={theme} />
+                <MainContainer>
 
-            <MainContainer>
-                {/* Mensagens de texto */}
-                <Message className="message"><p className="title">ROLE A TELA</p></Message>
-                <Message className="message"><p className="title">COM CARINHO, DE {pendingMessage.creatorName.toUpperCase()}</p></Message>
-                <Message className="message"><p className="title">PARA {pendingMessage.destinataryName.toUpperCase()}</p></Message>
+                    <Message className="message"><p className="title">ROLE A TELA</p></Message>
+                    <Message className="message"><p className="title">COM CARINHO, DE {pendingMessage.creatorName.toUpperCase()}</p></Message>
+                    <Message className="message"><p className="title">PARA {pendingMessage.destinataryName.toUpperCase()}</p></Message>
 
-                {/* Spotify */}
-                {pendingMessage.spotifyLink && (
+                    {pendingMessage.spotifyLink && (
+                        <Message className="message">
+                            <p className="title">
+                                DE PLAY NO TRECHO QUE {pendingMessage.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ
+                            </p>
+                            <SpotifyCard link={pendingMessage.spotifyLink} />
+                        </Message>
+                    )}
+
                     <Message className="message">
-                        <p className="title">
-                            ANTES, DE PLAY NO TRECHO QUE {pendingMessage.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ
-                        </p>
-                        <SpotifyCard link={pendingMessage.spotifyLink} />
+                        <section className="message-container">
+                            <p className="main-content">{pendingMessage.content}</p>
+                        </section>
                     </Message>
-                )}
+                    {sensorSupport ? (
+                        <Message className="message">
+                            <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
+                            {showMessage && (
+                                <DateAnim date={pendingMessage.dateInit} />
+                            )}
+                        </Message>
+                    ) : (
+                        <Message className="message">
+                            <p className="message" style={{ padding: 0, margin: 0 }}>UM RECADINHO ESPECIAL</p>
+                            <DateAnim date={pendingMessage.dateInit} animDuration={5} />
+                        </Message>
+                    )}
 
-                {/* Conteúdo da mensagem */}
-                <Message className="message">
-                    <section className="message-container">
-                        <p className="main-content">{pendingMessage.content}</p>
-                    </section>
-                </Message>
-
-                {/* Data dinâmica */}
-                {sensorSupport ? (
-                    <Message className="message">
-                        <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
-                        {showMessage && detailedTimeSince && (
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Image src={stars} alt="" width={60} height={60} className="stars01" />
-                                <p className="date-text">
-                                    EU TE AMO HÁ {detailedTimeSince.days} DIAS, {detailedTimeSince.hours} HORAS,
-                                    {detailedTimeSince.minutes} MINUTOS E {detailedTimeSince.seconds} SEGUNDOS
-                                </p>
-                                <Image src={stars} alt="" width={60} height={60} className="stars02" />
-                            </div>
-                        )}
-                    </Message>
-                ) : (
-                    <Message className="message">
-                        <div className="container-02">
-                            <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Image
-                                    src={stars}
-                                    alt="estrelas do campo de data do LoveVerse"
-                                    width={90}
-                                    height={90}
-                                    placeholder="blur"
-                                    quality={100}
-                                    className="stars01"
-                                />
-                                <p>
-                                    EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS,
-                                    {detailedTimeSince?.minutes} MINUTOS E {detailedTimeSince?.seconds} SEGUNDOS
-                                </p>
-                                <Image
-                                    src={stars}
-                                    alt="estrelas do campo de data do LoveVerse"
-                                    width={90}
-                                    height={90}
-                                    placeholder="blur"
-                                    quality={100}
-                                    className="stars01"
-                                />
-                            </section>
-                        </div>
-                    </Message>
-                )}
-
-                {/* Imagem final */}
-                {sensorSupport ? (
-                    <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
-                        <p className="title">CHACOALHE O SEU SMARTPHONE</p>
-                        {pendingMessage.imageBase64 && (
-                            <div style={{
-                                position: 'relative',
-                                width: '100%',
-                                maxWidth: '650px',      // ajuste o máximo que quiser
-                                aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
-                                margin: '0 auto'
-                            }}>
-                                <Image
-                                    src={pendingMessage.imageBase64!}
-                                    alt="recordação"
-                                    fill                      // preenche todo o container
-                                    style={{
-                                        objectFit: 'contain',    // ou 'contain'
-                                        borderRadius: '10px'
-                                    }}
-                                    className="heart main-image shake"
-                                    unoptimized
-                                />
-                            </div>
-                        )}
-                    </Message>
-                ) : (
-                    <Message className="image-container message">
-                        <p>AGORA, UMA LINDA RECORDAÇÃO!</p>
-                        {pendingMessage.imageBase64 && (
-                            <div style={{
-                                position: 'relative',
-                                width: '100%',
-                                maxWidth: '650px', 
-                                aspectRatio: '4/3',  
-                                margin: '0 auto'
-                            }}>
-                                <Image
-                                    src={pendingMessage.imageBase64!}
-                                    alt="Recordação do usuário"
-                                    fill                      // preenche todo o container
-                                    style={{
-                                        objectFit: 'contain',    // ou 'contain'
-                                        borderRadius: '10px'
-                                    }}
-                                    className="heart main-image"
-                                    unoptimized
-                                />
-                            </div>
-                        )}
-                    </Message>
-                )}
-                {rouletteTitle && rouletteItens && rouletteItens.length > 0 && (
-                    <section>
-                        <PreviewRoullette itens={rouletteItens} title={rouletteTitle} inComponent={true} />
-                    </section>
-                )}
-            </MainContainer>
-        </main>
+                    {sensorSupport ? (
+                        <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
+                            <p className="title">CHACOALHE O SEU SMARTPHONE</p>
+                            {pendingMessage.imageBase64 && (
+                                <div style={{
+                                    position: 'relative',
+                                    width: '100%',
+                                    maxWidth: '650px',      // ajuste o máximo que quiser
+                                    aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                                    margin: '0 auto'
+                                }}>
+                                    <Image
+                                        src={pendingMessage.imageBase64!}
+                                        alt="recordação"
+                                        fill                      // preenche todo o container
+                                        style={{
+                                            objectFit: 'contain',    // ou 'contain'
+                                            borderRadius: '10px'
+                                        }}
+                                        className="heart main-image shake"
+                                        unoptimized
+                                    />
+                                </div>
+                            )}
+                        </Message>
+                    ) : (
+                        <Message className="image-container message">
+                            <p>AGORA, UMA LINDA RECORDAÇÃO!</p>
+                            {pendingMessage.imageBase64 && (
+                                <div style={{
+                                    position: 'relative',
+                                    width: '100%',
+                                    maxWidth: '650px',
+                                    aspectRatio: '4/3',
+                                    margin: '0 auto'
+                                }}>
+                                    <Image
+                                        src={pendingMessage.imageBase64!}
+                                        alt="Recordação do usuário"
+                                        fill                      // preenche todo o container
+                                        style={{
+                                            objectFit: 'contain',    // ou 'contain'
+                                            borderRadius: '10px'
+                                        }}
+                                        className="heart main-image"
+                                        unoptimized
+                                    />
+                                </div>
+                            )}
+                        </Message>
+                    )}
+                    {rouletteTitle && rouletteItens && rouletteItens.length > 0 && (
+                        <section>
+                            <PreviewRoullette itens={rouletteItens} title={rouletteTitle} inComponent={true} />
+                        </section>
+                    )}
+                </MainContainer>
+            </main>
         </>
     );
 }

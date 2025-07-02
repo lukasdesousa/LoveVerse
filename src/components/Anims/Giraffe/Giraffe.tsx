@@ -25,6 +25,7 @@ const messages = [
   "Primeiro, o seu email...",
   "Agora, o seu lindo nome...",
   "Agora, o nome do seu amor...",
+  "Selecione um tema",
   "Uma bela música para dar o tom",
   "Agora, deixe a criatividade fluir...",
   "Sabe aquela data especial? Coloque aqui...",

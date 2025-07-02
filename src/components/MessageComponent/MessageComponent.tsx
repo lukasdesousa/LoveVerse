@@ -8,17 +8,17 @@ import styled from "styled-components";
 import Image from "next/image";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "next/navigation";
-import HeartAnim from "../HeartsAnim/HeartsAnim";
+import Anim from "../HeartsAnim/HeartsAnim";
 import useShake from "@/hooks/useShake";
 import { SpotifyCard } from "../Spotify/SpotifyCard";
 import dayjs from 'dayjs';
 import useTiltUpMessage from "@/hooks/useTiltUpMessage";
 import useSensorSupport from "@/hooks/useSensorSupport";
-import stars from 'public/img/stars.png';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MessageNotFound from "../loveComponents/messageNotFound/MessageNotFound";
 import PreviewRoullette from "../Pages/create-component/preview/PreviewRoulette/PreviewRoulette";
+import DateAnim from "./DateAnim/DateAnim";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -30,6 +30,7 @@ interface Messages {
   spotifyLink?: string;
   imageUrl?: string;
   userId: string;
+  theme: number;
   expiresAt: string;
   dateInit: string;
   rouletteTitle?: string;
@@ -37,7 +38,7 @@ interface Messages {
 }
 
 export default function MessagesComponent() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [message, setMessage] = useState<Messages | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibility, setVisibility] = useState(0);
@@ -125,36 +126,15 @@ export default function MessagesComponent() {
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  const calculateDetailedTimeSince = (startDate: string) => {
-    const now = dayjs(); // Data atual
-    const start = dayjs(startDate); // Data inicial
-    const totalDays = now.diff(start, 'day'); // Total de dias completos
-    const remainingHours = now.diff(start, 'hour') % 24; // Horas restantes após os dias
-    const remainingMinutes = now.diff(start, 'minute') % 60; // Minutos restantes após as horas
-    const remainingSeconds = now.diff(start, 'second') % 60; // Segundos restantes após os minutos
-
-    return {
-      days: totalDays,
-      hours: remainingHours,
-      minutes: remainingMinutes,
-      seconds: remainingSeconds
-    };
-  };
-
-  const detailedTimeSince = message?.dateInit
-    ? calculateDetailedTimeSince(message.dateInit)
-    : null;
-
   useShake(() => {
     setVisibility(1);
     const imgEl = imageContainerRef.current?.querySelector<HTMLImageElement>('img.heart');
     if (imgEl) {
-      // flash: começa super-branco e volta ao normal em 0.3s
       gsap.fromTo(
         imgEl,
-        { filter: 'brightness(10)' },    // branco intenso
+        { filter: 'brightness(10)' },
         {
-          filter: 'brightness(1)',      // volta ao normal
+          filter: 'brightness(1)',
           duration: 1,
           ease: 'power1.out'
         }
@@ -208,26 +188,26 @@ export default function MessagesComponent() {
     }
   }, [showMessage]);
 
-
+  const theme = message?.theme;
   if (loading) return <CircularProgress style={{ margin: 'auto', color: '#aa00ff' }} />;
   if (!message) return <MessageNotFound />;
 
   return (
     <main className="container" style={{ height: "100%", minHeight: '100%' }}>
-      <HeartAnim />
+      <Anim theme={theme} />
       <MainContainer>
         <Message className="message">
-          <p className="title">ROLE A TELA</p>
+          <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>ROLE A TELA</p>
         </Message>
         <Message className="message">
-          <p className="title">COM CARINHO, DE {message.creatorName.toUpperCase()}</p>
+          <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>COM CARINHO, DE {message.creatorName.toUpperCase()}</p>
         </Message>
         <Message className="message">
-          <p className="title">PARA {message.destinataryName.toUpperCase()}</p>
+          <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>PARA {message.destinataryName.toUpperCase()}</p>
         </Message>
         {message.spotifyLink && (
           <Message className="message">
-            <p className="title">DE PLAY NO TRECHO QUE {message.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ</p>
+            <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>DE PLAY NO TRECHO QUE {message.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ</p>
             <SpotifyCard link={message.spotifyLink} />
           </Message>
         )}
@@ -237,81 +217,43 @@ export default function MessagesComponent() {
           </section>
         </Message>
         {message.dateInit && (
-          sensorSupport ? (<Message className="message">
-            <section className="day-container">
-              <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
+          sensorSupport ? (
+          <Message className="message">
+              <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>APONTE O SMARTPHONE PARA O CÉU</p>
               {showMessage && (
-                <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Image
-                    src={stars}
-                    alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
-                    placeholder="blur"
-                    quality={100}
-                    className="stars01"
-                  />
-                  <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
-                  <Image
-                    src={stars}
-                    alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
-                    placeholder="blur"
-                    quality={100}
-                    className="stars02"
-                  />
-                </section>
+                <Message className="message">
+                  {showMessage && (
+                    <DateAnim date={message.dateInit} />
+                  )}
+                </Message>
               )}
-            </section>
           </Message>
           ) : (
             <Message className="message">
-              <section className="day-container">
-                <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Image
-                    src={stars}
-                    alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
-                    placeholder="blur"
-                    quality={100}
-                    className="stars01"
-                  />
-                  <p>EU TE AMO HÁ {detailedTimeSince?.days} DIAS, {detailedTimeSince?.hours} HORAS, {detailedTimeSince?.minutes} MINUTOS, E {detailedTimeSince?.seconds} SEGUNDOS</p>
-                  <Image
-                    src={stars}
-                    alt="estrelas do campo de data do LoveVerse"
-                    width={90}
-                    height={90}
-                    placeholder="blur"
-                    quality={100}
-                    className="stars02"
-                  />
-                </section>
-              </section>
+              <p className={`message ${theme === 2 ? 'theme-02' : ''}`} style={{ padding: 0, margin: 0 }}>UM RECADINHO ESPECIAL</p>
+              <DateAnim date={message.dateInit} animDuration={5} />
             </Message>)
         )}
         {message.imageUrl && (
           sensorSupport ? (
             <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
               <section>
-                <p className="title">
+                <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>
                   CHACOALHE O SEU SMARTPHONE
                 </p>
                 <div style={{
                   position: 'relative',
                   width: '100%',
-                  maxWidth: '650px',      // ajuste o máximo que quiser
-                  aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                  maxWidth: '650px',      
+                  aspectRatio: '4/3',     
                   margin: '0 auto'
                 }}>
                   <Image
                     src={message.imageUrl}
                     alt="recordação"
-                    fill                      // preenche todo o container
+                    fill                      
                     style={{
-                      objectFit: 'contain',    // ou 'contain'
+                      objectFit: 'contain',    
                       borderRadius: '10px'
                     }}
                     className="heart main-image shake"
@@ -323,7 +265,7 @@ export default function MessagesComponent() {
           ) : (
             <Message className="image-container message">
               <section>
-                <p>AGORA, UMA LINDA RECORDAÇÃO!</p>
+                <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>AGORA, UMA LINDA RECORDAÇÃO!</p>
                 <div style={{
                   position: 'relative',
                   width: '100%',
@@ -344,14 +286,17 @@ export default function MessagesComponent() {
                   />
                 </div>
               </section>
-              
+
             </Message>
           )
         )}
         {message.rouletteItens && message.rouletteItens.length > 0 && (
+          <Message className="message">
             <section>
+              <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>Roleta especial</p>
               <PreviewRoullette inComponent={true} title={message.rouletteTitle || "Roda da Sorte"} itens={message.rouletteItens} />
             </section>
+          </Message>
         )}
       </MainContainer>
     </main>
@@ -401,6 +346,21 @@ const MainContainer = styled.main`
 const Message = styled.section<{ isVisible?: number }>`
   width: 90%;
   margin: 0 auto;
+
+  .theme-02 {
+    text-shadow: 0 1px 0 #ffffff, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+  }
 
   p {
     font-size: 1.5rem;

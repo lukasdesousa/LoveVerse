@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import {
-  type Container,
   type ISourceOptions,
 } from "@tsparticles/engine";
 // import { loadAll } from "@tsparticles/all"; // if you are going to use `loadAll`, install the "@tsparticles/all" package too.
@@ -9,7 +8,11 @@ import {
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
-const HeartAnim = () => {
+type Theme = {
+  theme?: number;
+}
+
+const HeartAnim = ({theme}: Theme) => {
   const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime
@@ -27,8 +30,8 @@ const HeartAnim = () => {
     });
   }, []);
 
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
+  const particlesLoaded = async (): Promise<void> => {
+    //console.log(container);
   };
 
   const options: ISourceOptions = useMemo(
@@ -36,7 +39,7 @@ const HeartAnim = () => {
       autoPlay: true,
       "background": {
         "color": {
-          "value": "#c50df3"
+          "value": theme === 1 ? "#c50df3" : "#f7fb0e",
         },
         "image": "",
         "position": "",
@@ -346,7 +349,7 @@ const HeartAnim = () => {
           "type": "image",
           "options": {
             "image": {
-              "src": '/img/heart-anim.png',
+              "src": theme === 1 ? '/img/heart-anim.png' : '/img/friend.png',
               "width": 800,
               "height": 800
             }
@@ -590,7 +593,7 @@ const HeartAnim = () => {
         }
       }
     }),
-    [],
+    [theme],
   );
 
   if (init) {

@@ -48,6 +48,7 @@ const Container = styled.section.withConfig({ shouldForwardProp: (prop) => prop 
 
   p {
     color: black;
+    z-index: 1000;
   }
 
   @media (max-width: 768px) {
