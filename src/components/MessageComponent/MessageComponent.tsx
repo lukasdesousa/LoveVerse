@@ -195,7 +195,7 @@ export default function MessagesComponent() {
   return (
     <main className="container" style={{ height: "100%", minHeight: '100%' }}>
       <Anim theme={theme} />
-      <MainContainer>
+      <MainContainer theme={theme}>
         <Message className="message">
           <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>ROLE A TELA</p>
         </Message>

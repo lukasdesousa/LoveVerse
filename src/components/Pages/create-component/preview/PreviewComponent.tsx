@@ -198,7 +198,7 @@ export default function PreviewComponent() {
             <PreviewWarn />
             <main style={{ minHeight: '100vh', backgroundColor: 'black' }}>
                 <Anim theme={theme} />
-                <MainContainer>
+                <MainContainer theme={theme}>
 
                     <Message className="message"><p className={`title ${theme === 2 ? 'theme-02' : ''}`}>ROLE A TELA</p></Message>
                     <Message className="message"><p className={`title ${theme === 2 ? 'theme-02' : ''}`}>COM CARINHO, DE {pendingMessage.creatorName.toUpperCase()}</p></Message>
