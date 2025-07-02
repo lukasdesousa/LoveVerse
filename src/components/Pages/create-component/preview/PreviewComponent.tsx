@@ -200,13 +200,13 @@ export default function PreviewComponent() {
                 <Anim theme={theme} />
                 <MainContainer>
 
-                    <Message className="message"><p className="title">ROLE A TELA</p></Message>
-                    <Message className="message"><p className="title">COM CARINHO, DE {pendingMessage.creatorName.toUpperCase()}</p></Message>
-                    <Message className="message"><p className="title">PARA {pendingMessage.destinataryName.toUpperCase()}</p></Message>
+                    <Message className="message"><p className={`title ${theme === 2 ? 'theme-02' : ''}`}>ROLE A TELA</p></Message>
+                    <Message className="message"><p className={`title ${theme === 2 ? 'theme-02' : ''}`}>COM CARINHO, DE {pendingMessage.creatorName.toUpperCase()}</p></Message>
+                    <Message className="message"><p className={`title ${theme === 2 ? 'theme-02' : ''}`}>PARA {pendingMessage.destinataryName.toUpperCase()}</p></Message>
 
                     {pendingMessage.spotifyLink && (
                         <Message className="message">
-                            <p className="title">
+                            <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>
                                 DE PLAY NO TRECHO QUE {pendingMessage.creatorName.toUpperCase()} SELECIONOU PRA VOCÊ
                             </p>
                             <SpotifyCard link={pendingMessage.spotifyLink} />
@@ -220,35 +220,35 @@ export default function PreviewComponent() {
                     </Message>
                     {sensorSupport ? (
                         <Message className="message">
-                            <p className="title">APONTE O SMARTPHONE PARA O CÉU</p>
+                            <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>APONTE O SMARTPHONE PARA O CÉU</p>
                             {showMessage && (
                                 <DateAnim date={pendingMessage.dateInit} />
                             )}
                         </Message>
                     ) : (
                         <Message className="message">
-                            <p className="message" style={{ padding: 0, margin: 0 }}>UM RECADINHO ESPECIAL</p>
+                            <p className={`message ${theme === 2 ? 'theme-02' : ''}`} style={{ padding: 0, margin: 0 }}>UM RECADINHO ESPECIAL</p>
                             <DateAnim date={pendingMessage.dateInit} animDuration={5} />
                         </Message>
                     )}
 
                     {sensorSupport ? (
                         <Message ref={imageContainerRef} isVisible={visibility} className="image-container message">
-                            <p className="title">CHACOALHE O SEU SMARTPHONE</p>
+                            <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>CHACOALHE O SEU SMARTPHONE</p>
                             {pendingMessage.imageBase64 && (
                                 <div style={{
                                     position: 'relative',
                                     width: '100%',
-                                    maxWidth: '650px',      // ajuste o máximo que quiser
-                                    aspectRatio: '4/3',     // proporção fixa, por exemplo 4:3
+                                    maxWidth: '650px',      
+                                    aspectRatio: '4/3',     
                                     margin: '0 auto'
                                 }}>
                                     <Image
                                         src={pendingMessage.imageBase64!}
                                         alt="recordação"
-                                        fill                      // preenche todo o container
+                                        fill                   
                                         style={{
-                                            objectFit: 'contain',    // ou 'contain'
+                                            objectFit: 'contain',   
                                             borderRadius: '10px'
                                         }}
                                         className="heart main-image shake"
@@ -259,7 +259,7 @@ export default function PreviewComponent() {
                         </Message>
                     ) : (
                         <Message className="image-container message">
-                            <p>AGORA, UMA LINDA RECORDAÇÃO!</p>
+                            <p className={`${theme === 2 ? 'theme-02' : ''}`}>AGORA, UMA LINDA RECORDAÇÃO!</p>
                             {pendingMessage.imageBase64 && (
                                 <div style={{
                                     position: 'relative',
@@ -284,9 +284,12 @@ export default function PreviewComponent() {
                         </Message>
                     )}
                     {rouletteTitle && rouletteItens && rouletteItens.length > 0 && (
-                        <section>
-                            <PreviewRoullette itens={rouletteItens} title={rouletteTitle} inComponent={true} />
-                        </section>
+                        <Message className="message">
+                            <section>
+                                <p className={`title ${theme === 2 ? 'theme-02' : ''}`}>Roleta especial</p>
+                                <PreviewRoullette itens={rouletteItens} title={rouletteTitle} inComponent={true} />
+                            </section>
+                        </Message>
                     )}
                 </MainContainer>
             </main>
@@ -303,7 +306,22 @@ const MainContainer = styled.main`
   min-height: 100vh;
   height: auto;
   overflow: hidden;
-  background-color: #c50df3;
+  background-color: #f7fb0e;
+
+  .theme-02 {
+    text-shadow: 0 1px 0 #ffffff, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+  }
   
   section.message-container {
     
