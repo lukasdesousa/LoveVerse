@@ -57,7 +57,7 @@ export default function PreviewComponent() {
                 setPendingMessage(parsed);
                 setShowSpotify(!!parsed.spotifyLink);
             } catch (err) {
-                console.error('Erro ao parsear pendingMessage:', err);
+                console.error('Ocorreu um erro:', err);
             }
         }
         setLoading(false);

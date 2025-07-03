@@ -31,7 +31,7 @@ const HeartAnim = ({theme}: Theme) => {
   }, []);
 
   const particlesLoaded = async (): Promise<void> => {
-    //console.log(container);
+    // ignore
   };
 
   const options: ISourceOptions = useMemo(

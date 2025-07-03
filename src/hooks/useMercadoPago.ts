@@ -26,7 +26,7 @@ const useMercadoPago = () => {
       // **Redireciona para o checkout externo**
       window.location.href = url;
     } catch (err) {
-      console.error("MercadoPago checkout error:", err);
+      console.error("Ocorreu um erro", err);
       // aqui você pode notificar o usuário
     }
   }

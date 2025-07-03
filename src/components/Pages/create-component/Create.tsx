@@ -161,7 +161,7 @@ function Create() {
       setCurrent(prev => prev + 1);
       setFormIndex(current + 1);
     } catch (errorInfo) {
-      console.log('Validation failed:', errorInfo);
+      console.log('A validação falhou:', errorInfo);
     }
   };
 
