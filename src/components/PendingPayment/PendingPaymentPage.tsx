@@ -6,7 +6,9 @@ import animationData from "@/lotties/pending-payment-animation.json";
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const Lottie = dynamic(() => import('lottie-react'), {ssr: false})export default function PendingPaymentPage() {
+const Lottie = dynamic(() => import('lottie-react'), {ssr: false})
+
+export default function PendingPaymentPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const reference = searchParams.get("external_reference");
