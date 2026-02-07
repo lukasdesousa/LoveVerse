@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.loveverse.space/sitemap.xml
+Disallow: /pending-payment/
+Disallow: /previa/loveverse/
+Disallow: /melhorias/
+Disallow: /messages/
+Disallow: /failure/
+Disallow: /success/
+Disallow: /messages/
