@@ -16,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL('https://www.loveverse.space'),
+    metadataBase: new URL('https://loveverse.space'),
     title: {
       default: 'LoveVerse | Mensagens personalizadas para casais',
       template: '%s | LoveVerse',
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Crie mensagens personalizadas e únicas para quem você ama. Receba o QR Code para compartilhar suas mensagens de forma interativa. Surpreenda com carinho e criatividade usando nossa plataforma gratuita por tempo limitado.',
     openGraph: {
       type: 'website',
-      url: 'https://www.loveverse.space',
+      url: 'https://loveverse.space',
       title: 'LoveVerse',
       description: 'Crie mensagens personalizadas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas e gratuitas por tempo limitado.',
       siteName: 'LoveVerse',

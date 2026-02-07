@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.loveverse.space/sitemap.xml
+Sitemap: https://loveverse.space/sitemap.xml
 Disallow: /pending-payment/
 Disallow: /previa/loveverse/
 Disallow: /melhorias/
