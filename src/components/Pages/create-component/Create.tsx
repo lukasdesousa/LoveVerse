@@ -338,7 +338,7 @@ function Create() {
       paymentId: id
     };
     localStorage.setItem('pendingMessage', JSON.stringify(finalData));
-    //await createMercadoPagoCheckout({ testeId: id, userEmail: values.email });
+    
     router.push('/success');
     setLoading(false);
   };

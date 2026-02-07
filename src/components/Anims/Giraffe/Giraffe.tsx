@@ -47,7 +47,6 @@ const Giraffe: FC<GiraffeProps> = ({ formIndex }) => {
 
   return (
     <Container>
-
       <MessageWrapper>
         <AnimatePresence mode="wait">
           <motion.h1
