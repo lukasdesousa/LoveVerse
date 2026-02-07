@@ -18,19 +18,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.loveverse.space'),
     title: {
-      default: 'LoveVerse',
+      default: 'LoveVerse | Mensagens personalizadas para casais',
       template: '%s | LoveVerse',
     },
-    description: 'Mensagens personalizadas, única e interativa para casais. Crie mensagens românticas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas por um preço único',
+    description: 'Crie mensagens personalizadas e únicas para quem você ama. Receba o QR Code para compartilhar suas mensagens de forma interativa. Surpreenda com carinho e criatividade usando nossa plataforma gratuita por tempo limitado.',
     openGraph: {
       type: 'website',
       url: 'https://www.loveverse.space',
       title: 'LoveVerse',
-      description: 'Crie mensagens românticas únicas',
+      description: 'Crie mensagens personalizadas únicas para quem você ama e surpreenda com carinho e criatividade. Explore nossa plataforma para criar mensagens interativas e gratuitas por tempo limitado.',
       siteName: 'LoveVerse',
       images: [
         {
-          url: '/img/email-tutorial.png',
+          url: '/img/android-chrome-512x512.png',
           width: 1200,
           height: 630,
           alt: 'LoveVerse - Compartilhe amor',
