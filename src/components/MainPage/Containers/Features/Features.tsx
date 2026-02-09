@@ -23,8 +23,8 @@ export default function Features() {
                         </TextContainer>
                     <SubContainer>
                         <div><FeaturesCard title="Segurança" description="Aqui os seus dados estão seguros. Seus dados são excluidos automaticamente após 5 dias." src={security} /></div>
-                        <div><FeaturesCard title="Praticidade" description="Crie a sua mensagem em apenas alguns cliques." src={fast} /></div>
-                        <div><FeaturesCard title="Envio de e-mail" description="Enviamos o QR CODE da sua mensagem através de e-mail." src={email} /></div>
+                        <div><FeaturesCard title="Praticidade" description="Crie a sua cartinha em apenas alguns cliques." src={fast} /></div>
+                        <div><FeaturesCard title="Envio de e-mail" description="Enviamos o QR CODE da sua cartinha através de e-mail." src={email} /></div>
                         <div><FeaturesCard title="Preço baixo" description="Proporcionando muito, pelo menor preço possível." src={lowprice} /></div>
                     </SubContainer>
                 </Content>

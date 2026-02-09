@@ -21,7 +21,7 @@ export default function SubFeatures() {
             <Content>
                 <CheckCircleOutlined style={{ marginLeft: '1px'}}/>
                 <h4>Garantia</h4>
-                <p>Algo de errado ocorreu durante a criação de sua mensagem? Devolvemos 100% do seu dinheiro.</p>
+                <p>Algo de errado ocorreu durante a criação de sua cartinha? Devolvemos 100% do seu dinheiro.</p>
             </Content>
         </Container>
     )

@@ -49,7 +49,7 @@ export default function MessagesComponent() {
     async function fetchMessage() {
       try {
         const res = await fetch(`/api/usermessages/${id}`);
-        if (!res.ok) throw new Error("Mensagem não encontrada");
+        if (!res.ok) throw new Error("Cartinha não encontrada");
         const data = await res.json();
         setMessage(data);
       } catch {

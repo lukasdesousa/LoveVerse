@@ -66,7 +66,7 @@ const MessageNotFound: FC = () => {
                         }}
                     />
                     <Text>
-                        Mensagem não encontrada ou expirada
+                        Cartinha não encontrada ou expirada
                     </Text>
                 </div>
             </MessageWrapper>

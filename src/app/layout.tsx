@@ -22,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: '%s | LoveVerse',
     },
     description: 'Crie cartinhas de amor personalizadas e únicas para quem você ama. Receba o QR Code para compartilhar suas mensagens de forma interativa. Surpreenda com carinho e criatividade usando nossa plataforma gratuita por tempo limitado.',
+    keywords: ['cartinhas de amor', 'mensagens personalizadas', 'QR Code', 'surpresa romântica', 'criatividade', 'plataforma gratuita'],
     openGraph: {
       type: 'website',
       url: 'https://loveverse.space',

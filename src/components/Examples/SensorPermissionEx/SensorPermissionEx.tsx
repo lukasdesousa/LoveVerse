@@ -62,7 +62,7 @@ export default function SensorPermissionEx({
                     <h1>Love<span style={{ color: '#aa00ff' }}>Verse</span></h1><br />
                     <section className="info">
                         <h2>Permita os sensores</h2>
-                        <p>Está página contém mensagens animadas, para acessar a mensagem completa, precisamos da sua permissão para usar sensores do dispositivo para exibir as mensagens animadas. <strong>Essa ação é necessária para usuários IOS</strong></p>
+                        <p>Esta página contém cartinhas animadas, para acessar a cartinha completa, precisamos da sua permissão para usar sensores do dispositivo para exibir as cartinhas animadas. <strong>Essa ação é necessária para usuários IOS</strong></p>
                         <button onClick={requestPermission} style={{
                             marginTop: "1rem",
                             padding: "0.5rem 1.2rem",

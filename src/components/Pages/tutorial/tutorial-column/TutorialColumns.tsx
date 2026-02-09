@@ -17,11 +17,11 @@ export default function TutorialColumn() {
                             <MainTextContainer>
                                 <p style={{fontFamily: 'var(--font-quicksand)', marginBottom: '5px', marginLeft: '5px', opacity: 0.7}}>Breve tutorial</p>
                                 <MainText style={{maxWidth: '600px', fontWeight: '700', fontSize: '2.4rem'}}>Nossas mensagens</MainText>
-                                <p style={{fontFamily: 'var(--font-quicksand)'}}>A página de criação da mensagem te ensinará tudo. Mas aqui vão alguns passos essenciais para criar uma boa mensagem.</p>
+                                <p style={{fontFamily: 'var(--font-quicksand)'}}>A página de criação da cartinha te ensinará tudo. Mas aqui vão alguns passos essenciais para criar uma boa cartinha.</p>
                             </MainTextContainer>
                         </TextContainer>
                     <SubContainer>
-                        <div><FeaturesCard title="E-mail" description="Adicione o seu e-mail. O e-mail fornecido receberá o QR CODE da mensagem." src={email} /></div>
+                        <div><FeaturesCard title="E-mail" description="Adicione o seu e-mail. O e-mail fornecido receberá o QR CODE da cartinha." src={email} /></div>
                         <div><FeaturesCard title="Música" description="Adicione a sua melhor música direto do seu Spotify." src={spotify} /></div>
                         <div><FeaturesCard title="Imagem" description="Adicione a sua melhor recordação. Só é possível inserir 1 (uma) imagem." src={picture} /></div>
                         <div><FeaturesCard title="Interações" description="Nossas mensagens são interativas para usuários de smartphone. Chacoalhe, aponte para o céu e muito mais! Teste já." src={interact} /></div>

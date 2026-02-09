@@ -12,9 +12,9 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
   const html = `
   <div style="font-family: Arial, sans-serif; background-color: #f6f6f6; padding: 30px;">
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;">
-      <h2 style="color: #aa00ff; margin-bottom: 10px;">Mensagem criada com sucesso!</h2>
+      <h2 style="color: #aa00ff; margin-bottom: 10px;">Cartinha criada com sucesso!</h2>
       <p style="font-size: 15px; color: #444; margin-bottom: 20px;">
-        Sua mensagem está pronta! Você pode escanear o QR Code abaixo ou clicar nos botões para acessar.
+        Sua cartinha está pronta! Você pode escanear o QR Code abaixo ou clicar nos botões para acessar.
       </p>
 
       <img src="${qrCodeUrl}" alt="QR Code" width="200" height="200" style="margin: 20px auto; display: block;" />
@@ -46,7 +46,7 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
         border-radius: 6px;
         font-weight: bold;
         font-size: 14px;
-      ">Ver Mensagem</a>
+      ">Ver Cartinha</a>
 
       <div style="margin-top: 40px;">
         <h3 style="color: #333; font-size: 18px;">Ajude-nos a melhorar</h3>
@@ -75,7 +75,7 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
     await resend.emails.send({
       from: 'LoveVerse <noreply@loveverse.space>',
       to: email,
-      subject: `Seu QR CODE da mensagem de ${creatorName} & ${destinataryName}`,
+      subject: `Seu QR CODE da cartinha de ${creatorName} & ${destinataryName}`,
       html: html,
     });
 

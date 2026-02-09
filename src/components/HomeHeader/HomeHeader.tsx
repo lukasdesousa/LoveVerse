@@ -33,7 +33,7 @@ export default function LoveHeader() {
       </Link>
 
       <Menu>
-        <MenuItem href="/criar">Criar mensagem</MenuItem>
+        <MenuItem href="/criar">Criar cartinha</MenuItem>
         <MenuItem href="/termos/loveverse">Termos de uso</MenuItem>
         <MenuItem href="/tutorial/loveverse">Tutorial</MenuItem>
       </Menu>
@@ -49,7 +49,7 @@ export default function LoveHeader() {
         >
           <Line />
           <DrawerMenuOpts>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/criar'}><h1>Criar mensagem</h1></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/criar'}><h1>Criar cartinha</h1></Link>
             <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/termos/loveverse'}><h1>Termos de uso</h1></Link>
             <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/tutorial/loveverse'}><h1>Tutorial</h1></Link>
             <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/contato/loveverse'}><h1>Contato</h1></Link>

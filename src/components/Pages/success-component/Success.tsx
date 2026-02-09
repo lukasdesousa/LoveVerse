@@ -86,14 +86,14 @@ export default function SuccessPage() {
         }
 
         if (!res.ok) {
-          throw new Error(data.error || 'Erro ao criar mensagem');
+          throw new Error(data.error || 'Erro ao criar cartinha');
         }
 
         const created = data.message;
         setPercent(100);
         router.replace(`/messages/${created.id}`);
       } catch (err) {
-        alert(`Erro ao criar a mensagem: ${err instanceof Error ? err.message : 'Desconhecido'}`);
+        alert(`Erro ao criar a cartinha: ${err instanceof Error ? err.message : 'Desconhecido'}`);
         router.replace('/criar');
       }
     };

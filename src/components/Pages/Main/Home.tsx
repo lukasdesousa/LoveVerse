@@ -29,7 +29,7 @@ function Home() {
                 <MainTextContainer>
                   <MainText>Encante quem você ama com a LoveVerse.</MainText>
                   <section className='subtext-container'>
-                    <p>Compartilhe emoções, lembranças e amores junto à LoveVerse. Crie a sua mensagem agora mesmo.</p>
+                    <p>Compartilhe emoções, lembranças e amores junto à LoveVerse. Crie a sua cartinha agora mesmo.</p>
                     <BubbleButton />
                   </section>
                 </MainTextContainer>

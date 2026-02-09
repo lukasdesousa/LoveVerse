@@ -28,7 +28,7 @@ const MessageWrapper = styled.div`
 const messages = [
   "Espalhe amor",
   "Crie afeto",
-  "Tudo em forma de mensagem"
+  "Tudo em forma de cartinhas"
 ];
 
 const NotFound: FC = () => {

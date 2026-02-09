@@ -22,11 +22,11 @@ export default function TermsColumn() {
                             </MainTextContainer>
                         </TextContainer>
                     <SubContainer>
-                        <div><FeaturesCard title="Fotos" description="Você é responsável por qualquer foto que inserir ao criar sua mensagem." src={picture} /></div>
-                        <div><FeaturesCard title="Textos" description="Todo texto que inserir na mensagem é por sua responsabilidade e autoria." src={text} /></div>
+                        <div><FeaturesCard title="Fotos" description="Você é responsável por qualquer foto que inserir ao criar sua cartinha." src={picture} /></div>
+                        <div><FeaturesCard title="Textos" description="Todo texto que inserir na cartinha é por sua responsabilidade e autoria." src={text} /></div>
                         <div><FeaturesCard title="Tentativas de fraude" description="Não devolveremos o dinheiro em casos de tentativas de fraude identificadas." src={scam} /></div>
                         <div><FeaturesCard title="Mensagens ofensivas" description="Não nos responsabilizamos por mensagens ofensivas ou cujo objetivo seja diferente do proposto pela LoveVerse." src={badMessage} /></div>
-                        <div><FeaturesCard title="Editar mensagem" description="Após criada, você terá direito a editar a mensagem apenas 1 (uma) única vez." src={edit} /></div>
+                        <div><FeaturesCard title="Editar mensagem" description="Após a criação da cartinha, você não terá direito a editar a cartinha, verifique cuidadosamente na prévia." src={edit} /></div>
                     </SubContainer>
                 </Content>
             </Container>

@@ -175,7 +175,7 @@ function Create() {
     {
       title: '1º',
       content: (
-        <Form.Item extra='Insira o e-mail que irá receber o QR CODE da mensagem' label="E-mail" name="email" rules={[{ type: 'email', required: true, message: 'O e-mail é obrigatório' }]}>
+        <Form.Item extra='Insira o e-mail que irá receber o QR CODE da cartinha' label="E-mail" name="email" rules={[{ type: 'email', required: true, message: 'O e-mail é obrigatório' }]}>
           <Input size="large" style={{ width: '100%' }} placeholder="loveverse@email.com" />
         </Form.Item>
       )
@@ -288,7 +288,7 @@ function Create() {
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">Clique ou arraste a imagem aqui</p>
-            <p className="ant-upload-hint">Apenas uma imagem será enviada ao criar a mensagem.</p>
+            <p className="ant-upload-hint">Apenas uma imagem será enviada ao criar a cartinha.</p>
           </Dragger>
           {preview && (
             <div style={{ margin: '20px auto', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
