@@ -18,11 +18,23 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://loveverse.space'),
     title: {
-      default: 'LoveVerse | Cartinhas de amor personalizadas',
+      default: 'Cartinhas de Amor Personalizadas com QR Code | LoveVerse',
       template: '%s | LoveVerse',
     },
-    description: 'Crie cartinhas de amor personalizadas e únicas para quem você ama. Receba o QR Code para compartilhar suas mensagens de forma interativa. Surpreenda com carinho e criatividade usando nossa plataforma gratuita por tempo limitado.',
-    keywords: ['cartinhas de amor', 'mensagens personalizadas', 'QR Code', 'surpresa romântica', 'criatividade', 'plataforma gratuita'],
+    alternates: {
+      canonical: '/',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+      },
+    },
+    applicationName: 'LoveVerse',
+    description: 'Crie cartinhas de amor personalizadas com QR Code. Gere mensagens românticas interativas para compartilhar online. Plataforma gratuita e fácil de usar.',
     openGraph: {
       type: 'website',
       url: 'https://loveverse.space',
@@ -31,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'LoveVerse',
       images: [
         {
-          url: '/android-chrome-512x512.png',
+          url: '/img/banner-openg.png',
           width: 1200,
           height: 630,
           alt: 'LoveVerse - Compartilhe amor',
@@ -45,16 +57,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'LoveVerse',
       description: 'Crie mensagens personalizadas únicas',
       images: [
-        '/img/email-tutorial.png'
+        '/img/banner-openg.png'
       ],
-    },
-    other: {
-      'og:image': '/img/email-tutorial.png',
-      'og:image:width': '1200',
-      'og:image:height': '630',
-      'og:image:alt': 'LoveVerse - Compartilhe amor',
-      'og:image:type': 'image/png',
-      'og:updated_time': new Date().toISOString(),
     },
   };
 }
@@ -73,7 +77,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${inter.className} ${quicksand.variable}`}>
-       <head>
+      <head>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "LoveVerse",
+            "url": "https://loveverse.space",
+            "description": "Plataforma para criar cartinhas de amor personalizadas com QR Code"
+          })}
+        </script>
         <meta name="google-adsense-account" content="ca-pub-3912537462625302" />
       </head>
       <body >
