@@ -16,10 +16,10 @@ import Dragger from 'antd/es/upload/Dragger';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import Giraffe from '@/components/Anims/Giraffe/Giraffe';
-import PreviewButton from './preview/button/PreviewButton';
+import PreviewButton from '../../preview/button/PreviewButton';
 import { useRouter } from 'next/navigation';
-import RouletteInputs from './RouletteInputs/RouletteInputs';
-import Themes from './themes/Themes';
+import RouletteInputs from '../../RouletteInputs/RouletteInputs';
+import Themes from '../Themes';
 import DateAnim from '@/components/MessageComponent/DateAnim/DateAnim';
 import ptBR_FORM from 'antd/es/locale/pt_BR';
 
@@ -273,7 +273,6 @@ function Create() {
             name="file"
             multiple={false}
             beforeUpload={(file) => {
-              // CORREÇÃO: Converter para base64 imediatamente
               const reader = new FileReader();
               reader.onload = (e) => {
                 setPreview(e.target?.result as string);

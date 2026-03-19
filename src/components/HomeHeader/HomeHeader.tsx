@@ -40,9 +40,8 @@ export default function LoveHeader() {
 
         <Drawer
           placement='bottom'
-          width={500}
+          size={450}
           closeIcon={false}
-          height={400}
           style={{borderRadius: '30px 30px 0px 0px'}}
           onClose={onClose}
           open={open}

@@ -26,13 +26,18 @@ function validateInput(creatorName: string, destinataryName: string, content: st
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
+        const { theme } = body;
+        console.log("Corpo da requisição:", body);
+        let newMessage;
 
         const validationError = validateInput(body.creatorName, body.destinataryName, body.content);
+
         if (validationError) {
             return NextResponse.json({ error: validationError }, { status: 400 });
         }
 
-        const newMessage = await prisma.message.create({
+        if (theme === 'love') {
+            newMessage = await prisma.love_message_theme.create({
             data: {
                 creatorName: body.creatorName,
                 destinataryName: body.destinataryName,
@@ -40,19 +45,34 @@ export async function POST(req: NextRequest) {
                 email: body.email,
                 expiresAt: body.expiresAt || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 spotifyLink: body.spotifyLink || null,
-                rouletteTitle: body.rouletteTitle || null,
-                rouletteItens: body.rouletteItens || null,
-                theme: body.theme,
-                imageUrl: body.imageUrl || null,
+                imagesUrl: body.imageUrls,
                 dateInit: body.dateInit ? new Date(body.dateInit) : null,
                 emailSent: false,
             }
         });
-
+        } else {
+            newMessage = await prisma.message.create({
+                data: {
+                    creatorName: body.creatorName,
+                    destinataryName: body.destinataryName,
+                    content: body.content,
+                    email: body.email,
+                    expiresAt: body.expiresAt || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+                    spotifyLink: body.spotifyLink || null,
+                    rouletteTitle: body.rouletteTitle || null,
+                    rouletteItens: body.rouletteItens || null,
+                    theme: body.theme,
+                    imageUrl: body.imageUrl || null,
+                    dateInit: body.dateInit ? new Date(body.dateInit) : null,
+                    emailSent: false,
+                }
+            });
+        }
+        
         if (newMessage.id && !newMessage.emailSent) {
                 await SendEmail(newMessage.email, newMessage.id, newMessage.creatorName, newMessage.destinataryName)
                 
-                await prisma.message.update({
+                await prisma.love_message_theme.update({
                     where: { id: newMessage.id },
                     data: { emailSent: true }
                 });

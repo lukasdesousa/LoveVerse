@@ -1,12 +1,12 @@
 'use client';
 
-import Create from "@/components/Pages/create-component/Create";
+import SelectTheme from "@/components/Pages/create-component/SelectTheme";
 import { LoadPage } from "@/components/LoadPage/LoadPage";
 
 function Index() {
   return (
     <LoadPage>
-      <Create />
+      <SelectTheme />
     </LoadPage>
   )
 };

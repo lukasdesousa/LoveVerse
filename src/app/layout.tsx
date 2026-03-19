@@ -9,7 +9,7 @@ import { Quicksand } from 'next/font/google'
 const quicksand = Quicksand({
   subsets: ['latin'],
   variable: '--font-quicksand',
-  display: 'swap', // opcional, para evitar FOUT
+  display: 'swap',
 })
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://loveverse.space'),
     title: {
-      default: 'Cartinhas de Amor Personalizadas com QR Code | LoveVerse',
+      default: 'Criar Cartinhas de Amor Personalizadas Online com QR Code | LoveVerse',
       template: '%s | LoveVerse',
     },
     alternates: {
@@ -87,7 +87,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "description": "Plataforma para criar cartinhas de amor personalizadas com QR Code"
           })}
         </script>
-        <meta name="google-adsense-account" content="ca-pub-3912537462625302" />
       </head>
       <body >
         <GlobalStyle />

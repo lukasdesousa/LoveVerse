@@ -4,14 +4,14 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
-export default function PreviewButton() {
+export default function PreviewButton({ theme }: { theme: string }) {
     const router = useRouter();
 
     return (
     <Container>
         <button onClick={(e) => {
             e.preventDefault();
-            router.push('/previa/loveverse')
+            router.push(`${theme === "love" ? "/previa/love" : "/previa/loveverse"}`)
             }} className="button-9">Visualizar prévia</button>
     </Container>
     )

@@ -6,12 +6,16 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import animationData from "@/lotties/lovepet.json";
 import { Progress } from 'antd';
+import { useSearchParams } from 'next/navigation';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export default function SuccessPage() {
   const router = useRouter();
   const [percentValue, setPercent] = useState(0);
+  const params = useSearchParams();
+
+  const theme = params.get('theme');
 
   useEffect(() => {
     const handleSuccess = async () => {
@@ -20,32 +24,47 @@ export default function SuccessPage() {
 
       setPercent(10);
       const msg = JSON.parse(raw);
-      let imageUrl = '';
       setPercent(30);
 
       // Upload da imagem, se houver base64
-      if (msg.imageBase64) {
+      if (msg.imageBase64 || msg.imagesBase64?.length > 0) {
         try {
-          const byteString = atob(msg.imageBase64.split(',')[1]);
-          const mimeString = msg.imageBase64.split(',')[0].split(':')[1].split(';')[0];
-          setPercent(40);
 
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-          }
-          setPercent(50);
-
-          const blob = new Blob([ab], { type: mimeString });
           const formData = new FormData();
-          formData.append('file', blob, 'image.jpg');
+          const allImages: string[] = [];
+
+          if (msg.imageBase64) {
+            allImages.push(msg.imageBase64);
+          }
+
+          if (msg.imagesBase64?.length > 0) {
+            allImages.push(...msg.imagesBase64);
+          }
+
+          for (const base64 of allImages) {
+
+            const byteString = atob(base64.split(',')[1]);
+            const mimeString = base64.split(',')[0].split(':')[1].split(';')[0];
+
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+
+            const blob = new Blob([ab], { type: mimeString });
+
+            // 👇 mesma chave 'file'
+            formData.append('file', blob, `image-${Date.now()}.jpg`);
+          }
+
+          setPercent(50);
 
           const uploadRes = await fetch('/api/uploads', {
             method: 'POST',
             body: formData,
           });
-          setPercent(55);
 
           if (!uploadRes.ok) {
             const resultText = await uploadRes.text();
@@ -53,8 +72,18 @@ export default function SuccessPage() {
           }
 
           const uploadData = await uploadRes.json();
-          imageUrl = uploadData.url;
+
+          // 👇 agora vem como array
+          const imageUrls = uploadData.images.map((img: { url: string }) => img.url);
+
           setPercent(60);
+
+          // você pode decidir:
+          // se for 1 imagem → usar como main
+          // se for várias → separar
+
+          msg.imageUrls = imageUrls;
+
         } catch (err) {
           console.error('Erro no envio da imagem:', err);
           alert('Erro ao enviar imagem. Tente novamente.');
@@ -66,19 +95,28 @@ export default function SuccessPage() {
       localStorage.removeItem('pendingMessage');
       localStorage.removeItem('rouletteItens');
       localStorage.removeItem('rouletteTitle');
+   
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { imageBase64, ...rest } = msg;
-      const newMessage = { ...rest, imageUrl };
+      const { imageBase64, imagesBase64, ...rest } = msg;
+
+      const newMessage = {
+        ...rest,
+        images: msg.imageUrls || []
+      };
 
       try {
         const res = await fetch('/api/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newMessage),
+          body: JSON.stringify({
+            theme: theme || null,
+            ...newMessage,
+          }),
         });
 
         const text = await res.text();
         let data;
+        
         try {
           data = JSON.parse(text);
         } catch {
@@ -91,7 +129,12 @@ export default function SuccessPage() {
 
         const created = data.message;
         setPercent(100);
-        router.replace(`/messages/${created.id}`);
+
+        if (theme === 'love') {
+          router.replace(`/messages/${created.id}/love`);
+        } else {
+          router.replace(`/messages/${created.id}`);
+        }
       } catch (err) {
         alert(`Erro ao criar a cartinha: ${err instanceof Error ? err.message : 'Desconhecido'}`);
         router.replace('/criar');
@@ -99,7 +142,7 @@ export default function SuccessPage() {
     };
 
     handleSuccess();
-  }, [router]);
+  }, [router, theme]);
 
   return (
     <Container>

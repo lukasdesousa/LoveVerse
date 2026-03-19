@@ -24,6 +24,22 @@ model Message {
   expiresAt DateTime
 }
 
+model love_message_theme {
+  id        String   @id @default(uuid())
+  creatorName String
+  destinataryName String
+  content   String
+  imagesUrl  String[]
+  email String @default("")
+  carousel_title String
+  main_image_url String
+  spotifyLink  String?
+  dateInit  DateTime? // Data inicial do relacionamento
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  emailSent Boolean @default(false)
+}
+
 model help_us {
   id       String   @id @default(uuid())
   text_content String?
