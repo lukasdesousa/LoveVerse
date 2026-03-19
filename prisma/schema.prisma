@@ -31,8 +31,6 @@ model love_message_theme {
   content   String
   imagesUrl  String[]
   email String @default("")
-  carousel_title String
-  main_image_url String
   spotifyLink  String?
   dateInit  DateTime? // Data inicial do relacionamento
   createdAt DateTime @default(now())
