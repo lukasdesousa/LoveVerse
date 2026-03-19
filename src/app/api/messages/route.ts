@@ -72,10 +72,17 @@ export async function POST(req: NextRequest) {
         if (newMessage.id && !newMessage.emailSent) {
                 await SendEmail(newMessage.email, newMessage.id, newMessage.creatorName, newMessage.destinataryName, theme)
                 
-                await prisma.love_message_theme.update({
-                    where: { id: newMessage.id },
-                    data: { emailSent: true }
-                });
+                if (theme === 'love') {
+                    await prisma.love_message_theme.update({
+                        where: { id: newMessage.id },
+                        data: { emailSent: true }
+                    });
+                } else {
+                    await prisma.message.update({
+                        where: { id: newMessage.id },
+                        data: { emailSent: true }
+                    });
+                }
         }
         return NextResponse.json({ message: newMessage }, { status: 201 });
     } catch (error) {
