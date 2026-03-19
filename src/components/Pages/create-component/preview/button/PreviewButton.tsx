@@ -4,7 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
-export default function PreviewButton({ theme }: { theme: string }) {
+export default function PreviewButton({ theme }: { theme?: string }) {
     const router = useRouter();
 
     return (
