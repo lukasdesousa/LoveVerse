@@ -277,7 +277,7 @@ function LoveCreate() {
         <Form.Item
           name="content"
           label="Mensagem"
-          rules={[{ required: true, max: 1200 }]}
+          rules={[{ required: true, max: 1200, message: 'A mensagem é obrigatória' }]}
           extra={`Restam ${1200 - count.length} caracteres`}
         >
           <TextArea maxLength={1200} onChange={e => setCount(e.target.value)} />
@@ -325,15 +325,17 @@ function LoveCreate() {
                 </button>
               )}
             </Upload>
-            <Image
-              preview={{
-                open: previewOpen,
-                onOpenChange: setPreviewOpen,
-              }}
-              alt='Imagem'
-              src={previewImage}
-              style={{ display: 'none' }}
-            />
+            {previewImage && (
+              <Image
+                preview={{
+                  open: previewOpen,
+                  onOpenChange: setPreviewOpen,
+                }}
+                alt='Imagem'
+                src={previewImage}
+                style={{ display: 'none' }}
+              />
+            )}
           </section>
         </>
       ),
