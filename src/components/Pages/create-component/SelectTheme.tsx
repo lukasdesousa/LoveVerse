@@ -31,7 +31,7 @@ export default function SelectTheme() {
                         style={{ width: '100%', maxWidth: 240, height: '100%' }}
                         cover={
                             <Image
-                                alt="example"
+                                alt="Tema Amor para cartinha personalizada"
                                 src="/img/love-theme.png"
                                 width={300}
                                 height={300}
@@ -48,7 +48,7 @@ export default function SelectTheme() {
                         style={{ width: '100%', maxWidth: 240, height: '100%' }}
                         cover={
                             <Image
-                                alt="example"
+                                alt="Tema Interativo para cartinha personalizada"
                                 src="/img/theme.png"
                                 width={300}
                                 height={300}

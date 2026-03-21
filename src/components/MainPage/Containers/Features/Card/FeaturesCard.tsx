@@ -12,7 +12,7 @@ type Src = {
 /* 
  <Image 
             src={src}
-            alt="Imagem de descrição"
+            alt={title}
             quality={100}
             placeholder="blur"
             />
@@ -26,7 +26,7 @@ export default function FeaturesCard({ src, title, description }: Src) {
                 <p>{description}</p>
                 <Image
                 src={src}
-                alt="Imagem de descrição"
+                alt={title}
                 quality={100}
                 width={400}
                 height={400}
