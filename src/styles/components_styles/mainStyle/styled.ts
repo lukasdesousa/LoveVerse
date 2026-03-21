@@ -6,7 +6,7 @@ export const Container = styled.main`
     padding-top: 40px;
 `;
 
-export const MainText = styled.h2`
+export const MainText = styled.h1`
   font-size: 3.2rem;
   text-align: left;
   font-weight: 1000;

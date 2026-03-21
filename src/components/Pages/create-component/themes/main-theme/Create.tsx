@@ -291,7 +291,7 @@ function Create() {
           </Dragger>
           {preview && (
             <div style={{ margin: '20px auto', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-              <Image src={preview} alt="preview" style={{ borderRadius: '8px', maxWidth: '200px' }} />
+              <Image src={preview} alt="Prévia da imagem enviada para a cartinha" style={{ borderRadius: '8px', maxWidth: '200px' }} />
               <DeleteOutlined onClick={() => handleImageRemove()} style={{ transform: 'scale(2)' }} />
             </div>
           )}

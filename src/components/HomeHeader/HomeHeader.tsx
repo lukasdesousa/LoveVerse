@@ -29,7 +29,7 @@ export default function LoveHeader() {
   return (
     <HeaderContainer>
       <Link href={'/'} style={{textDecoration: 'none', color: 'inherit'}}>
-        <Logo>Love<span>Verse</span></Logo>
+        <Logo as="div">Love<span>Verse</span></Logo>
       </Link>
 
       <Menu>
@@ -48,10 +48,10 @@ export default function LoveHeader() {
         >
           <Line />
           <DrawerMenuOpts>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/criar'}><h1>Criar cartinha</h1></Link>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/termos/loveverse'}><h1>Termos de uso</h1></Link>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/tutorial/loveverse'}><h1>Tutorial</h1></Link>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/contato/loveverse'}><h1>Contato</h1></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/criar'}><p>Criar cartinha</p></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/termos/loveverse'}><p>Termos de uso</p></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/tutorial/loveverse'}><p>Tutorial</p></Link>
+            <Link style={{textDecoration: 'none', color: 'inherit'}} href={'/contato/loveverse'}><p>Contato</p></Link>
           </DrawerMenuOpts>
           <Line02 />
           <LtTitle>
@@ -103,8 +103,11 @@ const DrawerMenuOpts = styled.section`
   gap: 30px;
   margin-top: 70px;
 
-  h1 {
+  p {
     font-family: var(--font-quicksand);
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
   }
 `;
 

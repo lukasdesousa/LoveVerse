@@ -1,27 +1,52 @@
-// app/sitemap.ts
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next';
+import { prisma } from '@/lib/prisma';
+import { SITE_URL } from '@/lib/seo';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://loveverse.space/",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://loveverse.space/criar",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://loveverse.space/contato/loveverse",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://loveverse.space/termos/loveverse",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://loveverse.space/tutorial/loveverse",
-      lastModified: new Date(),
-    },
-  ];
+const staticRoutes = [
+  '/',
+  '/criar',
+  '/contato/loveverse',
+  '/termos/loveverse',
+  '/tutorial/loveverse',
+  '/melhorias/loveverse',
+] as const;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date();
+
+  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: new URL(route, SITE_URL).toString(),
+    lastModified: now,
+  }));
+
+  try {
+    const [messages, loveMessages] = await Promise.all([
+      prisma.message.findMany({
+        select: {
+          id: true,
+          createdAt: true,
+        },
+      }),
+      prisma.love_message_theme.findMany({
+        select: {
+          id: true,
+          createdAt: true,
+        },
+      }),
+    ]);
+
+    const messageEntries: MetadataRoute.Sitemap = messages.map((message) => ({
+      url: new URL(`/messages/${message.id}`, SITE_URL).toString(),
+      lastModified: message.createdAt,
+    }));
+
+    const loveMessageEntries: MetadataRoute.Sitemap = loveMessages.map((message) => ({
+      url: new URL(`/messages/${message.id}/love`, SITE_URL).toString(),
+      lastModified: message.createdAt,
+    }));
+
+    return [...staticEntries, ...messageEntries, ...loveMessageEntries];
+  } catch {
+    return staticEntries;
+  }
 }
