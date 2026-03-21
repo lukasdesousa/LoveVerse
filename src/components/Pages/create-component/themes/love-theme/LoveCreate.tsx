@@ -8,7 +8,6 @@ import { Box } from '@mui/material';
 import {
   Button,
   Input,
-  notification,
   Form,
   DatePicker,
   Steps,
@@ -19,6 +18,7 @@ import {
   UploadProps,
   GetProp,
 } from "antd";
+import { message } from 'antd';
 import CardContent from "@mui/joy/CardContent";
 import { useEffect, useState } from 'react';
 import { SpotifyCard } from '@/components/Spotify/SpotifyCard';
@@ -36,7 +36,6 @@ const { Search } = Input;
 function LoveCreate() {
   const [form] = Form.useForm();
   // const router = useRouter();
-  const [api, contextHolder] = notification.useNotification();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -46,6 +45,7 @@ function LoveCreate() {
   const [count, setCount] = useState('');
   const [current, setCurrent] = useState(0);
   const router = useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const fieldsPerStep = [
     ['email'],
@@ -170,10 +170,9 @@ function LoveCreate() {
       const merged = { ...existing, ...currentData };
 
       if (current === 6) {
-        if (!fileList.length) {
-          api.error({
-            message: 'Imagem obrigatória',
-            description: 'Selecione ao menos uma imagem.',
+        if (!fileList.length || fileList.length < 2) {
+          messageApi.error({
+            content: 'Ao menos 2 imagens obrigatórias',
           });
           return;
         }
@@ -194,9 +193,6 @@ function LoveCreate() {
 
     const id = uuidv4();
     const existing = JSON.parse(localStorage.getItem('pendingMessage') || '{}');
-    const imagesBase64 = fileList.map((file) => file.url);
-
-    console.log(imagesBase64)
 
     const finalData = {
       ...existing,
@@ -207,7 +203,6 @@ function LoveCreate() {
     };
 
     localStorage.setItem('pendingMessage', JSON.stringify(finalData));
-    console.log(finalData);
     router.push('/success?theme=love');
     setLoading(false);
   };
@@ -320,9 +315,10 @@ function LoveCreate() {
               maxCount={4}
             >
               {fileList.length < 4 && (
-                <button type="button" style={{ border: 0, background: 'none' }}>
+                <div>
                   <PlusOutlined />
-                </button>
+                  <div style={{ marginTop: 8 }}>Adicionar</div>
+                </div>
               )}
             </Upload>
             {previewImage && (
