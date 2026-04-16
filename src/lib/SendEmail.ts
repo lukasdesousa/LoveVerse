@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function SendEmail(email: string, id: string, creatorName: string, destinataryName: string, theme?: string) {
   try {
-    const messageLink = theme === 'love' ? `https://loveverse.space/messages/${id}/love` : `https://loveverse.space/messages/${id}`;
+    const messageLink = theme === 'love' ? `https://loveverse-space.vercel.app/messages/${id}/love` : `https://loveverse-space.vercel.app/messages/${id}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(messageLink)}`;
 
   const html = `
@@ -53,7 +53,7 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
         <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
           Envie sugestões para tornar o LoveVerse ainda melhor 💖
         </p>
-        <a href="https://loveverse.space/melhorias/loveverse" style="
+        <a href="https://loveverse-space.vercel.app/melhorias/loveverse" style="
           display: inline-block;
           background-color: #aa00ff;
           color: white;
@@ -73,7 +73,7 @@ export async function SendEmail(email: string, id: string, creatorName: string, 
 `;
 
     await resend.emails.send({
-      from: 'LoveVerse <noreply@loveverse.space>',
+      from: 'LoveVerse <noreply@loveverse-space.vercel.app>',
       to: email,
       subject: `Seu QR CODE da cartinha de ${creatorName} & ${destinataryName}`,
       html: html,

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const SITE_NAME = 'LoveVerse';
-export const SITE_URL = 'https://loveverse.space';
+export const SITE_URL = 'https://loveverse-space.vercel.app';
 export const DEFAULT_OG_IMAGE = '/img/banner-openg.png';
 export const SEO_KEYWORDS = [
   'cartinha de amor',
